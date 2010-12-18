@@ -1,0 +1,17 @@
+#Hướng triển khai trong tương lai.
+
+= Hướng triển khai trong tương lai =
+
+
+ # Long
+ * Chức năng 1
+ * Chức năng 2
+ * Chức năng 3
+ # Khánh
+ * Chức năng 1
+ * Chức năng 2
+ * Chức năng 3
+ # Phát
+ * Chức năng 1
+ * Chức năng 2
+ * Chức năng 3
