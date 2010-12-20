@@ -7,6 +7,7 @@ using WbWCF.Contract.Data;
 using System.Collections.ObjectModel;
 using WbTest;
 using System.Data;
+using WbTest.DataAccess;
 
 namespace WbWCF.DataAccess
 {
@@ -63,6 +64,32 @@ namespace WbWCF.DataAccess
                 cmd.Parameters.AddWithValue("@country_longitude", countries[i].country_longitude);
                 cmd.Parameters.AddWithValue("@country_latitude", countries[i].country_latitude);
                 cmd.Parameters.AddWithValue("@is_region", countries[i].is_region);
+                cmd.ExecuteNonQuery();
+            }
+            con.Close();
+        }
+
+        public static void InsertIndicators(Collection<IndicatorEntry> indicators)
+        {
+            SqlConnection con = GetConnection();
+            con.Open();
+            for (int i = 0; i < indicators.Count; i++)
+            {
+                string sql = @"INSERT INTO [tbl_indicators]
+                           ([indicator_id_pk]
+                           ,[indicator_code]
+                           ,[indicator_name]
+                           ,[indicator_description])
+                     VALUES
+                           (@indicator_id_pk
+                           ,@indicator_code
+                           ,@indicator_name
+                           ,@indicator_description)";
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@indicator_id_pk", indicators[i].indicator_id_pk);
+                cmd.Parameters.AddWithValue("@indicator_code", indicators[i].indicator_code);
+                cmd.Parameters.AddWithValue("@indicator_name", indicators[i].indicator_name);
+                cmd.Parameters.AddWithValue("@indicator_description", indicators[i].indicator_description);                
                 cmd.ExecuteNonQuery();
             }
             con.Close();
@@ -149,6 +176,32 @@ namespace WbWCF.DataAccess
             con.Close();
         }
 
+        public static void InsertIndicatorValue(Collection<CountryIndicatorEntry> ref_values)
+        {
+            SqlConnection con = GetConnection();
+            con.Open();
+            for (int i = 0; i < ref_values.Count; i++)
+            {
+                string sql = @"INSERT INTO [ref_country_indicator]
+                               ([country_indicator_year]
+                               ,[country_id]
+                               ,[indicator_id]
+                               ,[country_indicator_value])
+                         VALUES
+                               (@country_indicator_year
+                               ,@country_id
+                               ,@indicator_id
+                               ,@country_indicator_value)";
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@country_indicator_year", ref_values[i].country_indicator_year);
+                cmd.Parameters.AddWithValue("@country_id", ref_values[i].country_id);
+                cmd.Parameters.AddWithValue("@indicator_id", ref_values[i].indicator_id);
+                cmd.Parameters.AddWithValue("@country_indicator_value", ref_values[i].country_indicator_value);
+                cmd.ExecuteNonQuery();
+            }
+            con.Close();
+        }
+
         private static bool Is_New_Trade(TradeEntry entry)
         {
             SqlConnection con = GetConnection();
@@ -211,6 +264,33 @@ namespace WbWCF.DataAccess
                 
             }
             
+        }
+
+        public static void UpdateIndicator(IndicatorEntry entry)
+        {
+            SqlConnection con = GetConnection();
+            con.Open();
+            string sql = @"UPDATE [tbl_indicators]
+                        SET [indicator_unit] =@indicator_unit , [is_gotten]=1
+                        WHERE [indicator_id_pk]=@indicator_id_pk";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@indicator_id_pk", entry.indicator_id_pk);
+            cmd.Parameters.AddWithValue("@indicator_unit", entry.indicator_unit);
+            cmd.ExecuteNonQuery();
+        }
+
+        public static Collection<IndicatorEntry> GetSelectedIndicator()
+        {
+            SqlConnection con = GetConnection();
+            con.Open();
+            string sql = @"SELECT *
+                         FROM tbl_indicators
+                         WHERE is_gotten=0";
+            SqlDataAdapter da = new SqlDataAdapter(sql, con);
+            DataSet ds = new DataSet();
+            da.Fill(ds, "tbl_indicators");
+            Collection<IndicatorEntry> indicators = ds.Tables["tbl_indicators"].Rows.ToIndicatorEntries();
+            return indicators;
         }
 
         public static void UpdateTradeExport(TradeEntry entry)
@@ -290,6 +370,37 @@ namespace WbWCF.DataAccess
             con.Close();
             return result;
                         
+        }
+
+        public static Dictionary<string, int> MapCountryIdToIsoCode()
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            SqlConnection con = GetConnection();
+            con.Open();
+            string sql = @"SELECT country_id_pk,country_iso_code 
+                         FROM tbl_countries";
+            SqlDataAdapter da = new SqlDataAdapter(sql, con);
+            DataSet ds = new DataSet();
+            da.Fill(ds, "tbl_countries");
+            DataTable dt = ds.Tables["tbl_countries"];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int id = Int32.Parse(dt.Rows[i]["country_id_pk"].ToString());
+                if (dt.Rows[i]["country_iso_code"] != null)
+                {
+                    try
+                    {
+                        string code = dt.Rows[i]["country_iso_code"].ToString();
+                        result.Add(code, id);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            con.Close();
+            return result;
+
         }
         
     }

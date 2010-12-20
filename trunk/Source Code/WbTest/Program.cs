@@ -15,13 +15,55 @@ namespace WbTest
     class Program
     {
         const int UPDATED_YEAR=2009;
+        const int BEGIN_YEAR = 1996;
         static void Main(string[] args)
         {
-            GetStaticDataFromWorldBank();
-            GetTradeData();
+            //GetStaticDataFromWorldBank();
+            //GetTradeData();
+            //GetAllIndicatorDataFromWorldBank();
+            GetIndicatorsValue();
             Console.WriteLine("Finish all data");
             Console.ReadKey();
         }
+
+        static void GetAllIndicatorDataFromWorldBank()
+        {
+            Collection<IndicatorEntry> indicators= Utils.GetAllIndicators();            
+            WBAccess.InsertIndicators(indicators);
+        }
+
+        private static string GetUnit(string indicator_name)
+        {
+            string result = "";
+            if (indicator_name[indicator_name.Length - 1] != ')')
+                return "";
+            for (int i = indicator_name.Length - 1; i > 0; i--)
+            {
+                if (indicator_name[i] != '(')
+                {
+                    result = indicator_name[i] + result;
+                }
+                else
+                {
+                    result = '(' + result;
+                    break;
+                }
+            }
+            return result;
+        }
+
+        static void GetIndicatorsValue()
+        {
+            Collection<IndicatorEntry> indicators=WBAccess.GetSelectedIndicator();
+            for (int i = 0; i < indicators.Count; i++)
+            {
+                indicators[i].indicator_unit = GetUnit(indicators[i].indicator_name);
+                Collection<CountryIndicatorEntry> entries = Utils.GetAllIndicatorValue(indicators[i]);
+                WBAccess.InsertIndicatorValue(entries);
+                WBAccess.UpdateIndicator(indicators[i]);
+            }
+        }
+
         static void GetStaticDataFromWorldBank()
         {
             Console.WriteLine("Downloading data. Please wait... ");

@@ -7,7 +7,7 @@ using WbWCF.Contract.Data;
 using System.Collections.ObjectModel;
 using WbTest;
 using Excel = Microsoft.Office.Interop.Excel;
-
+using WbWCF.DataAccess;
 using System.IO;
 using System.Reflection;
 using System.Net;
@@ -99,6 +99,120 @@ namespace WbTest
                 }               
             }            
             return countries;
+        }
+
+        public static Collection<IndicatorEntry> GetAllIndicators()
+        {
+
+            string url = "http://api.worldbank.org/indicators?per_page=4000";
+            //
+            string indicator_tag = "wb:indicator";            
+            string name_tag = "wb:name";
+            string description_tag = "wb:sourceNote";            
+            string common_attribute = "id";
+
+            XmlTextReader reader = new XmlTextReader(url);
+            Collection<IndicatorEntry> indicators = new Collection<IndicatorEntry>();
+            int count = 0;
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == indicator_tag)
+                {
+                    count++;
+                    IndicatorEntry indicator = new IndicatorEntry();
+                    indicator.indicator_id_pk = count;
+
+                    //read indicator code                    
+                    while (reader.MoveToNextAttribute()) // Read the attributes.
+                    {
+                        string attribute_name = reader.Name;
+                        string attribute_value = reader.Value;
+                        if (attribute_name.Equals(common_attribute))
+                            indicator.indicator_code = attribute_value;
+                    }
+
+                    //read indicator name
+                    reader.ReadToFollowing(name_tag);
+                    indicator.indicator_name = reader.ReadElementContentAsString();
+
+                    //read indicator decription
+                    reader.ReadToFollowing(description_tag);
+                    indicator.indicator_description = reader.ReadElementContentAsString();
+                    indicators.Add(indicator);
+                    if (count % 10 == 0)
+                        count = count;
+                   
+                }
+            }
+            return indicators;
+        }
+
+        public static Collection<CountryIndicatorEntry> GetAllIndicatorValue(IndicatorEntry indicator)
+        {
+
+            string url = "http://api.worldbank.org/countries/all/indicators/" + indicator.indicator_code + "?per_page=30000&date=1996:2009";
+            //
+            string data_tag = "wb:data";
+            string country_tag = "wb:country";
+            string date_tag = "wb:date";
+            string value_tag = "wb:value";
+            string common_attribute = "id";
+
+            XmlTextReader reader = new XmlTextReader(url);
+            Collection<CountryIndicatorEntry> indicators = new Collection<CountryIndicatorEntry>();
+            int count = 0;
+            Dictionary<string, int> mapping = WBAccess.MapCountryIdToIsoCode();
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == data_tag)
+                {
+                    count++;
+                    CountryIndicatorEntry ref_value = new CountryIndicatorEntry();                    
+
+                    
+
+                    //read indicator name
+                    reader.ReadToFollowing(country_tag);
+                    //read indicator code                    
+                    string iso_code = "";
+                    while (reader.MoveToNextAttribute()) // Read the attributes.
+                    {
+                        string attribute_name = reader.Name;
+                        string attribute_value = reader.Value;
+                        if (attribute_name.Equals(common_attribute))
+                            iso_code = attribute_value;
+                    }
+                    if (iso_code != null && iso_code.Trim().Length > 0)
+                    {
+                        if (mapping.ContainsKey(iso_code))
+                        {
+                            ref_value.country_id = mapping[iso_code];
+                        }
+                        else continue;
+                    }
+                    else
+                        continue;
+                    //read ref_value year
+                    reader.ReadToFollowing(date_tag);
+                    ref_value.country_indicator_year = reader.ReadElementContentAsInt();
+
+                    //read ref_value value
+                    reader.ReadToFollowing(value_tag);
+                    try
+                    {
+                        ref_value.country_indicator_value = reader.ReadElementContentAsInt();
+                    }
+                    catch
+                    {
+                        ref_value.country_indicator_value = 0;
+                    }
+
+                    ref_value.indicator_id = indicator.indicator_id_pk;
+
+                    indicators.Add(ref_value);                                                            
+                }
+            }
+            return indicators;
         }
 
         public static Collection<RegionEntry> GetAllRegions()

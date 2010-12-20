@@ -63,11 +63,14 @@
   <ItemGroup>
     <Compile Include="CountryEntry.cs" />
     <Compile Include="DataAccess\BaseDataAccess.cs" />
+    <Compile Include="DataAccess\Conversion.cs" />
     <Compile Include="DataAccess\WBAccess.cs" />
     <Compile Include="IncomeLevelEntry.cs" />
+    <Compile Include="IndicatorEntry.cs" />
     <Compile Include="LendingTypeEntry.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CountryIndicatorEntry.cs" />
     <Compile Include="RegionEntry.cs" />
     <Compile Include="TradeEntry.cs" />
     <Compile Include="Util.cs" />
