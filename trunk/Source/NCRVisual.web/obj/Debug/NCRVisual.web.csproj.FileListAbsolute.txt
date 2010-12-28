@@ -1,0 +1,10 @@
+D:\Working\WordBank\Source Code\NCRVisual.web\obj\Debug\ResolveAssemblyReference.cache
+D:\Working\WordBank\Source Code\NCRVisual.web\bin\NCRVisual.web.dll
+D:\Working\WordBank\Source Code\NCRVisual.web\bin\NCRVisual.web.pdb
+D:\Working\WordBank\Source Code\NCRVisual.web\obj\Debug\NCRVisual.web.dll
+D:\Working\WordBank\Source Code\NCRVisual.web\obj\Debug\NCRVisual.web.pdb
+D:\Working\WordBank\Source\NCRVisual.web\bin\NCRVisual.web.dll
+D:\Working\WordBank\Source\NCRVisual.web\bin\NCRVisual.web.pdb
+D:\Working\WordBank\Source\NCRVisual.web\obj\Debug\ResolveAssemblyReference.cache
+D:\Working\WordBank\Source\NCRVisual.web\obj\Debug\NCRVisual.web.dll
+D:\Working\WordBank\Source\NCRVisual.web\obj\Debug\NCRVisual.web.pdb

@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="WBModelStoreContainer">
+          <EntitySet Name="ref_country_indicator" EntityType="WBModel.Store.ref_country_indicator" store:Type="Tables" store:Schema="dbo" store:Name="ref_country_indicator">
+            <DefiningQuery>SELECT 
+      [ref_country_indicator].[country_indicator_id_pk] AS [country_indicator_id_pk], 
+      [ref_country_indicator].[country_indicator_year] AS [country_indicator_year], 
+      [ref_country_indicator].[country_id] AS [country_id], 
+      [ref_country_indicator].[indicator_id] AS [indicator_id], 
+      [ref_country_indicator].[country_indicator_value] AS [country_indicator_value]
+      FROM [dbo].[ref_country_indicator] AS [ref_country_indicator]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="sysdiagrams" EntityType="WBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_countries" EntityType="WBModel.Store.tbl_countries" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_income_levels" EntityType="WBModel.Store.tbl_income_levels" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_indicators" EntityType="WBModel.Store.tbl_indicators" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_lending_types" EntityType="WBModel.Store.tbl_lending_types" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_regions" EntityType="WBModel.Store.tbl_regions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_trades" EntityType="WBModel.Store.tbl_trades" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'WB.dbo.ref_country_indicator' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="ref_country_indicator">
+          <Key>
+            <PropertyRef Name="country_indicator_id_pk" />
+          </Key>
+          <Property Name="country_indicator_id_pk" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="country_indicator_year" Type="int" />
+          <Property Name="country_id" Type="int" />
+          <Property Name="indicator_id" Type="int" />
+          <Property Name="country_indicator_value" Type="numeric" Scale="5" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_countries">
+          <Key>
+            <PropertyRef Name="country_id_pk" />
+          </Key>
+          <Property Name="country_id_pk" Type="int" Nullable="false" />
+          <Property Name="country_iso_code" Type="varchar" MaxLength="10" />
+          <Property Name="country_name" Type="varchar" MaxLength="255" />
+          <Property Name="region_id" Type="varchar" MaxLength="10" />
+          <Property Name="income_level_id" Type="varchar" MaxLength="10" />
+          <Property Name="lending_type_id" Type="varchar" MaxLength="10" />
+          <Property Name="country_longitude" Type="numeric" Scale="5" />
+          <Property Name="country_latitude" Type="numeric" Scale="5" />
+          <Property Name="is_region" Type="bit" />
+          <Property Name="country_code" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_income_levels">
+          <Key>
+            <PropertyRef Name="income_level_id_pk" />
+          </Key>
+          <Property Name="income_level_id_pk" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="income_level_name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tbl_indicators">
+          <Key>
+            <PropertyRef Name="indicator_id_pk" />
+          </Key>
+          <Property Name="indicator_id_pk" Type="int" Nullable="false" />
+          <Property Name="indicator_code" Type="varchar" MaxLength="50" />
+          <Property Name="indicator_name" Type="varchar" MaxLength="255" />
+          <Property Name="indicator_description" Type="text" />
+          <Property Name="indicator_unit" Type="varchar" MaxLength="255" />
+          <Property Name="is_yearly" Type="bit" />
+          <Property Name="last_update" Type="int" />
+          <Property Name="is_gotten" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_lending_types">
+          <Key>
+            <PropertyRef Name="lending_type_id_pk" />
+          </Key>
+          <Property Name="lending_type_id_pk" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="lending_type_name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tbl_regions">
+          <Key>
+            <PropertyRef Name="region_id_pk" />
+          </Key>
+          <Property Name="region_id_pk" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="region_name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tbl_trades">
+          <Key>
+            <PropertyRef Name="trade_id_pk" />
+          </Key>
+          <Property Name="trade_id_pk" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="country_from_id" Type="int" />
+          <Property Name="country_to_id" Type="int" />
+          <Property Name="import_value" Type="decimal" Scale="5" />
+          <Property Name="export_value" Type="decimal" Scale="5" />
+          <Property Name="trade_year" Type="int" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="WBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ref_country_indicator" EntityType="WBModel.ref_country_indicator" />
+          <EntitySet Name="tbl_countries" EntityType="WBModel.tbl_countries" />
+          <EntitySet Name="tbl_indicators" EntityType="WBModel.tbl_indicators" />
+          <EntitySet Name="tbl_trades" EntityType="WBModel.tbl_trades" />
+          <EntitySet Name="sysdiagrams" EntityType="WBModel.sysdiagram" />
+          <EntitySet Name="tbl_income_levels" EntityType="WBModel.tbl_income_levels" />
+          <EntitySet Name="tbl_lending_types" EntityType="WBModel.tbl_lending_types" />
+          <EntitySet Name="tbl_regions" EntityType="WBModel.tbl_regions" />
+        </EntityContainer>
+        <EntityType Name="ref_country_indicator">
+          <Key>
+            <PropertyRef Name="country_indicator_id_pk" />
+          </Key>
+          <Property Name="country_indicator_id_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country_indicator_year" Type="Int32" />
+          <Property Name="country_id" Type="Int32" />
+          <Property Name="indicator_id" Type="Int32" />
+          <Property Name="country_indicator_value" Type="Decimal" Precision="18" Scale="5" />
+        </EntityType>
+        <EntityType Name="tbl_countries">
+          <Key>
+            <PropertyRef Name="country_id_pk" />
+          </Key>
+          <Property Name="country_id_pk" Type="Int32" Nullable="false" />
+          <Property Name="country_iso_code" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="country_name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="region_id" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="income_level_id" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="lending_type_id" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="country_longitude" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="country_latitude" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="is_region" Type="Boolean" />
+          <Property Name="country_code" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_indicators">
+          <Key>
+            <PropertyRef Name="indicator_id_pk" />
+          </Key>
+          <Property Name="indicator_id_pk" Type="Int32" Nullable="false" />
+          <Property Name="indicator_code" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="indicator_name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="indicator_description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="indicator_unit" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="is_yearly" Type="Boolean" />
+          <Property Name="last_update" Type="Int32" />
+          <Property Name="is_gotten" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_trades">
+          <Key>
+            <PropertyRef Name="trade_id_pk" />
+          </Key>
+          <Property Name="trade_id_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country_from_id" Type="Int32" />
+          <Property Name="country_to_id" Type="Int32" />
+          <Property Name="import_value" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="export_value" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="trade_year" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Type="String" Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="principal_id" Nullable="false" />
+          <Property Type="Int32" Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="version" />
+          <Property Type="Binary" Name="definition" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_income_levels">
+          <Key>
+            <PropertyRef Name="income_level_id_pk" />
+          </Key>
+          <Property Type="String" Name="income_level_id_pk" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="income_level_name" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_lending_types">
+          <Key>
+            <PropertyRef Name="lending_type_id_pk" />
+          </Key>
+          <Property Type="String" Name="lending_type_id_pk" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="lending_type_name" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_regions">
+          <Key>
+            <PropertyRef Name="region_id_pk" />
+          </Key>
+          <Property Type="String" Name="region_id_pk" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="region_name" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WBModelStoreContainer" CdmEntityContainer="WBEntities">
+          <EntitySetMapping Name="ref_country_indicator"><EntityTypeMapping TypeName="WBModel.ref_country_indicator"><MappingFragment StoreEntitySet="ref_country_indicator">
+            <ScalarProperty Name="country_indicator_id_pk" ColumnName="country_indicator_id_pk" />
+            <ScalarProperty Name="country_indicator_year" ColumnName="country_indicator_year" />
+            <ScalarProperty Name="country_id" ColumnName="country_id" />
+            <ScalarProperty Name="indicator_id" ColumnName="indicator_id" />
+            <ScalarProperty Name="country_indicator_value" ColumnName="country_indicator_value" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tbl_countries"><EntityTypeMapping TypeName="WBModel.tbl_countries"><MappingFragment StoreEntitySet="tbl_countries">
+            <ScalarProperty Name="country_id_pk" ColumnName="country_id_pk" />
+            <ScalarProperty Name="country_iso_code" ColumnName="country_iso_code" />
+            <ScalarProperty Name="country_name" ColumnName="country_name" />
+            <ScalarProperty Name="region_id" ColumnName="region_id" />
+            <ScalarProperty Name="income_level_id" ColumnName="income_level_id" />
+            <ScalarProperty Name="lending_type_id" ColumnName="lending_type_id" />
+            <ScalarProperty Name="country_longitude" ColumnName="country_longitude" />
+            <ScalarProperty Name="country_latitude" ColumnName="country_latitude" />
+            <ScalarProperty Name="is_region" ColumnName="is_region" />
+            <ScalarProperty Name="country_code" ColumnName="country_code" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tbl_indicators"><EntityTypeMapping TypeName="WBModel.tbl_indicators"><MappingFragment StoreEntitySet="tbl_indicators">
+            <ScalarProperty Name="indicator_id_pk" ColumnName="indicator_id_pk" />
+            <ScalarProperty Name="indicator_code" ColumnName="indicator_code" />
+            <ScalarProperty Name="indicator_name" ColumnName="indicator_name" />
+            <ScalarProperty Name="indicator_description" ColumnName="indicator_description" />
+            <ScalarProperty Name="indicator_unit" ColumnName="indicator_unit" />
+            <ScalarProperty Name="is_yearly" ColumnName="is_yearly" />
+            <ScalarProperty Name="last_update" ColumnName="last_update" />
+            <ScalarProperty Name="is_gotten" ColumnName="is_gotten" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tbl_trades"><EntityTypeMapping TypeName="WBModel.tbl_trades"><MappingFragment StoreEntitySet="tbl_trades">
+            <ScalarProperty Name="trade_id_pk" ColumnName="trade_id_pk" />
+            <ScalarProperty Name="country_from_id" ColumnName="country_from_id" />
+            <ScalarProperty Name="country_to_id" ColumnName="country_to_id" />
+            <ScalarProperty Name="import_value" ColumnName="import_value" />
+            <ScalarProperty Name="export_value" ColumnName="export_value" />
+            <ScalarProperty Name="trade_year" ColumnName="trade_year" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="WBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_income_levels">
+            <EntityTypeMapping TypeName="WBModel.tbl_income_levels">
+              <MappingFragment StoreEntitySet="tbl_income_levels">
+                <ScalarProperty Name="income_level_name" ColumnName="income_level_name" />
+                <ScalarProperty Name="income_level_id_pk" ColumnName="income_level_id_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lending_types">
+            <EntityTypeMapping TypeName="WBModel.tbl_lending_types">
+              <MappingFragment StoreEntitySet="tbl_lending_types">
+                <ScalarProperty Name="lending_type_name" ColumnName="lending_type_name" />
+                <ScalarProperty Name="lending_type_id_pk" ColumnName="lending_type_id_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_regions">
+            <EntityTypeMapping TypeName="WBModel.tbl_regions">
+              <MappingFragment StoreEntitySet="tbl_regions">
+                <ScalarProperty Name="region_name" ColumnName="region_name" />
+                <ScalarProperty Name="region_id_pk" ColumnName="region_id_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="WBDataModel" ZoomLevel="94">
+        <EntityTypeShape EntityType="WBModel.ref_country_indicator" Width="1.5" PointX="0.75" PointY="0.75" Height="1.018779296875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WBModel.tbl_countries" Width="1.5" PointX="2.75" PointY="0.75" Height="2.9617936197916666" IsExpanded="true" />
+        <EntityTypeShape EntityType="WBModel.tbl_indicators" Width="1.5" PointX="4.75" PointY="0.75" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="WBModel.tbl_trades" Width="1.5" PointX="6.875" PointY="0.75" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="WBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="WBModel.tbl_income_levels" Width="1.5" PointX="2.75" PointY="4.75" Height="1.4033821614583317" />
+        <EntityTypeShape EntityType="WBModel.tbl_lending_types" Width="1.5" PointX="4.75" PointY="4.75" Height="1.4033821614583317" />
+        <EntityTypeShape EntityType="WBModel.tbl_regions" Width="1.5" PointX="6.75" PointY="4.75" Height="1.4033821614583317" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

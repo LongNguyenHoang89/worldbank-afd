@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="WBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ref_country_indicator" EntityType="WBModel.ref_country_indicator" />
+    <EntitySet Name="tbl_countries" EntityType="WBModel.tbl_countries" />
+    <EntitySet Name="tbl_indicators" EntityType="WBModel.tbl_indicators" />
+    <EntitySet Name="tbl_trades" EntityType="WBModel.tbl_trades" />
+    <EntitySet Name="sysdiagrams" EntityType="WBModel.sysdiagram" />
+    <EntitySet Name="tbl_income_levels" EntityType="WBModel.tbl_income_levels" />
+    <EntitySet Name="tbl_lending_types" EntityType="WBModel.tbl_lending_types" />
+    <EntitySet Name="tbl_regions" EntityType="WBModel.tbl_regions" />
+  </EntityContainer>
+  <EntityType Name="ref_country_indicator">
+    <Key>
+      <PropertyRef Name="country_indicator_id_pk" />
+    </Key>
+    <Property Name="country_indicator_id_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="country_indicator_year" Type="Int32" />
+    <Property Name="country_id" Type="Int32" />
+    <Property Name="indicator_id" Type="Int32" />
+    <Property Name="country_indicator_value" Type="Decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <EntityType Name="tbl_countries">
+    <Key>
+      <PropertyRef Name="country_id_pk" />
+    </Key>
+    <Property Name="country_id_pk" Type="Int32" Nullable="false" />
+    <Property Name="country_iso_code" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="country_name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="region_id" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="income_level_id" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="lending_type_id" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="country_longitude" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="country_latitude" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="is_region" Type="Boolean" />
+    <Property Name="country_code" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tbl_indicators">
+    <Key>
+      <PropertyRef Name="indicator_id_pk" />
+    </Key>
+    <Property Name="indicator_id_pk" Type="Int32" Nullable="false" />
+    <Property Name="indicator_code" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="indicator_name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="indicator_description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="indicator_unit" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="is_yearly" Type="Boolean" />
+    <Property Name="last_update" Type="Int32" />
+    <Property Name="is_gotten" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="tbl_trades">
+    <Key>
+      <PropertyRef Name="trade_id_pk" />
+    </Key>
+    <Property Name="trade_id_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="country_from_id" Type="Int32" />
+    <Property Name="country_to_id" Type="Int32" />
+    <Property Name="import_value" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="export_value" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="trade_year" Type="Int32" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Type="String" Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="principal_id" Nullable="false" />
+    <Property Type="Int32" Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="version" />
+    <Property Type="Binary" Name="definition" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tbl_income_levels">
+    <Key>
+      <PropertyRef Name="income_level_id_pk" />
+    </Key>
+    <Property Type="String" Name="income_level_id_pk" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="income_level_name" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_lending_types">
+    <Key>
+      <PropertyRef Name="lending_type_id_pk" />
+    </Key>
+    <Property Type="String" Name="lending_type_id_pk" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="lending_type_name" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_regions">
+    <Key>
+      <PropertyRef Name="region_id_pk" />
+    </Key>
+    <Property Type="String" Name="region_id_pk" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="region_name" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WBModelStoreContainer" CdmEntityContainer="WBEntities">
+    <EntitySetMapping Name="ref_country_indicator">
+      <EntityTypeMapping TypeName="WBModel.ref_country_indicator">
+        <MappingFragment StoreEntitySet="ref_country_indicator">
+          <ScalarProperty Name="country_indicator_id_pk" ColumnName="country_indicator_id_pk" />
+          <ScalarProperty Name="country_indicator_year" ColumnName="country_indicator_year" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="indicator_id" ColumnName="indicator_id" />
+          <ScalarProperty Name="country_indicator_value" ColumnName="country_indicator_value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_countries">
+      <EntityTypeMapping TypeName="WBModel.tbl_countries">
+        <MappingFragment StoreEntitySet="tbl_countries">
+          <ScalarProperty Name="country_id_pk" ColumnName="country_id_pk" />
+          <ScalarProperty Name="country_iso_code" ColumnName="country_iso_code" />
+          <ScalarProperty Name="country_name" ColumnName="country_name" />
+          <ScalarProperty Name="region_id" ColumnName="region_id" />
+          <ScalarProperty Name="income_level_id" ColumnName="income_level_id" />
+          <ScalarProperty Name="lending_type_id" ColumnName="lending_type_id" />
+          <ScalarProperty Name="country_longitude" ColumnName="country_longitude" />
+          <ScalarProperty Name="country_latitude" ColumnName="country_latitude" />
+          <ScalarProperty Name="is_region" ColumnName="is_region" />
+          <ScalarProperty Name="country_code" ColumnName="country_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_indicators">
+      <EntityTypeMapping TypeName="WBModel.tbl_indicators">
+        <MappingFragment StoreEntitySet="tbl_indicators">
+          <ScalarProperty Name="indicator_id_pk" ColumnName="indicator_id_pk" />
+          <ScalarProperty Name="indicator_code" ColumnName="indicator_code" />
+          <ScalarProperty Name="indicator_name" ColumnName="indicator_name" />
+          <ScalarProperty Name="indicator_description" ColumnName="indicator_description" />
+          <ScalarProperty Name="indicator_unit" ColumnName="indicator_unit" />
+          <ScalarProperty Name="is_yearly" ColumnName="is_yearly" />
+          <ScalarProperty Name="last_update" ColumnName="last_update" />
+          <ScalarProperty Name="is_gotten" ColumnName="is_gotten" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_trades">
+      <EntityTypeMapping TypeName="WBModel.tbl_trades">
+        <MappingFragment StoreEntitySet="tbl_trades">
+          <ScalarProperty Name="trade_id_pk" ColumnName="trade_id_pk" />
+          <ScalarProperty Name="country_from_id" ColumnName="country_from_id" />
+          <ScalarProperty Name="country_to_id" ColumnName="country_to_id" />
+          <ScalarProperty Name="import_value" ColumnName="import_value" />
+          <ScalarProperty Name="export_value" ColumnName="export_value" />
+          <ScalarProperty Name="trade_year" ColumnName="trade_year" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="WBModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_income_levels">
+      <EntityTypeMapping TypeName="WBModel.tbl_income_levels">
+        <MappingFragment StoreEntitySet="tbl_income_levels">
+          <ScalarProperty Name="income_level_name" ColumnName="income_level_name" />
+          <ScalarProperty Name="income_level_id_pk" ColumnName="income_level_id_pk" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_lending_types">
+      <EntityTypeMapping TypeName="WBModel.tbl_lending_types">
+        <MappingFragment StoreEntitySet="tbl_lending_types">
+          <ScalarProperty Name="lending_type_name" ColumnName="lending_type_name" />
+          <ScalarProperty Name="lending_type_id_pk" ColumnName="lending_type_id_pk" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_regions">
+      <EntityTypeMapping TypeName="WBModel.tbl_regions">
+        <MappingFragment StoreEntitySet="tbl_regions">
+          <ScalarProperty Name="region_name" ColumnName="region_name" />
+          <ScalarProperty Name="region_id_pk" ColumnName="region_id_pk" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
