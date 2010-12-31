@@ -15,7 +15,7 @@ namespace WorldMap
         #region private variables
         private LocationConverter locConverter = new LocationConverter();
         private bool _isControlpanelOpened = false;
-        private DraggablePushpin _currentPushpin;
+        private DraggablePushpin _currentPushpin;        
         # endregion
 
         #region properties
@@ -81,24 +81,19 @@ namespace WorldMap
 
         void DefaultPushPin_Pinned(object sender, EventArgs e)
         {
-            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer);
+            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer);            
             pushPin.IsOnMap = true;
             PushPinLayer.AddChild(pushPin, (sender as DraggablePushpin).Location);
 
             pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
-            pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
-            pushPin.Title = pushPin.IsOnMap.ToString();
-
-            ToolTipService.SetToolTip(pushPin, new ToolTip()
-            {
-                DataContext = pushPin,
-                Style = this.Resources["CustomInfoboxStyle"] as Style
-            });
+            pushPin.Clicked += new EventHandler(MapPushpin_Clicked);                       
         }
 
         void MapPushpin_Pinned(object sender, EventArgs e)
-        {            
-            ReverseGeocodeLocation((sender as DraggablePushpin).Location);           
+        {
+            DraggablePushpin p = sender as DraggablePushpin;
+            ReverseGeocodeLocation(p.Location);
+            _currentPushpin = p;
         }
 
         void MapPushpin_Clicked(object sender, EventArgs e)
@@ -202,8 +197,7 @@ namespace WorldMap
                     Output.Text = outputString + "No results";
                 }
                 else
-                {
-                    //string formatted = e.Result.Results[0].DisplayName;
+                {                                        
                     string formatted = e.Result.Results[0].Address.CountryRegion;
                     object a = e.Result.Results[0].MatchCodes.ToString();
 
@@ -220,6 +214,16 @@ namespace WorldMap
                         Output.Text = outputString + "  (" + e.Result.Results[0].Locations[0].CalculationMethod + ")";
                         GeocodeLayer.AddResult(e.Result.Results[0]);
                     }
+
+
+                    //Add to pushpin title
+                    _currentPushpin.Title = formatted;
+
+                    ToolTipService.SetToolTip(_currentPushpin, new ToolTip()
+                    {
+                        DataContext = _currentPushpin,
+                        Style = this.Resources["CustomInfoboxStyle"] as Style
+                    });
 
                 }
             }
@@ -269,6 +273,7 @@ namespace WorldMap
                 }
             }
         }
+
 
         private void ReverseGeocodeLocation(Location location)
         {

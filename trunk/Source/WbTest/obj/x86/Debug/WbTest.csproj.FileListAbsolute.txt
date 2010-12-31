@@ -1,5 +1,0 @@
-D:\Working\WordBank\Source Code\WbTest\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\Working\WordBank\Source Code\WbTest\bin\Debug\WbTest.exe
-D:\Working\WordBank\Source Code\WbTest\bin\Debug\WbTest.pdb
-D:\Working\WordBank\Source Code\WbTest\obj\x86\Debug\WbTest.exe
-D:\Working\WordBank\Source Code\WbTest\obj\x86\Debug\WbTest.pdb

@@ -83,7 +83,7 @@
         <m:Map CredentialsProvider="AnDFcb6V80_dRKOObV5Q-K0ACvlPNjpllC76dk3Trd7tG1Gjlau_T14711TdnLSe" x:Name="MyMap" Grid.Row="1" AllowDrop="True">            
         </m:Map>
 
-        <Border x:Name="ControlPanelBorder" CornerRadius="10,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="22,0" Width="400" Height="75" Grid.RowSpan="2">
+        <Border x:Name="ControlPanelBorder" CornerRadius="10,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="22,0" Width="400" Height="30" Grid.RowSpan="2">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity=".6"/>
             </Border.Background>
@@ -92,8 +92,26 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Button Height="20"  Width="20" Content="^" Name="ControlPanelButton" HorizontalAlignment="Right" Margin="5"/>
-                <ListBox Grid.Row="1" Name="IndicatorListBox" DisplayMemberPath="indicator_name"></ListBox>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Foreground="White" VerticalAlignment="Center" FontSize="15" FontWeight="ExtraBold">Indicator list</TextBlock>
+                    <Button Height="20"  Width="20" Content="^" Name="ControlPanelButton" Margin="5"/>
+                </StackPanel>
+                <ListBox Grid.Row="1" Name="IndicatorListBox">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch" ToolTipService.ToolTip="{Binding indicator_description}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="150"/>                                        
+                                    <ColumnDefinition Width="*"/>                                    
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="1" Text="{Binding indicator_code}"></TextBlock>
+                                <TextBlock Grid.Column="2" Text="{Binding indicator_name}"></TextBlock>
+                                <CheckBox ></CheckBox>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
         </Border>
         <Border CornerRadius="0,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="422,0" Width="200" Height="50" Grid.RowSpan="2">
@@ -105,3 +123,5 @@
         </Border>
     </Grid>
 </UserControl>
+
+    

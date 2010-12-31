@@ -14,7 +14,7 @@ namespace WorldMap
 {
     public partial class DraggablePushpin : Pushpin
     {
-        private bool isDragging = false;                
+        private bool isDragging = false;
 
         EventHandler<MapMouseDragEventArgs> ParentMapMousePanHandler;
         MouseButtonEventHandler ParentMapMouseLeftButtonUpHandler;
@@ -23,6 +23,7 @@ namespace WorldMap
         private DateTime _lastMouseDownTime;
 
         private MapLayer _mapLayer;
+
 
         /// <summary>
         /// Event after releasing the pushpin
@@ -49,8 +50,18 @@ namespace WorldMap
         /// </summary>
         public bool IsOnMap { get; set; }
 
-        public DraggablePushpin(MapLayer map):base()
+        public DraggablePushpin()
+            : base()
         {
+        }
+
+        public DraggablePushpin(MapLayer map)
+            : base()
+        {
+            Random ra = new Random();
+            SolidColorBrush randomColor = new SolidColorBrush(Color.FromArgb(255, (byte)ra.Next(0, 255), (byte)ra.Next(0, 255), (byte)ra.Next(0, 255)));
+
+            this.Background = randomColor;
             this._mapLayer = map;
             this.IsOnMap = false;
         }
@@ -92,6 +103,7 @@ namespace WorldMap
             // Enable Dragging
             this.isDragging = true;
             base.OnMouseLeftButtonDown(e);
+
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -135,10 +147,13 @@ namespace WorldMap
         void ParentMap_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // Left Mouse Button released, stop dragging the Pushpin
-            this.isDragging = false;
-            if (this.Pinned != null)
+            if (this.isDragging)
             {
-                Pinned(this, e);
+                this.isDragging = false;
+                if (this.Pinned != null)
+                {
+                    Pinned(this, e);
+                }
             }
         }
 
