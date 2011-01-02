@@ -155,6 +155,20 @@ namespace WbWCF.DataAccess
             con.Close();
         }
 
+        public static void UpdateCountryFlag(int country_id_pk, bool has_flag)
+        {
+            SqlConnection con = GetConnection();
+            con.Open();            
+            string sql = @"UPDATE [tbl_countries]
+                            SET [has_flag] = @has_flag
+                            WHERE [country_id_pk]=@country_iso_code and is_region=0";                            
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@has_flag", has_flag);
+            cmd.Parameters.AddWithValue("@country_iso_code", country_id_pk);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
 
         public static void InsertLendingTypes(Collection<LendingTypeEntry> lending_types)
         {

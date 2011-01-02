@@ -21,9 +21,16 @@ namespace WbTest
             //GetStaticDataFromWorldBank();
             //GetTradeData();
             //GetAllIndicatorDataFromWorldBank();
-            GetIndicatorsValue();
+            //GetIndicatorsValue(); //Get indicators 's values which have is_gotten=0
+            GetAllFlag();
             Console.WriteLine("Finish all data");
             Console.ReadKey();
+        }
+
+        static void GetAllFlag()
+        {
+            Dictionary<string, int> mapping = WBAccess.MapCountryIdToIsoCode();
+            Utils.downloadFlag(mapping);            
         }
 
         static void GetAllIndicatorDataFromWorldBank()

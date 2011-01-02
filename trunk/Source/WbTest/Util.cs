@@ -364,5 +364,48 @@ namespace WbTest
                 GC.Collect();
             }
         }
+
+        private static void downloadImage(string link,string name)
+        {
+            WebClient webclient = new WebClient();
+            webclient.DownloadFile(link, @"c:\flags\"+name);
+
+        }
+        
+        public static void downloadFlag(Dictionary<string,int> mapping)
+        {
+            
+            string url = "http://www.photius.com/flags/alphabetic_list.html";
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(url);
+            myRequest.Method = "GET";
+            WebResponse myResponse = myRequest.GetResponse();
+            StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+            string result = sr.ReadToEnd();
+
+            foreach (string country_code in mapping.Keys)
+            {
+                string flag_position = country_code.ToLower() + "-t.gif";
+                int flag_index = result.IndexOf(flag_position);
+                WBAccess.UpdateCountryFlag(mapping[country_code], false);
+                if (flag_index > 100)
+                {
+                    string string_contain_link = result.Substring(flag_index - 100, 150);
+                    int begin_link = string_contain_link.IndexOf("src=\"http://");
+                    if (begin_link != 1)
+                    {
+                        int end_link = string_contain_link.IndexOf(".gif", begin_link);
+                        if (end_link > begin_link)
+                        {                            
+                            string link = string_contain_link.Substring(begin_link + 5, end_link - begin_link - 1);
+                            string name = country_code.ToLower() + ".gif";
+                            downloadImage(link, name);
+                            WBAccess.UpdateCountryFlag(mapping[country_code], true);
+                        }
+                    }                    
+                }
+            }
+
+            return;
+        }
     }
 }
