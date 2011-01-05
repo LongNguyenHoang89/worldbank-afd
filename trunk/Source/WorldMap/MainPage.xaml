@@ -4,8 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:m="clr-namespace:Microsoft.Maps.MapControl;assembly=Microsoft.Maps.MapControl"
-    xmlns:local ="clr-namespace:WorldMap"
-    xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" 
+    xmlns:local ="clr-namespace:WorldMap"    
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Name="userControl" x:Class="WorldMap.MainPage"
     mc:Ignorable="d"  
     AllowDrop="True"
@@ -57,13 +56,30 @@
                         </Storyboard>
                     </VisualTransition>
                     <VisualTransition From="ControlPanelOpen" GeneratedDuration="0:0:0.25" To="ControlPanelClose"/>
+
+                    <VisualTransition From="CountryListPanelClose" GeneratedDuration="0" To="CountryListPanelOpen">
+                        <ei:ExtendedVisualStateManager.TransitionEffect>
+                            <ee:CloudRevealTransitionEffect RandomSeed="5"/>
+                        </ei:ExtendedVisualStateManager.TransitionEffect>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" To="475" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="CountryListBorder" d:IsOptimized="True"/>
+                        </Storyboard>
+                    </VisualTransition>
+                    <VisualTransition From="CountryListPanelOpen" GeneratedDuration="0:0:0.25" To="CountryListPanelClose"/>
                 </VisualStateGroup.Transitions>
                 <VisualState x:Name="ControlPanelOpen">
                     <Storyboard>
-                        <DoubleAnimation Duration="0" To="375" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="ControlPanelBorder" d:IsOptimized="True"/>
+                        <DoubleAnimation Duration="0:0:0.25" To="375" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="ControlPanelBorder" d:IsOptimized="True"/>
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="ControlPanelClose"/>
+
+                <VisualState x:Name="CountryListPanelOpen">
+                    <Storyboard>
+                        <DoubleAnimation Duration="0:0:0.25" To="475" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="CountryListBorder" d:IsOptimized="True"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="CountryListPanelClose"/>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
@@ -114,12 +130,31 @@
                 </ListBox>
             </Grid>
         </Border>
-        <Border CornerRadius="0,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="422,0" Width="200" Height="50" Grid.RowSpan="2">
+                
+        <Border CornerRadius="10,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"  Width="200" Height="50" Grid.RowSpan="2">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity=".6"/>
             </Border.Background>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="PushPinPanel">
             </StackPanel>
+        </Border>
+
+        <Border Name="CountryListBorder" CornerRadius="0,0,0,10" VerticalAlignment="Top" HorizontalAlignment="Right" Width="300" Height="30" Grid.Row="2">
+            <Border.Background>
+                <SolidColorBrush Color="Black" Opacity=".6"/>
+            </Border.Background>
+            <Grid Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Foreground="White" VerticalAlignment="Center" FontSize="15" FontWeight="ExtraBold">Countries</TextBlock>
+                    <Button Height="20"  Width="20" Content="^" Name="CountryListPanelButton" Margin="5"/>
+                </StackPanel>
+                <ListBox Grid.Row="1" Name="CountryListBox" Margin="10,0,0,10">
+                </ListBox>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

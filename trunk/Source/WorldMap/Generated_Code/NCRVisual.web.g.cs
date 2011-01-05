@@ -200,6 +200,128 @@ namespace NCRVisual.web.DataModel
     }
     
     /// <summary>
+    /// The 'ref_tab_indicator' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class ref_tab_indicator : Entity
+    {
+        
+        private Nullable<int> _indicator_id;
+        
+        private Nullable<int> _tab_id;
+        
+        private int _tab_indicator_id_pk;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Onindicator_idChanging(Nullable<int> value);
+        partial void Onindicator_idChanged();
+        partial void Ontab_idChanging(Nullable<int> value);
+        partial void Ontab_idChanged();
+        partial void Ontab_indicator_id_pkChanging(int value);
+        partial void Ontab_indicator_id_pkChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ref_tab_indicator"/> class.
+        /// </summary>
+        public ref_tab_indicator()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_id' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> indicator_id
+        {
+            get
+            {
+                return this._indicator_id;
+            }
+            set
+            {
+                if ((this._indicator_id != value))
+                {
+                    this.Onindicator_idChanging(value);
+                    this.RaiseDataMemberChanging("indicator_id");
+                    this.ValidateProperty("indicator_id", value);
+                    this._indicator_id = value;
+                    this.RaiseDataMemberChanged("indicator_id");
+                    this.Onindicator_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_id' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> tab_id
+        {
+            get
+            {
+                return this._tab_id;
+            }
+            set
+            {
+                if ((this._tab_id != value))
+                {
+                    this.Ontab_idChanging(value);
+                    this.RaiseDataMemberChanging("tab_id");
+                    this.ValidateProperty("tab_id", value);
+                    this._tab_id = value;
+                    this.RaiseDataMemberChanged("tab_id");
+                    this.Ontab_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_indicator_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int tab_indicator_id_pk
+        {
+            get
+            {
+                return this._tab_indicator_id_pk;
+            }
+            set
+            {
+                if ((this._tab_indicator_id_pk != value))
+                {
+                    this.Ontab_indicator_id_pkChanging(value);
+                    this.ValidateProperty("tab_indicator_id_pk", value);
+                    this._tab_indicator_id_pk = value;
+                    this.RaisePropertyChanged("tab_indicator_id_pk");
+                    this.Ontab_indicator_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._tab_indicator_id_pk;
+        }
+    }
+    
+    /// <summary>
     /// The 'tbl_countries' entity class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
@@ -217,6 +339,8 @@ namespace NCRVisual.web.DataModel
         private Nullable<decimal> _country_longitude;
         
         private string _country_name;
+        
+        private Nullable<bool> _has_flag;
         
         private string _income_level_id;
         
@@ -245,6 +369,8 @@ namespace NCRVisual.web.DataModel
         partial void Oncountry_longitudeChanged();
         partial void Oncountry_nameChanging(string value);
         partial void Oncountry_nameChanged();
+        partial void Onhas_flagChanging(Nullable<bool> value);
+        partial void Onhas_flagChanged();
         partial void Onincome_level_idChanging(string value);
         partial void Onincome_level_idChanged();
         partial void Onis_regionChanging(Nullable<bool> value);
@@ -409,6 +535,30 @@ namespace NCRVisual.web.DataModel
                     this._country_name = value;
                     this.RaiseDataMemberChanged("country_name");
                     this.Oncountry_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'has_flag' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<bool> has_flag
+        {
+            get
+            {
+                return this._has_flag;
+            }
+            set
+            {
+                if ((this._has_flag != value))
+                {
+                    this.Onhas_flagChanging(value);
+                    this.RaiseDataMemberChanging("has_flag");
+                    this.ValidateProperty("has_flag", value);
+                    this._has_flag = value;
+                    this.RaiseDataMemberChanged("has_flag");
+                    this.Onhas_flagChanged();
                 }
             }
         }
@@ -1079,6 +1229,101 @@ namespace NCRVisual.web.DataModel
     }
     
     /// <summary>
+    /// The 'tbl_tabs' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class tbl_tabs : Entity
+    {
+        
+        private int _tab_id_pk;
+        
+        private string _tab_name;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Ontab_id_pkChanging(int value);
+        partial void Ontab_id_pkChanged();
+        partial void Ontab_nameChanging(string value);
+        partial void Ontab_nameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="tbl_tabs"/> class.
+        /// </summary>
+        public tbl_tabs()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int tab_id_pk
+        {
+            get
+            {
+                return this._tab_id_pk;
+            }
+            set
+            {
+                if ((this._tab_id_pk != value))
+                {
+                    this.Ontab_id_pkChanging(value);
+                    this.ValidateProperty("tab_id_pk", value);
+                    this._tab_id_pk = value;
+                    this.RaisePropertyChanged("tab_id_pk");
+                    this.Ontab_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string tab_name
+        {
+            get
+            {
+                return this._tab_name;
+            }
+            set
+            {
+                if ((this._tab_name != value))
+                {
+                    this.Ontab_nameChanging(value);
+                    this.RaiseDataMemberChanging("tab_name");
+                    this.ValidateProperty("tab_name", value);
+                    this._tab_name = value;
+                    this.RaiseDataMemberChanged("tab_name");
+                    this.Ontab_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._tab_id_pk;
+        }
+    }
+    
+    /// <summary>
     /// The 'tbl_trades' entity class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
@@ -1283,6 +1528,837 @@ namespace NCRVisual.web.DataModel
             return this._trade_id_pk;
         }
     }
+    
+    /// <summary>
+    /// The 'View_CountryIndicator' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class View_CountryIndicator : Entity
+    {
+        
+        private int _country_id_pk;
+        
+        private Nullable<decimal> _country_indicator_value;
+        
+        private Nullable<int> _country_indicator_year;
+        
+        private string _country_iso_code;
+        
+        private string _country_name;
+        
+        private string _indicator_code;
+        
+        private string _indicator_description;
+        
+        private string _indicator_name;
+        
+        private string _indicator_unit;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Oncountry_id_pkChanging(int value);
+        partial void Oncountry_id_pkChanged();
+        partial void Oncountry_indicator_valueChanging(Nullable<decimal> value);
+        partial void Oncountry_indicator_valueChanged();
+        partial void Oncountry_indicator_yearChanging(Nullable<int> value);
+        partial void Oncountry_indicator_yearChanged();
+        partial void Oncountry_iso_codeChanging(string value);
+        partial void Oncountry_iso_codeChanged();
+        partial void Oncountry_nameChanging(string value);
+        partial void Oncountry_nameChanged();
+        partial void Onindicator_codeChanging(string value);
+        partial void Onindicator_codeChanged();
+        partial void Onindicator_descriptionChanging(string value);
+        partial void Onindicator_descriptionChanged();
+        partial void Onindicator_nameChanging(string value);
+        partial void Onindicator_nameChanged();
+        partial void Onindicator_unitChanging(string value);
+        partial void Onindicator_unitChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View_CountryIndicator"/> class.
+        /// </summary>
+        public View_CountryIndicator()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int country_id_pk
+        {
+            get
+            {
+                return this._country_id_pk;
+            }
+            set
+            {
+                if ((this._country_id_pk != value))
+                {
+                    this.Oncountry_id_pkChanging(value);
+                    this.ValidateProperty("country_id_pk", value);
+                    this._country_id_pk = value;
+                    this.RaisePropertyChanged("country_id_pk");
+                    this.Oncountry_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_indicator_value' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<decimal> country_indicator_value
+        {
+            get
+            {
+                return this._country_indicator_value;
+            }
+            set
+            {
+                if ((this._country_indicator_value != value))
+                {
+                    this.Oncountry_indicator_valueChanging(value);
+                    this.RaiseDataMemberChanging("country_indicator_value");
+                    this.ValidateProperty("country_indicator_value", value);
+                    this._country_indicator_value = value;
+                    this.RaiseDataMemberChanged("country_indicator_value");
+                    this.Oncountry_indicator_valueChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_indicator_year' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> country_indicator_year
+        {
+            get
+            {
+                return this._country_indicator_year;
+            }
+            set
+            {
+                if ((this._country_indicator_year != value))
+                {
+                    this.Oncountry_indicator_yearChanging(value);
+                    this.RaiseDataMemberChanging("country_indicator_year");
+                    this.ValidateProperty("country_indicator_year", value);
+                    this._country_indicator_year = value;
+                    this.RaiseDataMemberChanged("country_indicator_year");
+                    this.Oncountry_indicator_yearChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_iso_code' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(10)]
+        public string country_iso_code
+        {
+            get
+            {
+                return this._country_iso_code;
+            }
+            set
+            {
+                if ((this._country_iso_code != value))
+                {
+                    this.Oncountry_iso_codeChanging(value);
+                    this.RaiseDataMemberChanging("country_iso_code");
+                    this.ValidateProperty("country_iso_code", value);
+                    this._country_iso_code = value;
+                    this.RaiseDataMemberChanged("country_iso_code");
+                    this.Oncountry_iso_codeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string country_name
+        {
+            get
+            {
+                return this._country_name;
+            }
+            set
+            {
+                if ((this._country_name != value))
+                {
+                    this.Oncountry_nameChanging(value);
+                    this.RaiseDataMemberChanging("country_name");
+                    this.ValidateProperty("country_name", value);
+                    this._country_name = value;
+                    this.RaiseDataMemberChanged("country_name");
+                    this.Oncountry_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_code' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string indicator_code
+        {
+            get
+            {
+                return this._indicator_code;
+            }
+            set
+            {
+                if ((this._indicator_code != value))
+                {
+                    this.Onindicator_codeChanging(value);
+                    this.RaiseDataMemberChanging("indicator_code");
+                    this.ValidateProperty("indicator_code", value);
+                    this._indicator_code = value;
+                    this.RaiseDataMemberChanged("indicator_code");
+                    this.Onindicator_codeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_description' value.
+        /// </summary>
+        [DataMember()]
+        public string indicator_description
+        {
+            get
+            {
+                return this._indicator_description;
+            }
+            set
+            {
+                if ((this._indicator_description != value))
+                {
+                    this.Onindicator_descriptionChanging(value);
+                    this.RaiseDataMemberChanging("indicator_description");
+                    this.ValidateProperty("indicator_description", value);
+                    this._indicator_description = value;
+                    this.RaiseDataMemberChanged("indicator_description");
+                    this.Onindicator_descriptionChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string indicator_name
+        {
+            get
+            {
+                return this._indicator_name;
+            }
+            set
+            {
+                if ((this._indicator_name != value))
+                {
+                    this.Onindicator_nameChanging(value);
+                    this.RaiseDataMemberChanging("indicator_name");
+                    this.ValidateProperty("indicator_name", value);
+                    this._indicator_name = value;
+                    this.RaiseDataMemberChanged("indicator_name");
+                    this.Onindicator_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_unit' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string indicator_unit
+        {
+            get
+            {
+                return this._indicator_unit;
+            }
+            set
+            {
+                if ((this._indicator_unit != value))
+                {
+                    this.Onindicator_unitChanging(value);
+                    this.RaiseDataMemberChanging("indicator_unit");
+                    this.ValidateProperty("indicator_unit", value);
+                    this._indicator_unit = value;
+                    this.RaiseDataMemberChanged("indicator_unit");
+                    this.Onindicator_unitChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._country_id_pk;
+        }
+    }
+    
+    /// <summary>
+    /// The 'View_CountryIndicatorTab' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class View_CountryIndicatorTab : Entity
+    {
+        
+        private int _country_id_pk;
+        
+        private Nullable<decimal> _country_indicator_value;
+        
+        private Nullable<int> _country_indicator_year;
+        
+        private string _country_iso_code;
+        
+        private string _country_name;
+        
+        private string _indicator_code;
+        
+        private string _indicator_description;
+        
+        private string _indicator_name;
+        
+        private string _indicator_unit;
+        
+        private int _tab_id_pk;
+        
+        private string _tab_name;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Oncountry_id_pkChanging(int value);
+        partial void Oncountry_id_pkChanged();
+        partial void Oncountry_indicator_valueChanging(Nullable<decimal> value);
+        partial void Oncountry_indicator_valueChanged();
+        partial void Oncountry_indicator_yearChanging(Nullable<int> value);
+        partial void Oncountry_indicator_yearChanged();
+        partial void Oncountry_iso_codeChanging(string value);
+        partial void Oncountry_iso_codeChanged();
+        partial void Oncountry_nameChanging(string value);
+        partial void Oncountry_nameChanged();
+        partial void Onindicator_codeChanging(string value);
+        partial void Onindicator_codeChanged();
+        partial void Onindicator_descriptionChanging(string value);
+        partial void Onindicator_descriptionChanged();
+        partial void Onindicator_nameChanging(string value);
+        partial void Onindicator_nameChanged();
+        partial void Onindicator_unitChanging(string value);
+        partial void Onindicator_unitChanged();
+        partial void Ontab_id_pkChanging(int value);
+        partial void Ontab_id_pkChanged();
+        partial void Ontab_nameChanging(string value);
+        partial void Ontab_nameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View_CountryIndicatorTab"/> class.
+        /// </summary>
+        public View_CountryIndicatorTab()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int country_id_pk
+        {
+            get
+            {
+                return this._country_id_pk;
+            }
+            set
+            {
+                if ((this._country_id_pk != value))
+                {
+                    this.Oncountry_id_pkChanging(value);
+                    this.ValidateProperty("country_id_pk", value);
+                    this._country_id_pk = value;
+                    this.RaisePropertyChanged("country_id_pk");
+                    this.Oncountry_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_indicator_value' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<decimal> country_indicator_value
+        {
+            get
+            {
+                return this._country_indicator_value;
+            }
+            set
+            {
+                if ((this._country_indicator_value != value))
+                {
+                    this.Oncountry_indicator_valueChanging(value);
+                    this.RaiseDataMemberChanging("country_indicator_value");
+                    this.ValidateProperty("country_indicator_value", value);
+                    this._country_indicator_value = value;
+                    this.RaiseDataMemberChanged("country_indicator_value");
+                    this.Oncountry_indicator_valueChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_indicator_year' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> country_indicator_year
+        {
+            get
+            {
+                return this._country_indicator_year;
+            }
+            set
+            {
+                if ((this._country_indicator_year != value))
+                {
+                    this.Oncountry_indicator_yearChanging(value);
+                    this.RaiseDataMemberChanging("country_indicator_year");
+                    this.ValidateProperty("country_indicator_year", value);
+                    this._country_indicator_year = value;
+                    this.RaiseDataMemberChanged("country_indicator_year");
+                    this.Oncountry_indicator_yearChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_iso_code' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(10)]
+        public string country_iso_code
+        {
+            get
+            {
+                return this._country_iso_code;
+            }
+            set
+            {
+                if ((this._country_iso_code != value))
+                {
+                    this.Oncountry_iso_codeChanging(value);
+                    this.RaiseDataMemberChanging("country_iso_code");
+                    this.ValidateProperty("country_iso_code", value);
+                    this._country_iso_code = value;
+                    this.RaiseDataMemberChanged("country_iso_code");
+                    this.Oncountry_iso_codeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string country_name
+        {
+            get
+            {
+                return this._country_name;
+            }
+            set
+            {
+                if ((this._country_name != value))
+                {
+                    this.Oncountry_nameChanging(value);
+                    this.RaiseDataMemberChanging("country_name");
+                    this.ValidateProperty("country_name", value);
+                    this._country_name = value;
+                    this.RaiseDataMemberChanged("country_name");
+                    this.Oncountry_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_code' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string indicator_code
+        {
+            get
+            {
+                return this._indicator_code;
+            }
+            set
+            {
+                if ((this._indicator_code != value))
+                {
+                    this.Onindicator_codeChanging(value);
+                    this.RaiseDataMemberChanging("indicator_code");
+                    this.ValidateProperty("indicator_code", value);
+                    this._indicator_code = value;
+                    this.RaiseDataMemberChanged("indicator_code");
+                    this.Onindicator_codeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_description' value.
+        /// </summary>
+        [DataMember()]
+        public string indicator_description
+        {
+            get
+            {
+                return this._indicator_description;
+            }
+            set
+            {
+                if ((this._indicator_description != value))
+                {
+                    this.Onindicator_descriptionChanging(value);
+                    this.RaiseDataMemberChanging("indicator_description");
+                    this.ValidateProperty("indicator_description", value);
+                    this._indicator_description = value;
+                    this.RaiseDataMemberChanged("indicator_description");
+                    this.Onindicator_descriptionChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string indicator_name
+        {
+            get
+            {
+                return this._indicator_name;
+            }
+            set
+            {
+                if ((this._indicator_name != value))
+                {
+                    this.Onindicator_nameChanging(value);
+                    this.RaiseDataMemberChanging("indicator_name");
+                    this.ValidateProperty("indicator_name", value);
+                    this._indicator_name = value;
+                    this.RaiseDataMemberChanged("indicator_name");
+                    this.Onindicator_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_unit' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string indicator_unit
+        {
+            get
+            {
+                return this._indicator_unit;
+            }
+            set
+            {
+                if ((this._indicator_unit != value))
+                {
+                    this.Onindicator_unitChanging(value);
+                    this.RaiseDataMemberChanging("indicator_unit");
+                    this.ValidateProperty("indicator_unit", value);
+                    this._indicator_unit = value;
+                    this.RaiseDataMemberChanged("indicator_unit");
+                    this.Onindicator_unitChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int tab_id_pk
+        {
+            get
+            {
+                return this._tab_id_pk;
+            }
+            set
+            {
+                if ((this._tab_id_pk != value))
+                {
+                    this.Ontab_id_pkChanging(value);
+                    this.ValidateProperty("tab_id_pk", value);
+                    this._tab_id_pk = value;
+                    this.RaisePropertyChanged("tab_id_pk");
+                    this.Ontab_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string tab_name
+        {
+            get
+            {
+                return this._tab_name;
+            }
+            set
+            {
+                if ((this._tab_name != value))
+                {
+                    this.Ontab_nameChanging(value);
+                    this.RaiseDataMemberChanging("tab_name");
+                    this.ValidateProperty("tab_name", value);
+                    this._tab_name = value;
+                    this.RaiseDataMemberChanged("tab_name");
+                    this.Ontab_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return EntityKey.Create(this._country_id_pk, this._tab_id_pk);
+        }
+    }
+    
+    /// <summary>
+    /// The 'View_GeneralCountry' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class View_GeneralCountry : Entity
+    {
+        
+        private int _country_id_pk;
+        
+        private string _country_name;
+        
+        private string _income_level_name;
+        
+        private string _lending_type_name;
+        
+        private string _region_name;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Oncountry_id_pkChanging(int value);
+        partial void Oncountry_id_pkChanged();
+        partial void Oncountry_nameChanging(string value);
+        partial void Oncountry_nameChanged();
+        partial void Onincome_level_nameChanging(string value);
+        partial void Onincome_level_nameChanged();
+        partial void Onlending_type_nameChanging(string value);
+        partial void Onlending_type_nameChanged();
+        partial void Onregion_nameChanging(string value);
+        partial void Onregion_nameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View_GeneralCountry"/> class.
+        /// </summary>
+        public View_GeneralCountry()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int country_id_pk
+        {
+            get
+            {
+                return this._country_id_pk;
+            }
+            set
+            {
+                if ((this._country_id_pk != value))
+                {
+                    this.Oncountry_id_pkChanging(value);
+                    this.ValidateProperty("country_id_pk", value);
+                    this._country_id_pk = value;
+                    this.RaisePropertyChanged("country_id_pk");
+                    this.Oncountry_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string country_name
+        {
+            get
+            {
+                return this._country_name;
+            }
+            set
+            {
+                if ((this._country_name != value))
+                {
+                    this.Oncountry_nameChanging(value);
+                    this.RaiseDataMemberChanging("country_name");
+                    this.ValidateProperty("country_name", value);
+                    this._country_name = value;
+                    this.RaiseDataMemberChanged("country_name");
+                    this.Oncountry_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'income_level_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string income_level_name
+        {
+            get
+            {
+                return this._income_level_name;
+            }
+            set
+            {
+                if ((this._income_level_name != value))
+                {
+                    this.Onincome_level_nameChanging(value);
+                    this.RaiseDataMemberChanging("income_level_name");
+                    this.ValidateProperty("income_level_name", value);
+                    this._income_level_name = value;
+                    this.RaiseDataMemberChanged("income_level_name");
+                    this.Onincome_level_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'lending_type_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string lending_type_name
+        {
+            get
+            {
+                return this._lending_type_name;
+            }
+            set
+            {
+                if ((this._lending_type_name != value))
+                {
+                    this.Onlending_type_nameChanging(value);
+                    this.RaiseDataMemberChanging("lending_type_name");
+                    this.ValidateProperty("lending_type_name", value);
+                    this._lending_type_name = value;
+                    this.RaiseDataMemberChanged("lending_type_name");
+                    this.Onlending_type_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'region_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string region_name
+        {
+            get
+            {
+                return this._region_name;
+            }
+            set
+            {
+                if ((this._region_name != value))
+                {
+                    this.Onregion_nameChanging(value);
+                    this.RaiseDataMemberChanging("region_name");
+                    this.ValidateProperty("region_name", value);
+                    this._region_name = value;
+                    this.RaiseDataMemberChanged("region_name");
+                    this.Onregion_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._country_id_pk;
+        }
+    }
 }
 namespace NCRVisual.web.Services
 {
@@ -1355,6 +2431,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="ref_tab_indicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<ref_tab_indicator> ref_tab_indicators
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<ref_tab_indicator>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="tbl_countries"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<tbl_countries> tbl_countries
@@ -1410,6 +2497,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="tbl_tabs"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<tbl_tabs> tbl_tabs
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<tbl_tabs>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="tbl_trades"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<tbl_trades> tbl_trades
@@ -1421,6 +2519,39 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="View_CountryIndicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<View_CountryIndicator> View_CountryIndicators
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<View_CountryIndicator>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="View_CountryIndicatorTab"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<View_CountryIndicatorTab> View_CountryIndicatorTabs
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<View_CountryIndicatorTab>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="View_GeneralCountry"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<View_GeneralCountry> View_GeneralCountries
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<View_GeneralCountry>();
+            }
+        }
+        
+        /// <summary>
         /// Gets an EntityQuery instance that can be used to load <see cref="ref_country_indicator"/> entities using the 'GetRef_country_indicator' query.
         /// </summary>
         /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_country_indicator"/> entities.</returns>
@@ -1428,6 +2559,16 @@ namespace NCRVisual.web.Services
         {
             this.ValidateMethod("GetRef_country_indicatorQuery", null);
             return base.CreateQuery<ref_country_indicator>("GetRef_country_indicator", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_tab_indicator"/> entities using the 'GetRef_tab_indicator' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_tab_indicator"/> entities.</returns>
+        public EntityQuery<ref_tab_indicator> GetRef_tab_indicatorQuery()
+        {
+            this.ValidateMethod("GetRef_tab_indicatorQuery", null);
+            return base.CreateQuery<ref_tab_indicator>("GetRef_tab_indicator", null, false, true);
         }
         
         /// <summary>
@@ -1481,6 +2622,16 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_tabs"/> entities using the 'GetTbl_tabs' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_tabs"/> entities.</returns>
+        public EntityQuery<tbl_tabs> GetTbl_tabsQuery()
+        {
+            this.ValidateMethod("GetTbl_tabsQuery", null);
+            return base.CreateQuery<tbl_tabs>("GetTbl_tabs", null, false, true);
+        }
+        
+        /// <summary>
         /// Gets an EntityQuery instance that can be used to load <see cref="tbl_trades"/> entities using the 'GetTbl_trades' query.
         /// </summary>
         /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_trades"/> entities.</returns>
@@ -1488,6 +2639,39 @@ namespace NCRVisual.web.Services
         {
             this.ValidateMethod("GetTbl_tradesQuery", null);
             return base.CreateQuery<tbl_trades>("GetTbl_trades", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_CountryIndicator"/> entities using the 'GetView_CountryIndicator' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_CountryIndicator"/> entities.</returns>
+        public EntityQuery<View_CountryIndicator> GetView_CountryIndicatorQuery()
+        {
+            this.ValidateMethod("GetView_CountryIndicatorQuery", null);
+            return base.CreateQuery<View_CountryIndicator>("GetView_CountryIndicator", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_CountryIndicatorTab"/> entities using the 'GetView_CountryIndicatorTab' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_CountryIndicatorTab"/> entities.</returns>
+        public EntityQuery<View_CountryIndicatorTab> GetView_CountryIndicatorTabQuery()
+        {
+            this.ValidateMethod("GetView_CountryIndicatorTabQuery", null);
+            return base.CreateQuery<View_CountryIndicatorTab>("GetView_CountryIndicatorTab", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_GeneralCountry"/> entities using the 'GetView_GeneralCountry' query.
+        /// </summary>
+        /// <param name="country_id_pk">The value for the 'country_id_pk' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_GeneralCountry"/> entities.</returns>
+        public EntityQuery<View_GeneralCountry> GetView_GeneralCountryQuery(int country_id_pk)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("country_id_pk", country_id_pk);
+            this.ValidateMethod("GetView_GeneralCountryQuery", parameters);
+            return base.CreateQuery<View_GeneralCountry>("GetView_GeneralCountry", parameters, false, true);
         }
         
         /// <summary>
@@ -1523,6 +2707,24 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetRef_country_indicator'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetRef_country_indicator' operation.</returns>
             QueryResult<ref_country_indicator> EndGetRef_country_indicator(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetRef_tab_indicator' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetRef_tab_indicatorDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetRef_tab_indicator", ReplyAction="http://tempuri.org/WBDomainService/GetRef_tab_indicatorResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetRef_tab_indicator(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetRef_tab_indicator'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetRef_tab_indicator'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetRef_tab_indicator' operation.</returns>
+            QueryResult<ref_tab_indicator> EndGetRef_tab_indicator(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetTbl_countries' operation.
@@ -1615,6 +2817,24 @@ namespace NCRVisual.web.Services
             QueryResult<tbl_regions> EndGetTbl_regions(IAsyncResult result);
             
             /// <summary>
+            /// Asynchronously invokes the 'GetTbl_tabs' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetTbl_tabsDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetTbl_tabs", ReplyAction="http://tempuri.org/WBDomainService/GetTbl_tabsResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetTbl_tabs(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetTbl_tabs'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_tabs'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetTbl_tabs' operation.</returns>
+            QueryResult<tbl_tabs> EndGetTbl_tabs(IAsyncResult result);
+            
+            /// <summary>
             /// Asynchronously invokes the 'GetTbl_trades' operation.
             /// </summary>
             /// <param name="callback">Callback to invoke on completion.</param>
@@ -1631,6 +2851,61 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_trades'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetTbl_trades' operation.</returns>
             QueryResult<tbl_trades> EndGetTbl_trades(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetView_CountryIndicator' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_CountryIndicatorDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_CountryIndicator", ReplyAction="http://tempuri.org/WBDomainService/GetView_CountryIndicatorResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_CountryIndicator(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_CountryIndicator'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_CountryIndicator'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_CountryIndicator' operation.</returns>
+            QueryResult<View_CountryIndicator> EndGetView_CountryIndicator(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetView_CountryIndicatorTab' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_CountryIndicatorTabDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_CountryIndicatorTab", ReplyAction="http://tempuri.org/WBDomainService/GetView_CountryIndicatorTabResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_CountryIndicatorTab(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_CountryIndicatorTab'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_CountryIndicatorTab'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_CountryIndicatorTab' operation.</returns>
+            QueryResult<View_CountryIndicatorTab> EndGetView_CountryIndicatorTab(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetView_GeneralCountry' operation.
+            /// </summary>
+            /// <param name="country_id_pk">The value for the 'country_id_pk' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_GeneralCountryDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_GeneralCountry", ReplyAction="http://tempuri.org/WBDomainService/GetView_GeneralCountryResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_GeneralCountry(int country_id_pk, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_GeneralCountry'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_GeneralCountry'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_GeneralCountry' operation.</returns>
+            QueryResult<View_GeneralCountry> EndGetView_GeneralCountry(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'SubmitChanges' operation.
@@ -1656,13 +2931,18 @@ namespace NCRVisual.web.Services
             
             public WBDomainContextEntityContainer()
             {
-                this.CreateEntitySet<ref_country_indicator>(EntitySetOperations.All);
-                this.CreateEntitySet<tbl_countries>(EntitySetOperations.All);
-                this.CreateEntitySet<tbl_income_levels>(EntitySetOperations.All);
-                this.CreateEntitySet<tbl_indicators>(EntitySetOperations.All);
-                this.CreateEntitySet<tbl_lending_types>(EntitySetOperations.All);
-                this.CreateEntitySet<tbl_regions>(EntitySetOperations.All);
-                this.CreateEntitySet<tbl_trades>(EntitySetOperations.All);
+                this.CreateEntitySet<ref_country_indicator>(EntitySetOperations.None);
+                this.CreateEntitySet<ref_tab_indicator>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_countries>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_income_levels>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_indicators>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_lending_types>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_regions>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_tabs>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_trades>(EntitySetOperations.None);
+                this.CreateEntitySet<View_CountryIndicator>(EntitySetOperations.None);
+                this.CreateEntitySet<View_CountryIndicatorTab>(EntitySetOperations.None);
+                this.CreateEntitySet<View_GeneralCountry>(EntitySetOperations.None);
             }
         }
     }

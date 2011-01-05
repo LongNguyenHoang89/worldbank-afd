@@ -9,11 +9,14 @@ using Microsoft.Maps.MapControl;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
+using System.ServiceModel.DomainServices.Client;
+using NCRVisual.web.DataModel;
 
 namespace WorldMap
 {
     public partial class DraggablePushpin : Pushpin
     {
+        #region private
         private bool isDragging = false;
 
         EventHandler<MapMouseDragEventArgs> ParentMapMousePanHandler;
@@ -23,8 +26,9 @@ namespace WorldMap
         private DateTime _lastMouseDownTime;
 
         private MapLayer _mapLayer;
+        #endregion
 
-
+        #region Properties
         /// <summary>
         /// Event after releasing the pushpin
         /// </summary>
@@ -49,6 +53,13 @@ namespace WorldMap
         /// Check if the pushpin is on the map
         /// </summary>
         public bool IsOnMap { get; set; }
+
+        /// <summary>
+        /// country data of the pushpin
+        /// </summary>
+        public tbl_countries country { get; set; }
+
+        #endregion
 
         public DraggablePushpin()
             : base()
