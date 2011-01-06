@@ -287,11 +287,11 @@ namespace WorldMap
             {
                 if (e.Result.ResponseSummary.StatusCode != PlatformServices.ResponseStatusCode.Success)
                 {
-                    Output.Text = "error geocoding ... status <" + e.Result.ResponseSummary.StatusCode.ToString() + ">";
+                    //Output.Text = "error geocoding ... status <" + e.Result.ResponseSummary.StatusCode.ToString() + ">";
                 }
                 else if (0 == e.Result.Results.Count)
                 {
-                    Output.Text = outputString + "No results";
+                    //Output.Text = outputString + "No results";
                 }
                 else
                 {                                        
@@ -303,12 +303,12 @@ namespace WorldMap
                     //Check duplicated
                     if (found.ContainsKey(formatted))
                     {
-                        Output.Text = outputString + " (duplicate)";
+                        //Output.Text = outputString + " (duplicate)";
                     }
                     else
                     {
                         found[formatted] = true;
-                        Output.Text = outputString + "  (" + e.Result.Results[0].Locations[0].CalculationMethod + ")";
+                        //Output.Text = outputString + "  (" + e.Result.Results[0].Locations[0].CalculationMethod + ")";
                         GeocodeLayer.AddResult(e.Result.Results[0]);
                     }
 
@@ -338,7 +338,7 @@ namespace WorldMap
             }
             catch (Exception ex)
             {
-                Output.Text = "Exception raised calling reverse geocoder";
+                //Output.Text = "Exception raised calling reverse geocoder";
             }
 
             // See if there are more waiting to run.

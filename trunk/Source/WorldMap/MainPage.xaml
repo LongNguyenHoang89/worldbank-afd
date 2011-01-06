@@ -91,10 +91,7 @@
             <ei:ExtendedVisualStateManager/>
         </VisualStateManager.CustomVisualStateManager>
         
-        <StackPanel Grid.Row="0">
-            <Border BorderBrush="Black" BorderThickness="1">
-                <TextBlock x:Name="Output"  FontSize="13" Margin="12,8,12,8" VerticalAlignment="Center" Text="Location" HorizontalAlignment="Stretch"/>
-            </Border>
+        <StackPanel Grid.Row="0">        
         </StackPanel>
         <m:Map CredentialsProvider="AnDFcb6V80_dRKOObV5Q-K0ACvlPNjpllC76dk3Trd7tG1Gjlau_T14711TdnLSe" x:Name="MyMap" Grid.Row="1" AllowDrop="True">            
         </m:Map>

@@ -79,7 +79,7 @@ namespace WorldMap
             var loadTabCountryData = Context.Load(Context.GetView_GeneralCountryQuery(country_pk));
             loadTabCountryData.Completed += new EventHandler(loadTabCountryData_Completed);
 
-            var loadCountryOverviewData = Context.Load(Context.getview
+            //var loadCountryOverviewData = Context.Load(Context.
         }
 
         void loadTabCountryData_Completed(object sender, EventArgs e)
