@@ -120,7 +120,7 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="1" Text="{Binding indicator_code}"></TextBlock>
                                 <TextBlock Grid.Column="2" Text="{Binding indicator_name}"></TextBlock>
-                                <CheckBox ></CheckBox>
+                                <CheckBox Name="IndicatorCheckbox" Checked="IndicatorCheckbox_Checked" Tag="{Binding indicator_id_pk}" Unchecked="IndicatorCheckbox_Unchecked"></CheckBox>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -31,6 +31,37 @@ namespace NCRVisual.web.Services
             return this.ObjectContext.ref_country_indicator;
         }
 
+        public IQueryable<ref_country_indicator> GetRef_country_indicatorInCountryIdList(List<int> countryIdList)
+        {
+            return this.ObjectContext.ref_country_indicator.Where(c => countryIdList.Contains((int)c.country_id));
+        }
+
+        public void InsertRef_country_indicator(ref_country_indicator ref_country_indicator)
+        {
+            if ((ref_country_indicator.EntityState != EntityState.Detached))
+            {
+                this.ObjectContext.ObjectStateManager.ChangeObjectState(ref_country_indicator, EntityState.Added);
+            }
+            else
+            {
+                this.ObjectContext.ref_country_indicator.AddObject(ref_country_indicator);
+            }
+        }
+
+        public void UpdateRef_country_indicator(ref_country_indicator currentref_country_indicator)
+        {
+            this.ObjectContext.ref_country_indicator.AttachAsModified(currentref_country_indicator, this.ChangeSet.GetOriginal(currentref_country_indicator));
+        }
+
+        public void DeleteRef_country_indicator(ref_country_indicator ref_country_indicator)
+        {
+            if ((ref_country_indicator.EntityState == EntityState.Detached))
+            {
+                this.ObjectContext.ref_country_indicator.Attach(ref_country_indicator);
+            }
+            this.ObjectContext.ref_country_indicator.DeleteObject(ref_country_indicator);
+        }
+
         // TODO:
         // Consider constraining the results of your query method.  If you need additional input you can
         // add parameters to this method or create additional query methods with different names.
@@ -64,7 +95,7 @@ namespace NCRVisual.web.Services
         // To support paging you will need to add ordering to the 'tbl_indicators' query.
         public IQueryable<tbl_indicators> GetTbl_indicators()
         {
-            return this.ObjectContext.tbl_indicators.Where(e => e.is_gotten == true); ;
+            return this.ObjectContext.tbl_indicators;
         }
 
         // TODO:
@@ -101,33 +132,6 @@ namespace NCRVisual.web.Services
         public IQueryable<tbl_trades> GetTbl_trades()
         {
             return this.ObjectContext.tbl_trades;
-        }
-
-        // TODO:
-        // Consider constraining the results of your query method.  If you need additional input you can
-        // add parameters to this method or create additional query methods with different names.
-        // To support paging you will need to add ordering to the 'View_CountryIndicator' query.
-        public IQueryable<View_CountryIndicator> GetView_CountryIndicator()
-        {
-            return this.ObjectContext.View_CountryIndicator;
-        }
-
-        // TODO:
-        // Consider constraining the results of your query method.  If you need additional input you can
-        // add parameters to this method or create additional query methods with different names.
-        // To support paging you will need to add ordering to the 'View_CountryIndicatorTab' query.
-        public IQueryable<View_CountryIndicatorTab> GetView_CountryIndicatorTab()
-        {
-            return this.ObjectContext.View_CountryIndicatorTab;
-        }
-
-        // TODO:
-        // Consider constraining the results of your query method.  If you need additional input you can
-        // add parameters to this method or create additional query methods with different names.
-        // To support paging you will need to add ordering to the 'View_GeneralCountry' query.
-        public IQueryable<View_GeneralCountry> GetView_GeneralCountry(int country_id_pk)
-        {
-            return this.ObjectContext.View_GeneralCountry.Where(e=> e.country_id_pk == country_id_pk);            
         }
     }
 }
