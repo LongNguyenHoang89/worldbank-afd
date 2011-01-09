@@ -102,6 +102,33 @@ namespace NCRVisual.web.Services
         {
             return this.ObjectContext.tbl_trades;
         }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'View_CountryIndicator' query.
+        public IQueryable<View_CountryIndicator> GetView_CountryIndicator()
+        {
+            return this.ObjectContext.View_CountryIndicator;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'View_CountryIndicatorTab' query.
+        public IQueryable<View_CountryIndicatorTab> GetView_CountryIndicatorTab()
+        {
+            return this.ObjectContext.View_CountryIndicatorTab;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'View_GeneralCountry' query.
+        public IQueryable<View_GeneralCountry> GetView_GeneralCountry()
+        {
+            return this.ObjectContext.View_GeneralCountry;
+        }
     }
 }
 

@@ -94,12 +94,16 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controller.cs" />
+    <Compile Include="Controls\CompareCountriesChildWindow.xaml.cs">
+      <DependentUpon>CompareCountriesChildWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomChildWindow.xaml.cs">
       <DependentUpon>CustomChildWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DraggablePushpin.xaml.cs">
       <DependentUpon>DraggablePushpin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Generated_Code\NCRVisual.web.g.cs" />
     <Compile Include="GeocodeLayer.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -161,6 +165,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\CompareCountriesChildWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\CustomChildWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

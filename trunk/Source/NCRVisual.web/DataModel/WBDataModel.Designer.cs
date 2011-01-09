@@ -208,6 +208,54 @@ namespace NCRVisual.web.DataModel
             }
         }
         private ObjectSet<tbl_trades> _tbl_trades;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<View_CountryIndicator> View_CountryIndicator
+        {
+            get
+            {
+                if ((_View_CountryIndicator == null))
+                {
+                    _View_CountryIndicator = base.CreateObjectSet<View_CountryIndicator>("View_CountryIndicator");
+                }
+                return _View_CountryIndicator;
+            }
+        }
+        private ObjectSet<View_CountryIndicator> _View_CountryIndicator;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<View_CountryIndicatorTab> View_CountryIndicatorTab
+        {
+            get
+            {
+                if ((_View_CountryIndicatorTab == null))
+                {
+                    _View_CountryIndicatorTab = base.CreateObjectSet<View_CountryIndicatorTab>("View_CountryIndicatorTab");
+                }
+                return _View_CountryIndicatorTab;
+            }
+        }
+        private ObjectSet<View_CountryIndicatorTab> _View_CountryIndicatorTab;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<View_GeneralCountry> View_GeneralCountry
+        {
+            get
+            {
+                if ((_View_GeneralCountry == null))
+                {
+                    _View_GeneralCountry = base.CreateObjectSet<View_GeneralCountry>("View_GeneralCountry");
+                }
+                return _View_GeneralCountry;
+            }
+        }
+        private ObjectSet<View_GeneralCountry> _View_GeneralCountry;
 
         #endregion
         #region AddTo Methods
@@ -282,6 +330,30 @@ namespace NCRVisual.web.DataModel
         public void AddTotbl_trades(tbl_trades tbl_trades)
         {
             base.AddObject("tbl_trades", tbl_trades);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the View_CountryIndicator EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToView_CountryIndicator(View_CountryIndicator view_CountryIndicator)
+        {
+            base.AddObject("View_CountryIndicator", view_CountryIndicator);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the View_CountryIndicatorTab EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToView_CountryIndicatorTab(View_CountryIndicatorTab view_CountryIndicatorTab)
+        {
+            base.AddObject("View_CountryIndicatorTab", view_CountryIndicatorTab);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the View_GeneralCountry EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToView_GeneralCountry(View_GeneralCountry view_GeneralCountry)
+        {
+            base.AddObject("View_GeneralCountry", view_GeneralCountry);
         }
 
         #endregion
@@ -1550,6 +1622,704 @@ namespace NCRVisual.web.DataModel
         private Nullable<global::System.Int32> _trade_year;
         partial void Ontrade_yearChanging(Nullable<global::System.Int32> value);
         partial void Ontrade_yearChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="WBModel", Name="View_CountryIndicator")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class View_CountryIndicator : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new View_CountryIndicator object.
+        /// </summary>
+        /// <param name="country_id_pk">Initial value of the country_id_pk property.</param>
+        public static View_CountryIndicator CreateView_CountryIndicator(global::System.Int32 country_id_pk)
+        {
+            View_CountryIndicator view_CountryIndicator = new View_CountryIndicator();
+            view_CountryIndicator.country_id_pk = country_id_pk;
+            return view_CountryIndicator;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 country_id_pk
+        {
+            get
+            {
+                return _country_id_pk;
+            }
+            set
+            {
+                if (_country_id_pk != value)
+                {
+                    Oncountry_id_pkChanging(value);
+                    ReportPropertyChanging("country_id_pk");
+                    _country_id_pk = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("country_id_pk");
+                    Oncountry_id_pkChanged();
+                }
+            }
+        }
+        private global::System.Int32 _country_id_pk;
+        partial void Oncountry_id_pkChanging(global::System.Int32 value);
+        partial void Oncountry_id_pkChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String country_iso_code
+        {
+            get
+            {
+                return _country_iso_code;
+            }
+            set
+            {
+                Oncountry_iso_codeChanging(value);
+                ReportPropertyChanging("country_iso_code");
+                _country_iso_code = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("country_iso_code");
+                Oncountry_iso_codeChanged();
+            }
+        }
+        private global::System.String _country_iso_code;
+        partial void Oncountry_iso_codeChanging(global::System.String value);
+        partial void Oncountry_iso_codeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String country_name
+        {
+            get
+            {
+                return _country_name;
+            }
+            set
+            {
+                Oncountry_nameChanging(value);
+                ReportPropertyChanging("country_name");
+                _country_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("country_name");
+                Oncountry_nameChanged();
+            }
+        }
+        private global::System.String _country_name;
+        partial void Oncountry_nameChanging(global::System.String value);
+        partial void Oncountry_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_code
+        {
+            get
+            {
+                return _indicator_code;
+            }
+            set
+            {
+                Onindicator_codeChanging(value);
+                ReportPropertyChanging("indicator_code");
+                _indicator_code = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_code");
+                Onindicator_codeChanged();
+            }
+        }
+        private global::System.String _indicator_code;
+        partial void Onindicator_codeChanging(global::System.String value);
+        partial void Onindicator_codeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_name
+        {
+            get
+            {
+                return _indicator_name;
+            }
+            set
+            {
+                Onindicator_nameChanging(value);
+                ReportPropertyChanging("indicator_name");
+                _indicator_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_name");
+                Onindicator_nameChanged();
+            }
+        }
+        private global::System.String _indicator_name;
+        partial void Onindicator_nameChanging(global::System.String value);
+        partial void Onindicator_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_description
+        {
+            get
+            {
+                return _indicator_description;
+            }
+            set
+            {
+                Onindicator_descriptionChanging(value);
+                ReportPropertyChanging("indicator_description");
+                _indicator_description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_description");
+                Onindicator_descriptionChanged();
+            }
+        }
+        private global::System.String _indicator_description;
+        partial void Onindicator_descriptionChanging(global::System.String value);
+        partial void Onindicator_descriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_unit
+        {
+            get
+            {
+                return _indicator_unit;
+            }
+            set
+            {
+                Onindicator_unitChanging(value);
+                ReportPropertyChanging("indicator_unit");
+                _indicator_unit = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_unit");
+                Onindicator_unitChanged();
+            }
+        }
+        private global::System.String _indicator_unit;
+        partial void Onindicator_unitChanging(global::System.String value);
+        partial void Onindicator_unitChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> country_indicator_value
+        {
+            get
+            {
+                return _country_indicator_value;
+            }
+            set
+            {
+                Oncountry_indicator_valueChanging(value);
+                ReportPropertyChanging("country_indicator_value");
+                _country_indicator_value = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("country_indicator_value");
+                Oncountry_indicator_valueChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _country_indicator_value;
+        partial void Oncountry_indicator_valueChanging(Nullable<global::System.Decimal> value);
+        partial void Oncountry_indicator_valueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> country_indicator_year
+        {
+            get
+            {
+                return _country_indicator_year;
+            }
+            set
+            {
+                Oncountry_indicator_yearChanging(value);
+                ReportPropertyChanging("country_indicator_year");
+                _country_indicator_year = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("country_indicator_year");
+                Oncountry_indicator_yearChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _country_indicator_year;
+        partial void Oncountry_indicator_yearChanging(Nullable<global::System.Int32> value);
+        partial void Oncountry_indicator_yearChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="WBModel", Name="View_CountryIndicatorTab")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class View_CountryIndicatorTab : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new View_CountryIndicatorTab object.
+        /// </summary>
+        /// <param name="country_id_pk">Initial value of the country_id_pk property.</param>
+        /// <param name="tab_id_pk">Initial value of the tab_id_pk property.</param>
+        public static View_CountryIndicatorTab CreateView_CountryIndicatorTab(global::System.Int32 country_id_pk, global::System.Int32 tab_id_pk)
+        {
+            View_CountryIndicatorTab view_CountryIndicatorTab = new View_CountryIndicatorTab();
+            view_CountryIndicatorTab.country_id_pk = country_id_pk;
+            view_CountryIndicatorTab.tab_id_pk = tab_id_pk;
+            return view_CountryIndicatorTab;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 country_id_pk
+        {
+            get
+            {
+                return _country_id_pk;
+            }
+            set
+            {
+                if (_country_id_pk != value)
+                {
+                    Oncountry_id_pkChanging(value);
+                    ReportPropertyChanging("country_id_pk");
+                    _country_id_pk = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("country_id_pk");
+                    Oncountry_id_pkChanged();
+                }
+            }
+        }
+        private global::System.Int32 _country_id_pk;
+        partial void Oncountry_id_pkChanging(global::System.Int32 value);
+        partial void Oncountry_id_pkChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String country_iso_code
+        {
+            get
+            {
+                return _country_iso_code;
+            }
+            set
+            {
+                Oncountry_iso_codeChanging(value);
+                ReportPropertyChanging("country_iso_code");
+                _country_iso_code = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("country_iso_code");
+                Oncountry_iso_codeChanged();
+            }
+        }
+        private global::System.String _country_iso_code;
+        partial void Oncountry_iso_codeChanging(global::System.String value);
+        partial void Oncountry_iso_codeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String country_name
+        {
+            get
+            {
+                return _country_name;
+            }
+            set
+            {
+                Oncountry_nameChanging(value);
+                ReportPropertyChanging("country_name");
+                _country_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("country_name");
+                Oncountry_nameChanged();
+            }
+        }
+        private global::System.String _country_name;
+        partial void Oncountry_nameChanging(global::System.String value);
+        partial void Oncountry_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_code
+        {
+            get
+            {
+                return _indicator_code;
+            }
+            set
+            {
+                Onindicator_codeChanging(value);
+                ReportPropertyChanging("indicator_code");
+                _indicator_code = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_code");
+                Onindicator_codeChanged();
+            }
+        }
+        private global::System.String _indicator_code;
+        partial void Onindicator_codeChanging(global::System.String value);
+        partial void Onindicator_codeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_name
+        {
+            get
+            {
+                return _indicator_name;
+            }
+            set
+            {
+                Onindicator_nameChanging(value);
+                ReportPropertyChanging("indicator_name");
+                _indicator_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_name");
+                Onindicator_nameChanged();
+            }
+        }
+        private global::System.String _indicator_name;
+        partial void Onindicator_nameChanging(global::System.String value);
+        partial void Onindicator_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_description
+        {
+            get
+            {
+                return _indicator_description;
+            }
+            set
+            {
+                Onindicator_descriptionChanging(value);
+                ReportPropertyChanging("indicator_description");
+                _indicator_description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_description");
+                Onindicator_descriptionChanged();
+            }
+        }
+        private global::System.String _indicator_description;
+        partial void Onindicator_descriptionChanging(global::System.String value);
+        partial void Onindicator_descriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_unit
+        {
+            get
+            {
+                return _indicator_unit;
+            }
+            set
+            {
+                Onindicator_unitChanging(value);
+                ReportPropertyChanging("indicator_unit");
+                _indicator_unit = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_unit");
+                Onindicator_unitChanged();
+            }
+        }
+        private global::System.String _indicator_unit;
+        partial void Onindicator_unitChanging(global::System.String value);
+        partial void Onindicator_unitChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> country_indicator_value
+        {
+            get
+            {
+                return _country_indicator_value;
+            }
+            set
+            {
+                Oncountry_indicator_valueChanging(value);
+                ReportPropertyChanging("country_indicator_value");
+                _country_indicator_value = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("country_indicator_value");
+                Oncountry_indicator_valueChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _country_indicator_value;
+        partial void Oncountry_indicator_valueChanging(Nullable<global::System.Decimal> value);
+        partial void Oncountry_indicator_valueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> country_indicator_year
+        {
+            get
+            {
+                return _country_indicator_year;
+            }
+            set
+            {
+                Oncountry_indicator_yearChanging(value);
+                ReportPropertyChanging("country_indicator_year");
+                _country_indicator_year = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("country_indicator_year");
+                Oncountry_indicator_yearChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _country_indicator_year;
+        partial void Oncountry_indicator_yearChanging(Nullable<global::System.Int32> value);
+        partial void Oncountry_indicator_yearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 tab_id_pk
+        {
+            get
+            {
+                return _tab_id_pk;
+            }
+            set
+            {
+                if (_tab_id_pk != value)
+                {
+                    Ontab_id_pkChanging(value);
+                    ReportPropertyChanging("tab_id_pk");
+                    _tab_id_pk = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("tab_id_pk");
+                    Ontab_id_pkChanged();
+                }
+            }
+        }
+        private global::System.Int32 _tab_id_pk;
+        partial void Ontab_id_pkChanging(global::System.Int32 value);
+        partial void Ontab_id_pkChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String tab_name
+        {
+            get
+            {
+                return _tab_name;
+            }
+            set
+            {
+                Ontab_nameChanging(value);
+                ReportPropertyChanging("tab_name");
+                _tab_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("tab_name");
+                Ontab_nameChanged();
+            }
+        }
+        private global::System.String _tab_name;
+        partial void Ontab_nameChanging(global::System.String value);
+        partial void Ontab_nameChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="WBModel", Name="View_GeneralCountry")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class View_GeneralCountry : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new View_GeneralCountry object.
+        /// </summary>
+        /// <param name="country_id_pk">Initial value of the country_id_pk property.</param>
+        public static View_GeneralCountry CreateView_GeneralCountry(global::System.Int32 country_id_pk)
+        {
+            View_GeneralCountry view_GeneralCountry = new View_GeneralCountry();
+            view_GeneralCountry.country_id_pk = country_id_pk;
+            return view_GeneralCountry;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 country_id_pk
+        {
+            get
+            {
+                return _country_id_pk;
+            }
+            set
+            {
+                if (_country_id_pk != value)
+                {
+                    Oncountry_id_pkChanging(value);
+                    ReportPropertyChanging("country_id_pk");
+                    _country_id_pk = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("country_id_pk");
+                    Oncountry_id_pkChanged();
+                }
+            }
+        }
+        private global::System.Int32 _country_id_pk;
+        partial void Oncountry_id_pkChanging(global::System.Int32 value);
+        partial void Oncountry_id_pkChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String country_name
+        {
+            get
+            {
+                return _country_name;
+            }
+            set
+            {
+                Oncountry_nameChanging(value);
+                ReportPropertyChanging("country_name");
+                _country_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("country_name");
+                Oncountry_nameChanged();
+            }
+        }
+        private global::System.String _country_name;
+        partial void Oncountry_nameChanging(global::System.String value);
+        partial void Oncountry_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String region_name
+        {
+            get
+            {
+                return _region_name;
+            }
+            set
+            {
+                Onregion_nameChanging(value);
+                ReportPropertyChanging("region_name");
+                _region_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("region_name");
+                Onregion_nameChanged();
+            }
+        }
+        private global::System.String _region_name;
+        partial void Onregion_nameChanging(global::System.String value);
+        partial void Onregion_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String lending_type_name
+        {
+            get
+            {
+                return _lending_type_name;
+            }
+            set
+            {
+                Onlending_type_nameChanging(value);
+                ReportPropertyChanging("lending_type_name");
+                _lending_type_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("lending_type_name");
+                Onlending_type_nameChanged();
+            }
+        }
+        private global::System.String _lending_type_name;
+        partial void Onlending_type_nameChanging(global::System.String value);
+        partial void Onlending_type_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String income_level_name
+        {
+            get
+            {
+                return _income_level_name;
+            }
+            set
+            {
+                Onincome_level_nameChanging(value);
+                ReportPropertyChanging("income_level_name");
+                _income_level_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("income_level_name");
+                Onincome_level_nameChanged();
+            }
+        }
+        private global::System.String _income_level_name;
+        partial void Onincome_level_nameChanging(global::System.String value);
+        partial void Onincome_level_nameChanged();
 
         #endregion
     

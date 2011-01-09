@@ -115,6 +115,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\WBDomainService.cs" />
     <Compile Include="Services\WBDomainService.metadata.cs" />
+    <Compile Include="Services\WBDomainServiceExtended.cs" />
     <Compile Include="Upload.ashx.cs">
       <DependentUpon>Upload.ashx</DependentUpon>
     </Compile>
