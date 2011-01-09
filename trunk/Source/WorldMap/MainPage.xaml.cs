@@ -283,7 +283,7 @@ namespace WorldMap
                 }
             }
 
-            if (selectedCountries.Count > 1)
+            if (selectedCountries.Count > 1 && selectedIndicatorPKs.Count > 0)
             {
                 // init a new CustomChildWindow
                 CompareCountriesChildWindow child = new CompareCountriesChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
