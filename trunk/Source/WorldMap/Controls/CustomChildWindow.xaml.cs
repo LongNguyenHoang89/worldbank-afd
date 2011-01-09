@@ -130,8 +130,8 @@ namespace WorldMap
                 select c;
 
 
-            //loadOp = _worldMapController.Context.Load(query);
-            loadOp = _worldMapController.Context.Load(_worldMapController.Context.GetRef_country_indicatorInCountryIdListQuery(tmpIndPKs));
+            loadOp = _worldMapController.Context.Load(query);
+            //loadOp = _worldMapController.Context.Load(_worldMapController.Context.GetRef_country_indicatorInCountryIdListQuery(tmpIndPKs));
             //loadOp = _worldMapController.Context.Load(_worldMapController.Context.GetRef_country_indicatorQuery(tmpIndPKs));
             
             loadOp.Completed += new EventHandler(loadOp_Completed);
