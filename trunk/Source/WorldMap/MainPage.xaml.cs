@@ -17,7 +17,7 @@ namespace WorldMap
         #region private variables
         private LocationConverter locConverter = new LocationConverter();
         private bool _isControlpanelOpened = false;
-        private bool _isCountryListPanelOpened = false;
+        private bool _isCountryListPanelOpened = true;
         private DraggablePushpin _currentPushpin;
         private bool _isAddingNewPushPin;
         private List<int> selectedIndicatorPKs = new List<int>();
