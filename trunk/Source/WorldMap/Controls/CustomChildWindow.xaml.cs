@@ -40,6 +40,15 @@ namespace WorldMap
             // generate the list of shortlist indicators
             getIndicatorsFromPKs(checkedIndicatorPKs);
             this.CountryNameTextBlock.Text = _selectedCountry.country_name;
+            // gen combobox's items
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_COLUMN_DESC);
+            comboBoxRenderStyle.Items.Add("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC);
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_LINE_DESC);
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_BAR_DESC);
+            comboBoxRenderStyle.Items.Add("3D " + WorldbankGeneralChartControl.RA_BAR_DESC);
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_AREA_DESC);
+            // select the first choice of the combobox
+            comboBoxRenderStyle.SelectedIndex = 0;
         }
         private void getIndicatorsFromPKs(List<int> indPKs)
         {
@@ -173,9 +182,35 @@ namespace WorldMap
             shortListIndicatorsSelected = getIndicatorFromPKForGraph(listboxIndicatorPKSelected);
 
             // change render style if needed
-            if (shortListIndicatorsSelected.Count > 1)
+            //if (shortListIndicatorsSelected.Count > 1)
+            //{
+            //    control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
+            //}
+            if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_AREA_DESC))
+            {
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_AREA;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_BAR_DESC))
+            {
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_COLUMN_DESC))
+            {
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_LINE_DESC))
             {
                 control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC))
+            {
+                control.RenderAs3D = true;
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_BAR_DESC))
+            {
+                control.RenderAs3D = true;
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
             }
 
             GetDataForGraph(_selectedCountry, shortListIndicatorsSelected);

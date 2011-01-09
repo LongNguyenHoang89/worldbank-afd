@@ -13,21 +13,52 @@ namespace WorldbankDataGraphs
 
         #region public constants
         public const int RA_COLUMN = 1;
+        public const string RA_COLUMN_DESC = "Column chart";
         public const int RA_LINE = 2;
+        public const string RA_LINE_DESC = "Line chart";
         public const int RA_BAR = 4;
+        public const string RA_BAR_DESC = "Bar chart";
+        public const int RA_AREA = 8;
+        public const string RA_AREA_DESC = "Area chart";
         #endregion
 
         #region private vars
         // normal vars
         private List<Country> countriesShown = null;
         // chart vars
-        private Chart worldbankColumnChart = null;
+        private Chart worldbankChart = null;
         private string attributeShownName = null;
         private Axis YAxis;
         private RenderAs _thisChartRenderAs = RenderAs.Column;
+        private bool _renderAs3D = false;
         #endregion
 
         #region normal getters & setters
+        public bool RenderAs3D
+        {
+            get
+            {
+                if (worldbankChart == null)
+                {
+                    return _renderAs3D;
+                }
+                else
+                {
+                    return worldbankChart.View3D;
+                }
+            }
+            set
+            {
+                if (worldbankChart == null)
+                {
+                    _renderAs3D = value;
+                }
+                else
+                {
+                    worldbankChart.View3D = value;
+                }
+            }
+        }
         public int ThisChartRenderAs
         {
             set
@@ -41,6 +72,9 @@ namespace WorldbankDataGraphs
                         break;
                     case RA_BAR:
                         _thisChartRenderAs = RenderAs.Bar;
+                        break;
+                    case RA_AREA:
+                        _thisChartRenderAs = RenderAs.Area;
                         break;
                 }
             }
@@ -87,23 +121,25 @@ namespace WorldbankDataGraphs
                 countriesShown = value; // do the normal task of a setter
                 List<int> allYears = getAllYears(countriesShown);
                 // then refresh the graph
-                if (worldbankColumnChart == null) // init the chart if it's null
+                if (worldbankChart == null) // init the chart if it's null
                 {
-                    worldbankColumnChart = new Chart();
+                    worldbankChart = new Chart();
+                    // set 3d
+                    worldbankChart.View3D = _renderAs3D;
                     // set type of the chart
                     // set the caption of the YAxis
                     if (YAxis == null)
                     {
                         YAxis = new Axis();
                     }
-                    worldbankColumnChart.AxesY.Add(YAxis);
+                    worldbankChart.AxesY.Add(YAxis);
                     // init the data
                     bool isFirstLoop = true; // flag to know which loop is first (to set label)
                     foreach (Country tmpC in countriesShown)
                     {
                         DataSeries tmpDS = new DataSeries();
                         tmpDS.LegendText = tmpC.Name;
-                        worldbankColumnChart.Series.Add(tmpDS);
+                        worldbankChart.Series.Add(tmpDS);
                         tmpDS.RenderAs = _thisChartRenderAs;
                         DataPoint tmpDP = null;
                         for (int i = 0; i < allYears.Count; i++)
@@ -120,11 +156,11 @@ namespace WorldbankDataGraphs
                         isFirstLoop = false;
                     }
                     // Add the chart to the control
-                    LayoutRoot.Children.Add(worldbankColumnChart);
+                    LayoutRoot.Children.Add(worldbankChart);
                 }
                 else
                 {
-                    ChartUtils.ClearChart(worldbankColumnChart);
+                    ChartUtils.ClearChart(worldbankChart);
                 }
                 // refresh values of the chart
                 if (attributeShownName != null)
@@ -143,9 +179,9 @@ namespace WorldbankDataGraphs
 
         private void processChartValue(List<Country> countryList, List<int> allYears, string valueKey)
         {
-            for(int j = 0; j < worldbankColumnChart.Series.Count; j++)
+            for(int j = 0; j < worldbankChart.Series.Count; j++)
             {
-                DataSeries tmpDS = worldbankColumnChart.Series[j];
+                DataSeries tmpDS = worldbankChart.Series[j];
                 Country tmpCountry = countriesShown[j];
                 DataPoint tmpDP = null;
                 int z = 0; // this is the year index where country begin to have statistics
