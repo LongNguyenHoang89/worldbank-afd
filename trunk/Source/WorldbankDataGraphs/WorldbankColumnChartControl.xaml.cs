@@ -10,7 +10,6 @@ namespace WorldbankDataGraphs
     {
         #region constants for this control
         private static string DEF_CHART_TITLE = "USD";
-        private Axis YAxis;
         #endregion
 
         #region private vars
@@ -19,6 +18,8 @@ namespace WorldbankDataGraphs
         // chart vars
         private Chart worldbankColumnChart = null;
         private string attributeShownName = null;
+        private Axis YAxis;
+        private RenderAs _thisChartRenderAs = RenderAs.Column;
         #endregion
 
         #region normal getters & setters
@@ -71,6 +72,7 @@ namespace WorldbankDataGraphs
                         DataSeries tmpDS = new DataSeries();
                         tmpDS.LegendText = tmpC.Name;
                         worldbankColumnChart.Series.Add(tmpDS);
+                        tmpDS.RenderAs = _thisChartRenderAs;
                         DataPoint tmpDP = null;
                         for (int i = 0; i < allYears.Count; i++)
                         {

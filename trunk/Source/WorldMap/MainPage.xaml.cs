@@ -130,25 +130,18 @@ namespace WorldMap
             _currentPushpin = p;
         }
 
+        /// <summary>
+        /// The event where a pin is double clicked on
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void MapPushpin_Clicked(object sender, EventArgs e)
         {
             // get the selected countries
-            List<tbl_countries> selectedCountries = new List<tbl_countries>();
-            foreach ( object test in CountryListBox.Items )
-            {
-                Panel tmpP = (Panel)test;
-                foreach (object tmpO in tmpP.Children)
-                {
-                    if (tmpO.GetType().Equals(typeof(DraggablePushpin)))
-                    {
-                        DraggablePushpin tmpDP = (DraggablePushpin)tmpO;
-                        selectedCountries.Add(tmpDP.country);
-                    }
-                }
-            }
+            tbl_countries thisPinOnCountry = ((DraggablePushpin)sender).country;
             // init a new CustomChildWindow
-            CustomChildWindow child = new CustomChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
-            child.Show();       
+            CustomChildWindow child = new CustomChildWindow(WorldMapController, thisPinOnCountry, selectedIndicatorPKs);
+            child.Show();
         }
 
         void CreateCountryPushPin(DraggablePushpin pushpin)
@@ -201,12 +194,12 @@ namespace WorldMap
             {
                 int a = pushpinPanel.Children.Count;
                 TextBlock tb = pushpinPanel.Children[2] as TextBlock;
-                tb.Text = pushpin.country.country_name;                
+                tb.Text = pushpin.country.country_name;
             }
             else
             {
                 (PushPinPanel.Children[2] as TextBlock).Text = "Error country data";
-            }             
+            }
         }
 
         void bt_Click(object sender, RoutedEventArgs e)
@@ -418,15 +411,15 @@ namespace WorldMap
         private void IndicatorCheckbox_Checked(object sender, RoutedEventArgs e)
         {
 
-            if (CountryListBox.Items.Count > 1 && selectedIndicatorPKs.Count > 0)
-            {
-                MessageBox.Show("You can only choose 1 indicator if 2 or more countries are choosen");
-                ((CheckBox)sender).IsChecked = false;
-            }
-            else
-            {
+            //if (CountryListBox.Items.Count > 1 && selectedIndicatorPKs.Count > 0)
+            //{
+            //    MessageBox.Show("You can only choose 1 indicator if 2 or more countries are choosen");
+            //    ((CheckBox)sender).IsChecked = false;
+            //}
+            //else
+            //{
                 selectedIndicatorPKs.Add(Convert.ToInt32(((CheckBox)sender).Tag));
-            }
+            //}
         }
 
         private void IndicatorCheckbox_Unchecked(object sender, RoutedEventArgs e)
@@ -434,6 +427,28 @@ namespace WorldMap
             selectedIndicatorPKs.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
         }
         #endregion
+
+        private void buttonCompareCountries_Click(object sender, RoutedEventArgs e)
+        {
+
+            // get the selected countries
+            List<tbl_countries> selectedCountries = new List<tbl_countries>();
+            foreach (object test in CountryListBox.Items)
+            {
+                Panel tmpP = (Panel)test;
+                foreach (object tmpO in tmpP.Children)
+                {
+                    if (tmpO.GetType().Equals(typeof(DraggablePushpin)))
+                    {
+                        DraggablePushpin tmpDP = (DraggablePushpin)tmpO;
+                        selectedCountries.Add(tmpDP.country);
+                    }
+                }
+            }
+            // init a new CustomChildWindow
+            CompareCountriesChildWindow child = new CompareCountriesChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
+            child.Show();     
+        }
 
     }
 }

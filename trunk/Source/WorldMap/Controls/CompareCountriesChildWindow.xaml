@@ -1,0 +1,14 @@
+﻿<basics:ChildWindow
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" x:Name="chwPopUp"
+	x:Class="WorldMap.CompareCountriesChildWindow"	
+	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+
+    <Grid Height="350" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Name="chartTabGrid">
+        <ComboBox Height="23" HorizontalAlignment="Right" Name="comboBoxIndicatorSelector" VerticalAlignment="Top" Width="337" Margin="0,0,12,0" SelectionChanged="comboBoxIndicatorSelector_SelectionChanged" />
+        <sdk:Label Height="19" HorizontalAlignment="Left" Margin="12,4,0,0" Name="label1" VerticalAlignment="Top" Width="133" Content="Indicator to compare" />
+        <Grid Height="321" HorizontalAlignment="Left" Margin="12,29,0,0" Name="gridChart" VerticalAlignment="Top" Width="476" />
+    </Grid>
+
+</basics:ChildWindow>

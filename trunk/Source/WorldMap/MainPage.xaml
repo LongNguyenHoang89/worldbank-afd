@@ -84,7 +84,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <VisualStateManager.CustomVisualStateManager>
@@ -153,6 +153,7 @@
                 </ListBox>
             </Grid>
         </Border>
+        <Button Content="Compare countries" Grid.Row="1" Height="23" HorizontalAlignment="Right" Name="buttonCompareCountries" VerticalAlignment="Bottom" Width="125" Click="buttonCompareCountries_Click" />
     </Grid>
 </UserControl>
 

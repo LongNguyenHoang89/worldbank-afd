@@ -19,7 +19,7 @@ namespace NCRVisual.web.Services
     // Also consider adding roles to restrict access as appropriate.
     // [RequiresAuthentication]
     [EnableClientAccess()]
-    public class WBDomainService : LinqToEntitiesDomainService<WBEntities>
+    public partial class WBDomainService : LinqToEntitiesDomainService<WBEntities>
     {
 
         // TODO:
@@ -29,37 +29,6 @@ namespace NCRVisual.web.Services
         public IQueryable<ref_country_indicator> GetRef_country_indicator()
         {
             return this.ObjectContext.ref_country_indicator;
-        }
-
-        public IQueryable<ref_country_indicator> GetRef_country_indicatorInCountryIdList(List<int> countryIdList)
-        {
-            return this.ObjectContext.ref_country_indicator.Where(c => countryIdList.Contains((int)c.country_id));
-        }
-
-        public void InsertRef_country_indicator(ref_country_indicator ref_country_indicator)
-        {
-            if ((ref_country_indicator.EntityState != EntityState.Detached))
-            {
-                this.ObjectContext.ObjectStateManager.ChangeObjectState(ref_country_indicator, EntityState.Added);
-            }
-            else
-            {
-                this.ObjectContext.ref_country_indicator.AddObject(ref_country_indicator);
-            }
-        }
-
-        public void UpdateRef_country_indicator(ref_country_indicator currentref_country_indicator)
-        {
-            this.ObjectContext.ref_country_indicator.AttachAsModified(currentref_country_indicator, this.ChangeSet.GetOriginal(currentref_country_indicator));
-        }
-
-        public void DeleteRef_country_indicator(ref_country_indicator ref_country_indicator)
-        {
-            if ((ref_country_indicator.EntityState == EntityState.Detached))
-            {
-                this.ObjectContext.ref_country_indicator.Attach(ref_country_indicator);
-            }
-            this.ObjectContext.ref_country_indicator.DeleteObject(ref_country_indicator);
         }
 
         // TODO:
