@@ -3,9 +3,9 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" x:Name="chwPopUp"
 	x:Class="WorldMap.CustomChildWindow"
-	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="626">
+	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="618">
 
-    <basics:TabControl Height="350" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Top">
+    <basics:TabControl Height="350" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Top" Width="600">
         <basics:TabItem Header="Country Overview" Name="OverviewTab">
             <Grid x:Name="LayoutRoot" Background="White">
                 <Grid.RowDefinitions>
