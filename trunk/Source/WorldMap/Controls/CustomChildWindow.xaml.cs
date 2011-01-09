@@ -41,9 +41,9 @@ namespace WorldMap
             getIndicatorsFromPKs(checkedIndicatorPKs);
             this.CountryNameTextBlock.Text = _selectedCountry.country_name;
             // gen combobox's items
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_LINE_DESC);
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_COLUMN_DESC);
             comboBoxRenderStyle.Items.Add("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC);
-            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_LINE_DESC);
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_BAR_DESC);
             comboBoxRenderStyle.Items.Add("3D " + WorldbankGeneralChartControl.RA_BAR_DESC);
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_AREA_DESC);
@@ -66,6 +66,7 @@ namespace WorldMap
             IndicatorListBox.ItemsSource = listIndicatorSelectedFromWM;
             // enable the render button
             buttonRenderChart.IsEnabled = true;
+            buttonRenderChart_Click(this, new RoutedEventArgs());
         }
 
         private List<tbl_indicators> getIndicatorFromPKForGraph(List<int> indPKs)
