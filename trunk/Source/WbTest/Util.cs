@@ -151,6 +151,7 @@ namespace WbTest
         {
 
             string url = "http://api.worldbank.org/countries/all/indicators/" + indicator.indicator_code + "?per_page=30000&date=1996:2009";
+            //string url = "http://api.worldbank.org/countries/VN/indicators/" + indicator.indicator_code + "?per_page=30000&date=1996:2009";
             //
             string data_tag = "wb:data";
             string country_tag = "wb:country";
@@ -200,7 +201,7 @@ namespace WbTest
                     reader.ReadToFollowing(value_tag);
                     try
                     {
-                        ref_value.country_indicator_value = reader.ReadElementContentAsInt();
+                        ref_value.country_indicator_value = reader.ReadElementContentAsDouble();
                     }
                     catch
                     {

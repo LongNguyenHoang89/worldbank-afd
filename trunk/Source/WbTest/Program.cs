@@ -21,8 +21,8 @@ namespace WbTest
             //GetStaticDataFromWorldBank();
             //GetTradeData();
             //GetAllIndicatorDataFromWorldBank();
-            //GetIndicatorsValue(); //Get indicators 's values which have is_gotten=0
-            GetAllFlag();
+            GetIndicatorsValue(); //Get indicators 's values which have is_gotten=0
+            //GetAllFlag();
             Console.WriteLine("Finish all data");
             Console.ReadKey();
         }
@@ -68,6 +68,7 @@ namespace WbTest
                 Collection<CountryIndicatorEntry> entries = Utils.GetAllIndicatorValue(indicators[i]);
                 WBAccess.InsertIndicatorValue(entries);
                 WBAccess.UpdateIndicator(indicators[i]);
+                Console.WriteLine("finish indicator:" + indicators[i].indicator_name);
             }
         }
 
