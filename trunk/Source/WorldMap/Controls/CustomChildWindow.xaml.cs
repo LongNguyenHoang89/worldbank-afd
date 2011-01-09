@@ -39,6 +39,8 @@ namespace WorldMap
             this._selectedCountry = selectedCountry;
             // generate the list of shortlist indicators
             getIndicatorsFromPKs(checkedIndicatorPKs);
+            // default is all selected
+            listboxIndicatorPKSelected = checkedIndicatorPKs;
             this.CountryNameTextBlock.Text = _selectedCountry.country_name;
             // gen combobox's items
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_LINE_DESC);
@@ -126,7 +128,12 @@ namespace WorldMap
                 // == tmpTC.country_id_pk
                 where (c.country_id == selectedCountry.country_id_pk)
                 select c;
-            loadOp = _worldMapController.Context.Load(query);
+
+
+            //loadOp = _worldMapController.Context.Load(query);
+            loadOp = _worldMapController.Context.Load(_worldMapController.Context.GetRef_country_indicatorInCountryIdListQuery(tmpIndPKs));
+            //loadOp = _worldMapController.Context.Load(_worldMapController.Context.GetRef_country_indicatorQuery(tmpIndPKs));
+            
             loadOp.Completed += new EventHandler(loadOp_Completed);
         }
 

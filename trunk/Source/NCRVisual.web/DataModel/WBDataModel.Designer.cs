@@ -516,7 +516,7 @@ namespace NCRVisual.web.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> country_indicator_value
+        public Nullable<global::System.Single> country_indicator_value
         {
             get
             {
@@ -531,8 +531,8 @@ namespace NCRVisual.web.DataModel
                 Oncountry_indicator_valueChanged();
             }
         }
-        private Nullable<global::System.Decimal> _country_indicator_value;
-        partial void Oncountry_indicator_valueChanging(Nullable<global::System.Decimal> value);
+        private Nullable<global::System.Single> _country_indicator_value;
+        partial void Oncountry_indicator_valueChanging(Nullable<global::System.Single> value);
         partial void Oncountry_indicator_valueChanged();
 
         #endregion

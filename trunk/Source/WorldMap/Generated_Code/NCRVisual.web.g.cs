@@ -32,7 +32,7 @@ namespace NCRVisual.web.DataModel
         
         private int _country_indicator_id_pk;
         
-        private Nullable<decimal> _country_indicator_value;
+        private Nullable<float> _country_indicator_value;
         
         private Nullable<int> _country_indicator_year;
         
@@ -49,7 +49,7 @@ namespace NCRVisual.web.DataModel
         partial void Oncountry_idChanged();
         partial void Oncountry_indicator_id_pkChanging(int value);
         partial void Oncountry_indicator_id_pkChanged();
-        partial void Oncountry_indicator_valueChanging(Nullable<decimal> value);
+        partial void Oncountry_indicator_valueChanging(Nullable<float> value);
         partial void Oncountry_indicator_valueChanged();
         partial void Oncountry_indicator_yearChanging(Nullable<int> value);
         partial void Oncountry_indicator_yearChanged();
@@ -121,7 +121,7 @@ namespace NCRVisual.web.DataModel
         /// Gets or sets the 'country_indicator_value' value.
         /// </summary>
         [DataMember()]
-        public Nullable<decimal> country_indicator_value
+        public Nullable<float> country_indicator_value
         {
             get
             {

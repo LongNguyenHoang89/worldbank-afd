@@ -46,7 +46,9 @@ namespace WorldMap
             
             //Note: get country data
             var loadCountry = Context.Load(Context.GetTbl_countriesQuery());
-            loadCountry.Completed += new System.EventHandler(load_Completed);            
+            loadCountry.Completed += new System.EventHandler(load_Completed);
+
+
         }
 
         void loadTabIndicator_Completed(object sender, EventArgs e)
