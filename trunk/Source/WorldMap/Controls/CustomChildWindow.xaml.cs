@@ -8,6 +8,7 @@ using System.ServiceModel.DomainServices.Client;
 using NCRVisual.web.Services;
 using System.Linq;
 using WorldbankDataGraphs;
+using System.Windows.Media.Imaging;
 
 namespace WorldMap
 {
@@ -54,6 +55,10 @@ namespace WorldMap
 
             worldMapController.GetTabCountryData(selectedCountry.country_id_pk);
             worldMapController.GetTabCountryDataCompleted += new EventHandler(worldMapController_GetTabCountryDataCompleted);
+
+            Uri uriSource = new Uri(Application.Current.Host.Source + "../../../flags/" + selectedCountry.country_iso_code + ".png", UriKind.Absolute);
+            Flag.Source = new BitmapImage(uriSource);
+
         }
 
         void worldMapController_GetTabCountryDataCompleted(object sender, EventArgs e)

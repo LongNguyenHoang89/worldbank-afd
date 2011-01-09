@@ -14,7 +14,7 @@
                     <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <Image></Image>
+                    <Image Name="Flag" Width="70" Height="40" Stretch="Fill" Margin="0,0,10,0"/>
                     <TextBlock FontSize="30" Name="CountryNameTextBlock"></TextBlock>
                 </StackPanel>
 

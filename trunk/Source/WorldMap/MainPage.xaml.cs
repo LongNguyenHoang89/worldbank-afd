@@ -4,16 +4,11 @@ using System.ServiceModel;
 using System.Windows;
 using System.Windows.Browser;
 using System.Windows.Controls;
-using Microsoft.Expression.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using Microsoft.Maps.MapControl;
 using Microsoft.Maps.MapControl.Design;
-using NCRVisual.web.Services;
 using NCRVisual.web.DataModel;
-using System.Windows.Media;
-using System.Windows.Data;
-using System.Linq;
-using System.Windows.Media.Imaging;
-using System.Windows.Input;
 
 namespace WorldMap
 {
@@ -86,8 +81,7 @@ namespace WorldMap
                     if (item.Header.ToString() == indicator.tab_name.ToString())
                     {
                         Grid grid = new Grid();
-                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20) });
-                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) });
+                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20) });                        
                         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength() });
 
                         ToolTipService.SetToolTip(grid, new ToolTip()
@@ -95,21 +89,17 @@ namespace WorldMap
                             Content = indicator.indicator_description,
                             //Style = this.Resources["CustomInfoboxStyle"] as Style,
                         });
-
-
-                        TextBlock code = new TextBlock { Text = indicator.indicator_code };
+                        
                         TextBlock name = new TextBlock { Text = indicator.indicator_name };
                         CheckBox chk = new CheckBox();
                         chk.Tag = indicator.indicator_id_pk;
                         chk.Checked += new RoutedEventHandler(IndicatorCheckbox_Checked);
                         chk.Unchecked += new RoutedEventHandler(IndicatorCheckbox_Unchecked);
-
-                        grid.Children.Add(code);
+                        
                         grid.Children.Add(name);
                         grid.Children.Add(chk);
 
-                        Grid.SetColumn(code, 1);
-                        Grid.SetColumn(name, 2);
+                        Grid.SetColumn(name, 1);
 
                         item.Items.Add(grid);
                         break;
