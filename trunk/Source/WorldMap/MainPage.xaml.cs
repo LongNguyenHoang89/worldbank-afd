@@ -283,9 +283,17 @@ namespace WorldMap
                 }
             }
 
-            // init a new CustomChildWindow
-            CompareCountriesChildWindow child = new CompareCountriesChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
-            child.Show();
+            if (selectedCountries.Count > 1)
+            {
+                // init a new CustomChildWindow
+                CompareCountriesChildWindow child = new CompareCountriesChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
+                child.Show();
+            }
+            else
+            {
+                ErrorNotification errorPopup = new ErrorNotification("You must select at least 2 country to compare them");
+                errorPopup.Show();
+            }
         }
 
         #region Reverse Geocode region
