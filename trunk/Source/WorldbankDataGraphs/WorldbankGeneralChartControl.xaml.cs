@@ -6,10 +6,15 @@ using WorldbankDataGraphs.Common;
 using WorldbankDataGraphs.Entities;
 namespace WorldbankDataGraphs
 {
-    public partial class WorldbankColumnChartControl : UserControl
+    public partial class WorldbankGeneralChartControl : UserControl
     {
         #region constants for this control
-        private static string DEF_CHART_TITLE = "USD";
+        #endregion
+
+        #region public constants
+        public const int RA_COLUMN = 1;
+        public const int RA_LINE = 2;
+        public const int RA_BAR = 4;
         #endregion
 
         #region private vars
@@ -23,9 +28,44 @@ namespace WorldbankDataGraphs
         #endregion
 
         #region normal getters & setters
+        public int ThisChartRenderAs
+        {
+            set
+            {
+                switch (value) {
+                    case RA_COLUMN:
+                        _thisChartRenderAs = RenderAs.Column;
+                        break;
+                    case RA_LINE:
+                        _thisChartRenderAs = RenderAs.Line;
+                        break;
+                    case RA_BAR:
+                        _thisChartRenderAs = RenderAs.Bar;
+                        break;
+                }
+            }
+        }
+        public string AttributeShownName
+        {
+            get { return attributeShownName; }
+            set { attributeShownName = value; }
+        }
+        #endregion
+
+        #region getters & setters with advanced function (refresh graph on data update)
         public string ChartTitle
         {
-            get { return YAxis.Title; }
+            get
+            {
+                if (YAxis != null)
+                {
+                    return YAxis.Title;
+                }
+                else
+                {
+                    return null;
+                }
+            }
             set
             {
                 if (YAxis != null)
@@ -39,14 +79,6 @@ namespace WorldbankDataGraphs
                 }
             }
         }
-        public string AttributeShownName
-        {
-            get { return attributeShownName; }
-            set { attributeShownName = value; }
-        }
-        #endregion
-
-        #region getters & setters with advanced function (refresh graph on data update)
         public List<Country> CountriesShown
         {
             get { return countriesShown; }
@@ -197,7 +229,7 @@ namespace WorldbankDataGraphs
 
         #endregion
 
-        public WorldbankColumnChartControl()
+        public WorldbankGeneralChartControl()
         {
             InitializeComponent();
             //#region create dummy data

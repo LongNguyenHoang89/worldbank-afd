@@ -3,9 +3,9 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" x:Name="chwPopUp"
 	x:Class="WorldMap.CustomChildWindow"
-	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="626">
 
-    <basics:TabControl Height="350" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="500">
+    <basics:TabControl Height="350" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Top">
         <basics:TabItem Header="Country Overview" Name="OverviewTab">
             <Grid x:Name="LayoutRoot" Background="White">
                 <Grid.RowDefinitions>
@@ -46,7 +46,37 @@
             </Grid>
         </basics:TabItem>
         <basics:TabItem Header="Getting data..." Name="tabItem2">
-            <Grid Background="White" Name="columnChartTab"/>
+            <Grid Background="White" Name="columnChartTabContainer">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Background="White" Name="columnChartTab" Width="400" HorizontalAlignment="Left">
+                    
+                </Grid>
+                <Grid Name="IndicatorsGrid" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <ListBox Name="IndicatorListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch" ToolTipService.ToolTip="{Binding indicator_description}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="IndicatorCheckbox" Checked="IndicatorCheckbox_Checked" Tag="{Binding indicator_id_pk}" Unchecked="IndicatorCheckbox_Unchecked"></CheckBox>
+                                    <TextBlock Grid.Column="1" Text="{Binding indicator_name}"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Grid.Row="1" Margin="5" Name="buttonRenderChart" Click="buttonRenderChart_Click" IsEnabled="False">Render chart</Button>
+                </Grid>
+            </Grid>
         </basics:TabItem>
     </basics:TabControl>
 

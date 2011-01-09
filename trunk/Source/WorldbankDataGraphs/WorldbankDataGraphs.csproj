@@ -82,8 +82,8 @@
     <Compile Include="Entities\PieSlice.cs" />
     <Compile Include="Entities\YearData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorldbankColumnChartControl.xaml.cs">
-      <DependentUpon>WorldbankColumnChartControl.xaml</DependentUpon>
+    <Compile Include="WorldbankGeneralChartControl.xaml.cs">
+      <DependentUpon>WorldbankGeneralChartControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorldbankPieChartControl.xaml.cs">
       <DependentUpon>WorldbankPieChartControl.xaml</DependentUpon>
@@ -97,7 +97,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="WorldbankColumnChartControl.xaml">
+    <Page Include="WorldbankGeneralChartControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -24,6 +24,11 @@ namespace NCRVisual.web.Services
             return this.ObjectContext.tbl_indicators.Where(i => pks.Contains((int)i.indicator_id_pk));
         }
 
+        public IQueryable<ref_country_indicator> GetRef_country_indicatorInIndicatorIDList(List<int> indicatorIdList)
+        {
+            return this.ObjectContext.ref_country_indicator.Where(i => indicatorIdList.Contains((int)i.indicator_id));
+        }
+
         public void InsertRef_country_indicator(ref_country_indicator ref_country_indicator)
         {
             if ((ref_country_indicator.EntityState != EntityState.Detached))

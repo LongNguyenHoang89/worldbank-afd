@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ServiceModel.DomainServices.Client;
 using NCRVisual.web.Services;
 using System.Linq;
+using WorldbankDataGraphs;
 
 namespace WorldMap
 {
@@ -16,7 +17,7 @@ namespace WorldMap
     public partial class CompareCountriesChildWindow
     {
         Controller _worldMapController;
-        private WorldbankDataGraphs.WorldbankColumnChartControl columnChartControl = null;
+        private WorldbankDataGraphs.WorldbankGeneralChartControl columnChartControl = null;
         private List<tbl_countries> _selectedCountries;
         private List<int> _checkedIndicatorPKs;
         private LoadOperation<tbl_indicators> tblIndLoadOp = null;
@@ -121,7 +122,8 @@ namespace WorldMap
 
         private void comboBoxIndicatorSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            WorldbankDataGraphs.WorldbankColumnChartControl control = new WorldbankDataGraphs.WorldbankColumnChartControl();
+            WorldbankGeneralChartControl control = new WorldbankDataGraphs.WorldbankGeneralChartControl();
+            control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
             this.columnChartControl = control;
             // disable the combobox
             this.comboBoxIndicatorSelector.IsEnabled = false;

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ServiceModel.DomainServices.Client;
 using NCRVisual.web.Services;
 using System.Linq;
+using WorldbankDataGraphs;
 
 namespace WorldMap
 {
@@ -16,10 +17,14 @@ namespace WorldMap
     public partial class CustomChildWindow
     {
         Controller _worldMapController;
-        private WorldbankDataGraphs.WorldbankColumnChartControl columnChartControl = null;
+        private WorldbankDataGraphs.WorldbankGeneralChartControl columnChartControl = null;
         private tbl_countries _selectedCountry;
         private LoadOperation<tbl_indicators> tblIndLoadOp = null;
+        private LoadOperation<tbl_indicators> tblIndsLoadOp = null;
         private LoadOperation<ref_country_indicator> loadOp = null;
+        private List<int> listboxIndicatorPKSelected = new List<int>();
+        private List<tbl_indicators> listIndicatorSelectedFromWM;
+        private List<tbl_indicators> shortListIndicatorsSelected;
 
         /// <summary>
         /// Default constructor
@@ -29,46 +34,73 @@ namespace WorldMap
         public CustomChildWindow(Controller worldMapController, tbl_countries selectedCountry, List<int> checkedIndicatorPKs)
         {
             InitializeComponent();
+            // set some var with input params
             this._worldMapController = worldMapController;
             this._selectedCountry = selectedCountry;
-
+            // generate the list of shortlist indicators
+            getIndicatorsFromPKs(checkedIndicatorPKs);
             this.CountryNameTextBlock.Text = _selectedCountry.country_name;
-
-            WorldbankDataGraphs.WorldbankColumnChartControl control = new WorldbankDataGraphs.WorldbankColumnChartControl();
-            getIndicatorFromPK(checkedIndicatorPKs[0]);
-            this.columnChartControl = control;
-            GetDataForGraph(_selectedCountry, checkedIndicatorPKs[0]);
-            this.columnChartTab.Children.Add(control);            
         }
-
-        private void getIndicatorFromPK(int indPK)
+        private void getIndicatorsFromPKs(List<int> indPKs)
         {
             // get the indicator
             EntityQuery<tbl_indicators> tblIndQuery =
-                from ind in _worldMapController.Context.GetTbl_indicatorsQuery()
-                where (ind.indicator_id_pk == indPK)
+                from ind in _worldMapController.Context.GetTbl_indicatorsInPKListQuery(indPKs)
+                select ind;
+            tblIndsLoadOp = _worldMapController.Context.Load(tblIndQuery);
+            tblIndsLoadOp.Completed += new EventHandler(tblIndsLoadOp_Completed);
+        }
+
+        private void tblIndsLoadOp_Completed(object sender, EventArgs e)
+        {
+            listIndicatorSelectedFromWM = new List<tbl_indicators>(tblIndsLoadOp.Entities);
+            IndicatorListBox.ItemsSource = listIndicatorSelectedFromWM;
+            // enable the render button
+            buttonRenderChart.IsEnabled = true;
+        }
+
+        private List<tbl_indicators> getIndicatorFromPKForGraph(List<int> indPKs)
+        {
+            List<tbl_indicators> returnList = new List<tbl_indicators>(
+                from tmp in listIndicatorSelectedFromWM
+                where indPKs.Contains(tmp.indicator_id_pk)
+                select tmp
+                );
+            return returnList;
+            /* Obsolete code
+            // get the indicator
+            EntityQuery<tbl_indicators> tblIndQuery =
+                from ind in _worldMapController.Context.GetTbl_indicatorsInPKListQuery(indPKs)
                 select ind;
             tblIndLoadOp = _worldMapController.Context.Load(tblIndQuery);
             tblIndLoadOp.Completed += new EventHandler(tblIndLoadOp_Completed);
+             */
         }
 
-        private void tblIndLoadOp_Completed(object sender, EventArgs e)
+        //private void tblIndLoadOp_Completed(object sender, EventArgs e)
+        //{
+        //    List<tbl_indicators> selectedInd = new List<tbl_indicators>(tblIndLoadOp.Entities);
+        //    //nqk
+        //    if (selectedInd.Count > 0)
+        //    {
+        //        this.columnChartControl.ChartTitle = selectedInd[0].indicator_unit;
+        //        this.tabItem2.Header = selectedInd[0].indicator_name;
+        //    }
+        //}
+
+        private void GetDataForGraph(tbl_countries selectedCountry, List<tbl_indicators> checkedIndicator)
         {
-            List<tbl_indicators> selectedInd = new List<tbl_indicators>(tblIndLoadOp.Entities);
-            if (selectedInd.Count > 0)
+            // create a list of indicator pks
+            List<int> tmpIndPKs = new List<int>();
+            foreach (tbl_indicators tmpTI in checkedIndicator)
             {
-                // get the first one, of course it's the only result because we query based on pk
-                this.columnChartControl.ChartTitle = selectedInd[0].indicator_unit;
-                this.tabItem2.Header = selectedInd[0].indicator_name;
+                tmpIndPKs.Add(tmpTI.indicator_id_pk);
             }
-        }
 
-        private void GetDataForGraph(tbl_countries selectedCountries, int checkedIndicator)
-        {
             EntityQuery<ref_country_indicator> query =
-                from c in _worldMapController.Context.GetRef_country_indicatorQuery()
+                from c in _worldMapController.Context.GetRef_country_indicatorInIndicatorIDListQuery(tmpIndPKs)
                 // == tmpTC.country_id_pk
-                where (c.country_id == selectedCountries.country_id_pk && c.indicator_id == checkedIndicator)
+                where (c.country_id == selectedCountry.country_id_pk)
                 select c;
             loadOp = _worldMapController.Context.Load(query);
             loadOp.Completed += new EventHandler(loadOp_Completed);
@@ -78,23 +110,36 @@ namespace WorldMap
         {
             List<ref_country_indicator> refCountryIndic = new List<ref_country_indicator>(loadOp.Entities);
             List<Country> finalResult = new List<Country>();
-            string key = refCountryIndic[0].indicator_id.ToString();
+            string key = "key"; // it could be any random string
 
-            // create a new country to send as param to the ColumnChartControl
-            Country tmpC = new Country();
-            tmpC.Name = _selectedCountry.country_name;
-            foreach (ref_country_indicator tmpRCI in refCountryIndic)
+            foreach (tbl_indicators tmpTI in shortListIndicatorsSelected)
             {
-                YearData tmpYD = new YearData();
-                tmpYD.Year = (int)tmpRCI.country_indicator_year;
-                tmpYD.Attributes.Add(key, tmpRCI.country_indicator_value.ToString());
-                tmpC.Years.Add(tmpYD);
+                // create a new country to send as param to the ColumnChartControl
+                Country tmpC = new Country();
+                tmpC.Name = tmpTI.indicator_name;
+
+                List<ref_country_indicator> tmprefCountryIndic = new List<ref_country_indicator>(
+                    from r in refCountryIndic
+                    where r.indicator_id == tmpTI.indicator_id_pk
+                    select r
+                    );
+
+                foreach (ref_country_indicator tmpRCI in tmprefCountryIndic)
+                {
+                    YearData tmpYD = new YearData();
+                    tmpYD.Year = (int)tmpRCI.country_indicator_year;
+                    tmpYD.Attributes.Add(key, tmpRCI.country_indicator_value.ToString());
+                    tmpC.Years.Add(tmpYD);
+                }
+                finalResult.Add(tmpC);
             }
-            finalResult.Add(tmpC);
 
 
             this.columnChartControl.AttributeShownName = key;
             this.columnChartControl.CountriesShown = finalResult;
+
+            // re-enable the render button
+            buttonRenderChart.IsEnabled = true;
         }
 
         #region obsolete funcs, might need to be removed
@@ -109,9 +154,42 @@ namespace WorldMap
         }
         #endregion
 
-        #region for pie chart tab
-        #endregion
+        private void buttonRenderChart_Click(object sender, RoutedEventArgs e)
+        {
+            // disable the button
+            buttonRenderChart.IsEnabled = false;
 
+            WorldbankGeneralChartControl control = new WorldbankGeneralChartControl();
+            this.columnChartControl = control;
+            // remove all controls from columnChartTab
+            int countChild = this.columnChartTab.Children.Count;
+            for (int i = 0; i < countChild; i++)
+            {
+                this.columnChartTab.Children.RemoveAt(0);
+            }
+            // add the chart to columnChartTab
+            this.columnChartTab.Children.Add(control);
+
+            shortListIndicatorsSelected = getIndicatorFromPKForGraph(listboxIndicatorPKSelected);
+
+            // change render style if needed
+            if (shortListIndicatorsSelected.Count > 1)
+            {
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
+            }
+
+            GetDataForGraph(_selectedCountry, shortListIndicatorsSelected);
+        }
+
+        private void IndicatorCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            listboxIndicatorPKSelected.Add(Convert.ToInt32(((CheckBox)sender).Tag));
+        }
+
+        private void IndicatorCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            listboxIndicatorPKSelected.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
+        }
     }
 }
 
