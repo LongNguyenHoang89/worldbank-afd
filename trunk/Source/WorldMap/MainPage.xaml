@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:m="clr-namespace:Microsoft.Maps.MapControl;assembly=Microsoft.Maps.MapControl"
     xmlns:local ="clr-namespace:WorldMap"    
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Name="userControl" x:Class="WorldMap.MainPage"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" x:Name="userControl" x:Class="WorldMap.MainPage"
     mc:Ignorable="d"  
     AllowDrop="True"
     >
@@ -23,66 +23,39 @@
                                 <SolidColorBrush Color="Black" Opacity="0.5"/>
                             </Border.Background>
                             <ContentPresenter Margin="5">
-                                <ContentPresenter.Content>
-                                    <StackPanel Margin="5" MaxWidth="200">
-                                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" Foreground="White"/>
-                                        <TextBlock Text="{Binding Description}" Foreground="White" TextWrapping="Wrap"/>
-                                    </StackPanel>
-                                </ContentPresenter.Content>
+                                <StackPanel Margin="5" MaxWidth="200">
+                                    <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" Foreground="White"/>
+                                    <TextBlock Text="{Binding Description}" Foreground="White" TextWrapping="Wrap"/>
+                                </StackPanel>
                             </ContentPresenter>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
         </Style>
+        <Storyboard x:Name="IndicatorListOpen">
+            <DoubleAnimation Duration="0:0:0.25" To="375" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="ControlPanelBorder" d:IsOptimized="True"/>
+        </Storyboard>
+
+        <Storyboard x:Name="IndicatorListClose">
+            <DoubleAnimation Duration="0:0:0.25" To="30" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="ControlPanelBorder" d:IsOptimized="True"/>
+        </Storyboard>
+
+        <Storyboard x:Name="CountryListOpen">
+            <DoubleAnimation Duration="0:0:0.25" To="475" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="CountryListBorder" d:IsOptimized="True"/>
+        </Storyboard>
+
+        <Storyboard x:Name="CountryListClose">
+            <DoubleAnimation Duration="0:0:0.25" To="30" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="CountryListBorder" d:IsOptimized="True"/>
+        </Storyboard>
+
+        <ControlTemplate x:Key="RemoveButton" TargetType="Button">
+            <Image Source="Image/Remove.png"/>
+        </ControlTemplate>
     </UserControl.Resources>
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseLeftButtonDown" SourceObject="{Binding ElementName=button}">
-            <ei:GoToStateAction TargetObject="{Binding ElementName=ControlPanelBorder}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
     <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
-                <VisualStateGroup.Transitions>
-                    <VisualTransition From="ControlPanelClose" GeneratedDuration="0" To="ControlPanelOpen">
-                        <ei:ExtendedVisualStateManager.TransitionEffect>
-                            <ee:CloudRevealTransitionEffect RandomSeed="5"/>
-                        </ei:ExtendedVisualStateManager.TransitionEffect>
-                        <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.25" To="375" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="ControlPanelBorder" d:IsOptimized="True"/>
-                        </Storyboard>
-                    </VisualTransition>
-                    <VisualTransition From="ControlPanelOpen" GeneratedDuration="0:0:0.25" To="ControlPanelClose"/>
-
-                    <VisualTransition From="CountryListPanelClose" GeneratedDuration="0" To="CountryListPanelOpen">
-                        <ei:ExtendedVisualStateManager.TransitionEffect>
-                            <ee:CloudRevealTransitionEffect RandomSeed="5"/>
-                        </ei:ExtendedVisualStateManager.TransitionEffect>
-                        <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.25" To="475" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="CountryListBorder" d:IsOptimized="True"/>
-                        </Storyboard>
-                    </VisualTransition>
-                    <VisualTransition From="CountryListPanelOpen" GeneratedDuration="0:0:0.25" To="CountryListPanelClose"/>
-                </VisualStateGroup.Transitions>
-                <VisualState x:Name="ControlPanelOpen">
-                    <Storyboard>
-                        <DoubleAnimation Duration="0:0:0.25" To="375" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="ControlPanelBorder" d:IsOptimized="True"/>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="ControlPanelClose"/>
-
-                <VisualState x:Name="CountryListPanelOpen">
-                    <Storyboard>
-                        <DoubleAnimation Duration="0:0:0.25" To="475" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="CountryListBorder" d:IsOptimized="True"/>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="CountryListPanelClose"/>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*"/>
@@ -90,11 +63,9 @@
         <VisualStateManager.CustomVisualStateManager>
             <ei:ExtendedVisualStateManager/>
         </VisualStateManager.CustomVisualStateManager>
-        
-        <StackPanel Grid.Row="0">        
-        </StackPanel>
-        <m:Map CredentialsProvider="AnDFcb6V80_dRKOObV5Q-K0ACvlPNjpllC76dk3Trd7tG1Gjlau_T14711TdnLSe" x:Name="MyMap" Grid.Row="1" AllowDrop="True">            
-        </m:Map>
+
+        <StackPanel Grid.Row="0"/>
+        <m:Map CredentialsProvider="AnDFcb6V80_dRKOObV5Q-K0ACvlPNjpllC76dk3Trd7tG1Gjlau_T14711TdnLSe" x:Name="MyMap" Grid.Row="1" AllowDrop="True" IsEnabled="False"/>
 
         <Border x:Name="ControlPanelBorder" CornerRadius="10,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="22,0" Width="400" Height="30" Grid.RowSpan="2">
             <Border.Background>
@@ -106,37 +77,30 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock Foreground="White" VerticalAlignment="Center" FontSize="15" FontWeight="ExtraBold">Indicator list</TextBlock>
-                    <Button Height="20"  Width="20" Content="^" Name="ControlPanelButton" Margin="5"/>
+                    <TextBlock Foreground="White" VerticalAlignment="Center" FontSize="15" FontWeight="ExtraBold"><Run Text="Indicator list"/></TextBlock>
+                    <Button Height="20"  Width="20" Content="^" x:Name="ControlPanelButton" Margin="5"/>
                 </StackPanel>
-                <ListBox Grid.Row="1" Name="IndicatorListBox">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch" ToolTipService.ToolTip="{Binding indicator_description}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="150"/>                                        
-                                    <ColumnDefinition Width="*"/>                                    
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="1" Text="{Binding indicator_code}"></TextBlock>
-                                <TextBlock Grid.Column="2" Text="{Binding indicator_name}"></TextBlock>
-                                <CheckBox Name="IndicatorCheckbox" Checked="IndicatorCheckbox_Checked" Tag="{Binding indicator_id_pk}" Unchecked="IndicatorCheckbox_Unchecked"></CheckBox>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+
+                <sdk:TreeView Grid.Row="1" x:Name="IndicatorTreeView">
+                </sdk:TreeView>
             </Grid>
         </Border>
-                
-        <Border CornerRadius="10,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"  Width="200" Height="50" Grid.RowSpan="2">
+
+        <Border CornerRadius="10,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"  Width="200" Height="60" Grid.RowSpan="2">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity=".6"/>
             </Border.Background>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="PushPinPanel">
-            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" ></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" x:Name="PushPinPanel"/>
+                <TextBlock Grid.Row="1" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">[Drag this to world map]</TextBlock>
+            </Grid>
         </Border>
 
-        <Border Name="CountryListBorder" CornerRadius="0,0,0,10" VerticalAlignment="Top" HorizontalAlignment="Right" Width="300" Height="30" Grid.Row="2">
+        <Border x:Name="CountryListBorder" CornerRadius="0,0,0,10" VerticalAlignment="Top" HorizontalAlignment="Right" Width="300" Height="30" Grid.Row="2">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity=".6"/>
             </Border.Background>
@@ -144,16 +108,28 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock Foreground="White" VerticalAlignment="Center" FontSize="15" FontWeight="ExtraBold">Countries</TextBlock>
-                    <Button Height="20"  Width="20" Content="^" Name="CountryListPanelButton" Margin="5"/>
+                    <TextBlock Foreground="White" VerticalAlignment="Center" FontSize="15" FontWeight="ExtraBold"><Run Text="Countries"/></TextBlock>
+                    <Button Height="20"  Width="20" Content="^" x:Name="CountryListPanelButton" Margin="5"/>
                 </StackPanel>
-                <ListBox Grid.Row="1" Name="CountryListBox" Margin="10,0,0,10">
-                </ListBox>
+                <ListBox Grid.Row="1" x:Name="CountryListBox" Margin="10,0,0,10"/>
+                <StackPanel Grid.Row="2">
+                    <Button Grid.Row="1" Height="23" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="buttonCompareCountries" Width="125" Click="buttonCompareCountries_Click">
+                        Compare Countries
+                    </Button>
+                </StackPanel>
             </Grid>
         </Border>
-        <Button Content="Compare countries" Grid.Row="1" Height="23" HorizontalAlignment="Right" Name="buttonCompareCountries" VerticalAlignment="Bottom" Width="125" Click="buttonCompareCountries_Click" />
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="LoadingPanel">
+            <StackPanel.Background>
+                <SolidColorBrush Color="Black" Opacity="0.7"/>
+            </StackPanel.Background>
+            <ProgressBar  Height="20" x:Name="progressBar" Width="200" IsIndeterminate="True" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="White"><Run Text="Please wait while loading data"/></TextBlock>
+        </StackPanel>
     </Grid>
 </UserControl>
 

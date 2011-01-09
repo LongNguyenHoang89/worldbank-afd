@@ -49,7 +49,21 @@ namespace WorldMap
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_AREA_DESC);
             // select the first choice of the combobox
             comboBoxRenderStyle.SelectedIndex = 0;
+
+            worldMapController.GetTabCountryData(selectedCountry.country_id_pk);
+            worldMapController.GetTabCountryDataCompleted += new EventHandler(worldMapController_GetTabCountryDataCompleted);
         }
+
+        void worldMapController_GetTabCountryDataCompleted(object sender, EventArgs e)
+        {
+            foreach (View_GeneralCountry v in _worldMapController.Context.View_GeneralCountries)
+            {
+                RegionNameTextBlock.Text = v.region_name;
+                IncomeLevelTextBLock.Text = v.income_level_name;
+                LendingTypeTextBlock.Text = v.lending_type_name;               
+            }
+        }
+
         private void getIndicatorsFromPKs(List<int> indPKs)
         {
             // get the indicator

@@ -2359,6 +2359,246 @@ namespace NCRVisual.web.DataModel
             return this._country_id_pk;
         }
     }
+    
+    /// <summary>
+    /// The 'View_TabIndicator' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class View_TabIndicator : Entity
+    {
+        
+        private string _indicator_code;
+        
+        private string _indicator_description;
+        
+        private int _indicator_id_pk;
+        
+        private string _indicator_name;
+        
+        private string _indicator_unit;
+        
+        private int _tab_id_pk;
+        
+        private string _tab_name;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Onindicator_codeChanging(string value);
+        partial void Onindicator_codeChanged();
+        partial void Onindicator_descriptionChanging(string value);
+        partial void Onindicator_descriptionChanged();
+        partial void Onindicator_id_pkChanging(int value);
+        partial void Onindicator_id_pkChanged();
+        partial void Onindicator_nameChanging(string value);
+        partial void Onindicator_nameChanged();
+        partial void Onindicator_unitChanging(string value);
+        partial void Onindicator_unitChanged();
+        partial void Ontab_id_pkChanging(int value);
+        partial void Ontab_id_pkChanged();
+        partial void Ontab_nameChanging(string value);
+        partial void Ontab_nameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View_TabIndicator"/> class.
+        /// </summary>
+        public View_TabIndicator()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_code' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string indicator_code
+        {
+            get
+            {
+                return this._indicator_code;
+            }
+            set
+            {
+                if ((this._indicator_code != value))
+                {
+                    this.Onindicator_codeChanging(value);
+                    this.RaiseDataMemberChanging("indicator_code");
+                    this.ValidateProperty("indicator_code", value);
+                    this._indicator_code = value;
+                    this.RaiseDataMemberChanged("indicator_code");
+                    this.Onindicator_codeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_description' value.
+        /// </summary>
+        [DataMember()]
+        public string indicator_description
+        {
+            get
+            {
+                return this._indicator_description;
+            }
+            set
+            {
+                if ((this._indicator_description != value))
+                {
+                    this.Onindicator_descriptionChanging(value);
+                    this.RaiseDataMemberChanging("indicator_description");
+                    this.ValidateProperty("indicator_description", value);
+                    this._indicator_description = value;
+                    this.RaiseDataMemberChanged("indicator_description");
+                    this.Onindicator_descriptionChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int indicator_id_pk
+        {
+            get
+            {
+                return this._indicator_id_pk;
+            }
+            set
+            {
+                if ((this._indicator_id_pk != value))
+                {
+                    this.Onindicator_id_pkChanging(value);
+                    this.ValidateProperty("indicator_id_pk", value);
+                    this._indicator_id_pk = value;
+                    this.RaisePropertyChanged("indicator_id_pk");
+                    this.Onindicator_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string indicator_name
+        {
+            get
+            {
+                return this._indicator_name;
+            }
+            set
+            {
+                if ((this._indicator_name != value))
+                {
+                    this.Onindicator_nameChanging(value);
+                    this.RaiseDataMemberChanging("indicator_name");
+                    this.ValidateProperty("indicator_name", value);
+                    this._indicator_name = value;
+                    this.RaiseDataMemberChanged("indicator_name");
+                    this.Onindicator_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_unit' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string indicator_unit
+        {
+            get
+            {
+                return this._indicator_unit;
+            }
+            set
+            {
+                if ((this._indicator_unit != value))
+                {
+                    this.Onindicator_unitChanging(value);
+                    this.RaiseDataMemberChanging("indicator_unit");
+                    this.ValidateProperty("indicator_unit", value);
+                    this._indicator_unit = value;
+                    this.RaiseDataMemberChanged("indicator_unit");
+                    this.Onindicator_unitChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int tab_id_pk
+        {
+            get
+            {
+                return this._tab_id_pk;
+            }
+            set
+            {
+                if ((this._tab_id_pk != value))
+                {
+                    this.Ontab_id_pkChanging(value);
+                    this.ValidateProperty("tab_id_pk", value);
+                    this._tab_id_pk = value;
+                    this.RaisePropertyChanged("tab_id_pk");
+                    this.Ontab_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string tab_name
+        {
+            get
+            {
+                return this._tab_name;
+            }
+            set
+            {
+                if ((this._tab_name != value))
+                {
+                    this.Ontab_nameChanging(value);
+                    this.RaiseDataMemberChanging("tab_name");
+                    this.ValidateProperty("tab_name", value);
+                    this._tab_name = value;
+                    this.RaiseDataMemberChanged("tab_name");
+                    this.Ontab_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return EntityKey.Create(this._indicator_id_pk, this._tab_id_pk);
+        }
+    }
 }
 namespace NCRVisual.web.Services
 {
@@ -2417,6 +2657,17 @@ namespace NCRVisual.web.Services
                 base(domainClient)
         {
             this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="View_GeneralCountry"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<View_GeneralCountry> View_GeneralCountries
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<View_GeneralCountry>();
+            }
         }
         
         /// <summary>
@@ -2541,14 +2792,27 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
-        /// Gets the set of <see cref="View_GeneralCountry"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// Gets the set of <see cref="View_TabIndicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
-        public EntitySet<View_GeneralCountry> View_GeneralCountries
+        public EntitySet<View_TabIndicator> View_TabIndicators
         {
             get
             {
-                return base.EntityContainer.GetEntitySet<View_GeneralCountry>();
+                return base.EntityContainer.GetEntitySet<View_TabIndicator>();
             }
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_GeneralCountry"/> entities using the 'GetCountryGeneralInfo' query.
+        /// </summary>
+        /// <param name="country_pk">The value for the 'country_pk' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_GeneralCountry"/> entities.</returns>
+        public EntityQuery<View_GeneralCountry> GetCountryGeneralInfoQuery(int country_pk)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("country_pk", country_pk);
+            this.ValidateMethod("GetCountryGeneralInfoQuery", parameters);
+            return base.CreateQuery<View_GeneralCountry>("GetCountryGeneralInfo", parameters, false, true);
         }
         
         /// <summary>
@@ -2572,6 +2836,19 @@ namespace NCRVisual.web.Services
             parameters.Add("countryIdList", countryIdList);
             this.ValidateMethod("GetRef_country_indicatorInCountryIdListQuery", parameters);
             return base.CreateQuery<ref_country_indicator>("GetRef_country_indicatorInCountryIdList", parameters, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_country_indicator"/> entities using the 'GetRef_country_indicatorInIndicatorIDList' query.
+        /// </summary>
+        /// <param name="indicatorIdList">The value for the 'indicatorIdList' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_country_indicator"/> entities.</returns>
+        public EntityQuery<ref_country_indicator> GetRef_country_indicatorInIndicatorIDListQuery(IEnumerable<int> indicatorIdList)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("indicatorIdList", indicatorIdList);
+            this.ValidateMethod("GetRef_country_indicatorInIndicatorIDListQuery", parameters);
+            return base.CreateQuery<ref_country_indicator>("GetRef_country_indicatorInIndicatorIDList", parameters, false, true);
         }
         
         /// <summary>
@@ -2698,6 +2975,16 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_TabIndicator"/> entities using the 'GetView_TabIndicator' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_TabIndicator"/> entities.</returns>
+        public EntityQuery<View_TabIndicator> GetView_TabIndicatorQuery()
+        {
+            this.ValidateMethod("GetView_TabIndicatorQuery", null);
+            return base.CreateQuery<View_TabIndicator>("GetView_TabIndicator", null, false, true);
+        }
+        
+        /// <summary>
         /// Creates a new entity container for this domain context's entity sets.
         /// </summary>
         /// <returns>A new container instance.</returns>
@@ -2712,6 +2999,25 @@ namespace NCRVisual.web.Services
         [ServiceContract()]
         public interface IWBDomainServiceContract
         {
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetCountryGeneralInfo' operation.
+            /// </summary>
+            /// <param name="country_pk">The value for the 'country_pk' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetCountryGeneralInfoDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetCountryGeneralInfo", ReplyAction="http://tempuri.org/WBDomainService/GetCountryGeneralInfoResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetCountryGeneralInfo(int country_pk, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetCountryGeneralInfo'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetCountryGeneralInfo'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetCountryGeneralInfo' operation.</returns>
+            QueryResult<View_GeneralCountry> EndGetCountryGeneralInfo(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetRef_country_indicator' operation.
@@ -2751,6 +3057,27 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetRef_country_indicatorInCountryIdList'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetRef_country_indicatorInCountryIdList' operation.</returns>
             QueryResult<ref_country_indicator> EndGetRef_country_indicatorInCountryIdList(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetRef_country_indicatorInIndicatorIDList' operation.
+            /// </summary>
+            /// <param name="indicatorIdList">The value for the 'indicatorIdList' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetRef_country_indicatorInIndicatorIDListDomai" +
+                "nServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetRef_country_indicatorInIndicatorIDList", ReplyAction="http://tempuri.org/WBDomainService/GetRef_country_indicatorInIndicatorIDListRespo" +
+                "nse")]
+            [WebGet()]
+            IAsyncResult BeginGetRef_country_indicatorInIndicatorIDList(IEnumerable<int> indicatorIdList, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetRef_country_indicatorInIndicatorIDList'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetRef_country_indicatorInIndicatorIDList'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetRef_country_indicatorInIndicatorIDList' operation.</returns>
+            QueryResult<ref_country_indicator> EndGetRef_country_indicatorInIndicatorIDList(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetRef_tab_indicator' operation.
@@ -2970,6 +3297,24 @@ namespace NCRVisual.web.Services
             QueryResult<View_GeneralCountry> EndGetView_GeneralCountry(IAsyncResult result);
             
             /// <summary>
+            /// Asynchronously invokes the 'GetView_TabIndicator' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_TabIndicatorDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_TabIndicator", ReplyAction="http://tempuri.org/WBDomainService/GetView_TabIndicatorResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_TabIndicator(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_TabIndicator'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_TabIndicator'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_TabIndicator' operation.</returns>
+            QueryResult<View_TabIndicator> EndGetView_TabIndicator(IAsyncResult result);
+            
+            /// <summary>
             /// Asynchronously invokes the 'SubmitChanges' operation.
             /// </summary>
             /// <param name="changeSet">The change-set to submit.</param>
@@ -3005,6 +3350,7 @@ namespace NCRVisual.web.Services
                 this.CreateEntitySet<View_CountryIndicator>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryIndicatorTab>(EntitySetOperations.None);
                 this.CreateEntitySet<View_GeneralCountry>(EntitySetOperations.None);
+                this.CreateEntitySet<View_TabIndicator>(EntitySetOperations.None);
             }
         }
     }

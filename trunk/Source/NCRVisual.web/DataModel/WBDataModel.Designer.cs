@@ -256,6 +256,22 @@ namespace NCRVisual.web.DataModel
             }
         }
         private ObjectSet<View_GeneralCountry> _View_GeneralCountry;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<View_TabIndicator> View_TabIndicator
+        {
+            get
+            {
+                if ((_View_TabIndicator == null))
+                {
+                    _View_TabIndicator = base.CreateObjectSet<View_TabIndicator>("View_TabIndicator");
+                }
+                return _View_TabIndicator;
+            }
+        }
+        private ObjectSet<View_TabIndicator> _View_TabIndicator;
 
         #endregion
         #region AddTo Methods
@@ -354,6 +370,14 @@ namespace NCRVisual.web.DataModel
         public void AddToView_GeneralCountry(View_GeneralCountry view_GeneralCountry)
         {
             base.AddObject("View_GeneralCountry", view_GeneralCountry);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the View_TabIndicator EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToView_TabIndicator(View_TabIndicator view_TabIndicator)
+        {
+            base.AddObject("View_TabIndicator", view_TabIndicator);
         }
 
         #endregion
@@ -2320,6 +2344,210 @@ namespace NCRVisual.web.DataModel
         private global::System.String _income_level_name;
         partial void Onincome_level_nameChanging(global::System.String value);
         partial void Onincome_level_nameChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="WBModel", Name="View_TabIndicator")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class View_TabIndicator : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new View_TabIndicator object.
+        /// </summary>
+        /// <param name="tab_id_pk">Initial value of the tab_id_pk property.</param>
+        /// <param name="indicator_id_pk">Initial value of the indicator_id_pk property.</param>
+        public static View_TabIndicator CreateView_TabIndicator(global::System.Int32 tab_id_pk, global::System.Int32 indicator_id_pk)
+        {
+            View_TabIndicator view_TabIndicator = new View_TabIndicator();
+            view_TabIndicator.tab_id_pk = tab_id_pk;
+            view_TabIndicator.indicator_id_pk = indicator_id_pk;
+            return view_TabIndicator;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 tab_id_pk
+        {
+            get
+            {
+                return _tab_id_pk;
+            }
+            set
+            {
+                if (_tab_id_pk != value)
+                {
+                    Ontab_id_pkChanging(value);
+                    ReportPropertyChanging("tab_id_pk");
+                    _tab_id_pk = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("tab_id_pk");
+                    Ontab_id_pkChanged();
+                }
+            }
+        }
+        private global::System.Int32 _tab_id_pk;
+        partial void Ontab_id_pkChanging(global::System.Int32 value);
+        partial void Ontab_id_pkChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String tab_name
+        {
+            get
+            {
+                return _tab_name;
+            }
+            set
+            {
+                Ontab_nameChanging(value);
+                ReportPropertyChanging("tab_name");
+                _tab_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("tab_name");
+                Ontab_nameChanged();
+            }
+        }
+        private global::System.String _tab_name;
+        partial void Ontab_nameChanging(global::System.String value);
+        partial void Ontab_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 indicator_id_pk
+        {
+            get
+            {
+                return _indicator_id_pk;
+            }
+            set
+            {
+                if (_indicator_id_pk != value)
+                {
+                    Onindicator_id_pkChanging(value);
+                    ReportPropertyChanging("indicator_id_pk");
+                    _indicator_id_pk = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("indicator_id_pk");
+                    Onindicator_id_pkChanged();
+                }
+            }
+        }
+        private global::System.Int32 _indicator_id_pk;
+        partial void Onindicator_id_pkChanging(global::System.Int32 value);
+        partial void Onindicator_id_pkChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_code
+        {
+            get
+            {
+                return _indicator_code;
+            }
+            set
+            {
+                Onindicator_codeChanging(value);
+                ReportPropertyChanging("indicator_code");
+                _indicator_code = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_code");
+                Onindicator_codeChanged();
+            }
+        }
+        private global::System.String _indicator_code;
+        partial void Onindicator_codeChanging(global::System.String value);
+        partial void Onindicator_codeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_description
+        {
+            get
+            {
+                return _indicator_description;
+            }
+            set
+            {
+                Onindicator_descriptionChanging(value);
+                ReportPropertyChanging("indicator_description");
+                _indicator_description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_description");
+                Onindicator_descriptionChanged();
+            }
+        }
+        private global::System.String _indicator_description;
+        partial void Onindicator_descriptionChanging(global::System.String value);
+        partial void Onindicator_descriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_name
+        {
+            get
+            {
+                return _indicator_name;
+            }
+            set
+            {
+                Onindicator_nameChanging(value);
+                ReportPropertyChanging("indicator_name");
+                _indicator_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_name");
+                Onindicator_nameChanged();
+            }
+        }
+        private global::System.String _indicator_name;
+        partial void Onindicator_nameChanging(global::System.String value);
+        partial void Onindicator_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String indicator_unit
+        {
+            get
+            {
+                return _indicator_unit;
+            }
+            set
+            {
+                Onindicator_unitChanging(value);
+                ReportPropertyChanging("indicator_unit");
+                _indicator_unit = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("indicator_unit");
+                Onindicator_unitChanged();
+            }
+        }
+        private global::System.String _indicator_unit;
+        partial void Onindicator_unitChanging(global::System.String value);
+        partial void Onindicator_unitChanged();
 
         #endregion
     

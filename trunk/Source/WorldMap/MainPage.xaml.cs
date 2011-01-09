@@ -11,6 +11,9 @@ using NCRVisual.web.Services;
 using NCRVisual.web.DataModel;
 using System.Windows.Media;
 using System.Windows.Data;
+using System.Linq;
+using System.Windows.Media.Imaging;
+using System.Windows.Input;
 
 namespace WorldMap
 {
@@ -23,7 +26,6 @@ namespace WorldMap
         private DraggablePushpin _currentPushpin;
         private bool _isAddingNewPushPin;
         private List<int> selectedIndicatorPKs = new List<int>();
-        private HashSet<tbl_countries> selectedCountries = new HashSet<tbl_countries>();
         # endregion
 
         #region properties
@@ -47,14 +49,11 @@ namespace WorldMap
             InitializeComponent();
 
             //Event Handler
-            this.Loaded += new RoutedEventHandler(MainPage_Loaded);            
+            this.Loaded += new RoutedEventHandler(MainPage_Loaded);
             this.ControlPanelButton.Click += new RoutedEventHandler(ControlPanelButton_Click);
             this.CountryListPanelButton.Click += new RoutedEventHandler(CountryListPanelButton_Click);
-
-            //Set default visual state
-            VisualStateManager.GoToState(this, "ControlPanelClose", true);            
         }
-       
+
         /// <summary>
         /// Run after all page is loaded
         /// </summary>
@@ -64,12 +63,66 @@ namespace WorldMap
         {
             this.WorldMapController = new Controller();
             this.WorldMapController.LoadInitDataCompleted += new EventHandler(WorldMapController_LoadInitDataCompleted);
+            this.WorldMapController.GetView_TabIndicatorQueryCompleted += new EventHandler(WorldMapController_GetView_TabIndicatorQueryCompleted);
+        }
 
-            this.IndicatorListBox.ItemsSource = WorldMapController.Context.tbl_indicators;
+        void WorldMapController_GetView_TabIndicatorQueryCompleted(object sender, EventArgs e)
+        {
+            //TreeViewItem item = new
+            List<int> tabId = new List<int>();
+            foreach (View_TabIndicator indicator in WorldMapController.Context.View_TabIndicators)
+            {
+                if (!tabId.Contains(indicator.tab_id_pk))
+                {
+                    tabId.Add(indicator.tab_id_pk);
+                    TreeViewItem item = new TreeViewItem();
+                    item.Header = indicator.tab_name;
+                    item.DataContext = indicator.tab_id_pk;
+                    this.IndicatorTreeView.Items.Add(item);
+                }
+
+                foreach (TreeViewItem item in this.IndicatorTreeView.Items)
+                {
+                    if (item.Header.ToString() == indicator.tab_name.ToString())
+                    {
+                        Grid grid = new Grid();
+                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20) });
+                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) });
+                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength() });
+
+                        ToolTipService.SetToolTip(grid, new ToolTip()
+                        {
+                            Content = indicator.indicator_description,
+                            //Style = this.Resources["CustomInfoboxStyle"] as Style,
+                        });
+
+
+                        TextBlock code = new TextBlock { Text = indicator.indicator_code };
+                        TextBlock name = new TextBlock { Text = indicator.indicator_name };
+                        CheckBox chk = new CheckBox();
+                        chk.Tag = indicator.indicator_id_pk;
+                        chk.Checked += new RoutedEventHandler(IndicatorCheckbox_Checked);
+                        chk.Unchecked += new RoutedEventHandler(IndicatorCheckbox_Unchecked);
+
+                        grid.Children.Add(code);
+                        grid.Children.Add(name);
+                        grid.Children.Add(chk);
+
+                        Grid.SetColumn(code, 1);
+                        Grid.SetColumn(name, 2);
+
+                        item.Items.Add(grid);
+                        break;
+                    }
+                }
+            }
         }
 
         void WorldMapController_LoadInitDataCompleted(object sender, EventArgs e)
         {
+            this.LoadingPanel.Visibility = Visibility.Collapsed;
+            this.MyMap.IsEnabled = true;
+
             //Default Pushpin, put here cuz we have to wait the controller data loading process completed.
             PushPinLayer = new MapLayer();
             PushPinLayer.Name = "PushPinLayer";
@@ -77,18 +130,18 @@ namespace WorldMap
 
             DraggablePushpin DefaultPushPin = new DraggablePushpin(PushPinLayer);
             PushPinPanel.Children.Add(DefaultPushPin);
-            DefaultPushPin.Pinned += new EventHandler(DefaultPushPin_Pinned);                        
-        }              
+            DefaultPushPin.Pinned += new EventHandler(DefaultPushPin_Pinned);
+        }
 
         void ControlPanelButton_Click(object sender, RoutedEventArgs e)
         {
             if (!_isControlpanelOpened)
             {
-                VisualStateManager.GoToState(this, "ControlPanelOpen", true);
+                this.IndicatorListOpen.Begin();
             }
             else
             {
-                VisualStateManager.GoToState(this, "ControlPanelClose", true);
+                this.IndicatorListClose.Begin();
             }
             _isControlpanelOpened = !_isControlpanelOpened;
         }
@@ -97,18 +150,18 @@ namespace WorldMap
         {
             if (!_isCountryListPanelOpened)
             {
-                VisualStateManager.GoToState(this, "CountryListPanelOpen", true);
+                this.CountryListOpen.Begin();
             }
             else
             {
-                VisualStateManager.GoToState(this, "CountryListPanelClose", true);
+                this.CountryListClose.Begin();
             }
             _isCountryListPanelOpened = !_isCountryListPanelOpened;
         }
 
         void DefaultPushPin_Pinned(object sender, EventArgs e)
         {
-            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer);            
+            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer);
             pushPin.IsOnMap = true;
             PushPinLayer.AddChild(pushPin, (sender as DraggablePushpin).Location);
             pushPin.Location = (sender as DraggablePushpin).Location;
@@ -118,7 +171,7 @@ namespace WorldMap
             _currentPushpin = pushPin;
 
             pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
-            pushPin.Clicked += new EventHandler(MapPushpin_Clicked);                       
+            pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
         }
 
         void MapPushpin_Pinned(object sender, EventArgs e)
@@ -131,7 +184,7 @@ namespace WorldMap
         }
 
         /// <summary>
-        /// The event where a pin is double clicked on
+        /// The event where a pin is clicked on
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -145,7 +198,7 @@ namespace WorldMap
         }
 
         void CreateCountryPushPin(DraggablePushpin pushpin)
-        {            
+        {
             StackPanel panel = new StackPanel();
             panel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 
@@ -154,11 +207,11 @@ namespace WorldMap
             DraggablePushpin dp = new DraggablePushpin();
             dp.Background = pushpin.Background;
             dp.country = pushpin.country;
-                        
+
             TextBlock tb = new TextBlock();
             tb.TextAlignment = TextAlignment.Center;
             tb.VerticalAlignment = VerticalAlignment.Center;
-            tb.Margin = new Thickness(5, 0, 0, 0);            
+            tb.Margin = new Thickness(5, 0, 0, 0);
 
             if (pushpin.country != null)
             {
@@ -171,13 +224,19 @@ namespace WorldMap
 
             Button bt = new Button
             {
-                Height = 20,
-                Width = 50,
-                Content = "Remove",                
+                Height = 25,                                
+                Template = this.Resources["RemoveButton"] as ControlTemplate
             };
 
+            bt.MouseEnter += new System.Windows.Input.MouseEventHandler(bt_MouseEnter);
+            bt.MouseLeave += new System.Windows.Input.MouseEventHandler(bt_MouseLeave);
             bt.Click += new RoutedEventHandler(bt_Click);
 
+            CheckBox chk = new CheckBox();
+            chk.VerticalAlignment = VerticalAlignment.Center;
+            chk.Margin = new Thickness(5, 0, 5, 0);
+
+            panel.Children.Add(chk);
             panel.Children.Add(bt);
             panel.Children.Add(dp);
             panel.Children.Add(tb);
@@ -187,26 +246,56 @@ namespace WorldMap
             CountryListBox.Items.Add(panel);
         }
 
-        void UpdateCountryPushPin(StackPanel pushpinPanel)
-        {         
-            DraggablePushpin pushpin = pushpinPanel.DataContext as DraggablePushpin;
-            if (pushpin.country != null)
-            {
-                int a = pushpinPanel.Children.Count;
-                TextBlock tb = pushpinPanel.Children[2] as TextBlock;
-                tb.Text = pushpin.country.country_name;
-            }
-            else
-            {
-                (PushPinPanel.Children[2] as TextBlock).Text = "Error country data";
-            }
+        #region removeButton mouse event
+        void bt_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.Cursor = Cursors.Arrow;
+        }
+
+        void bt_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
         }
 
         void bt_Click(object sender, RoutedEventArgs e)
         {
-            StackPanel item = VisualTreeHelper.GetParent(sender as UIElement) as StackPanel;            
+            StackPanel item = VisualTreeHelper.GetParent(sender as UIElement) as StackPanel;
             PushPinLayer.Children.Remove(item.DataContext as DraggablePushpin);
             CountryListBox.Items.Remove(item);
+        }
+        #endregion
+
+        void UpdateCountryPushPin(StackPanel pushpinPanel)
+        {
+            DraggablePushpin pushpin = pushpinPanel.DataContext as DraggablePushpin;
+            if (pushpin.country != null)
+            {
+                int a = pushpinPanel.Children.Count;
+                TextBlock tb = pushpinPanel.Children[3] as TextBlock;
+                tb.Text = pushpin.country.country_name;
+            }
+            else
+            {
+                (PushPinPanel.Children[3] as TextBlock).Text = "Error country data";
+            }
+        }
+     
+        private void buttonCompareCountries_Click(object sender, RoutedEventArgs e)
+        {
+            // get the selected countries
+            List<tbl_countries> selectedCountries = new List<tbl_countries>();
+            foreach (UIElement test in CountryListBox.Items)
+            {
+                if (((test as StackPanel).Children[0] as CheckBox).IsChecked == true)
+                {
+                    DraggablePushpin tmpDP = (test as StackPanel).Children[2] as DraggablePushpin;
+                    selectedCountries.Add(tmpDP.country);
+                }
+            }
+
+            // init a new CustomChildWindow
+            CompareCountriesChildWindow child = new CompareCountriesChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
+            child.Show();
         }
 
         #region Reverse Geocode region
@@ -298,13 +387,19 @@ namespace WorldMap
                 if (e.Result.ResponseSummary.StatusCode != PlatformServices.ResponseStatusCode.Success)
                 {
                     //Output.Text = "error geocoding ... status <" + e.Result.ResponseSummary.StatusCode.ToString() + ">";
+                    ErrorNotification cw = new ErrorNotification("Error while geocoding, please choose another location");
+                    cw.Show();
+                    this.PushPinLayer.Children.Remove(_currentPushpin);
                 }
                 else if (0 == e.Result.Results.Count)
                 {
                     //Output.Text = outputString + "No results";
+                    ErrorNotification cw = new ErrorNotification("Error while geocoding, please choose another location");
+                    cw.Show();
+                    this.PushPinLayer.Children.Remove(_currentPushpin);
                 }
                 else
-                {                                        
+                {
                     string formatted = e.Result.Results[0].Address.CountryRegion;
                     object a = e.Result.Results[0].MatchCodes.ToString();
 
@@ -347,13 +442,14 @@ namespace WorldMap
                 }
             }
             catch (Exception ex)
-            {
-                //Output.Text = "Exception raised calling reverse geocoder";
+            {                
+                ErrorNotification cw = new ErrorNotification("Error while geocoding the location, please choose another country");
+                cw.Show();                
             }
 
             // See if there are more waiting to run.
             ReverseGeocodeFromQueue();
-        }     
+        }
 
         // Throttle calls on geocoding service.
         private const int MaxGeocodes = 3;
@@ -418,7 +514,7 @@ namespace WorldMap
             //}
             //else
             //{
-                selectedIndicatorPKs.Add(Convert.ToInt32(((CheckBox)sender).Tag));
+            selectedIndicatorPKs.Add(Convert.ToInt32(((CheckBox)sender).Tag));
             //}
         }
 
@@ -426,29 +522,7 @@ namespace WorldMap
         {
             selectedIndicatorPKs.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
         }
-        #endregion
-
-        private void buttonCompareCountries_Click(object sender, RoutedEventArgs e)
-        {
-
-            // get the selected countries
-            List<tbl_countries> selectedCountries = new List<tbl_countries>();
-            foreach (object test in CountryListBox.Items)
-            {
-                Panel tmpP = (Panel)test;
-                foreach (object tmpO in tmpP.Children)
-                {
-                    if (tmpO.GetType().Equals(typeof(DraggablePushpin)))
-                    {
-                        DraggablePushpin tmpDP = (DraggablePushpin)tmpO;
-                        selectedCountries.Add(tmpDP.country);
-                    }
-                }
-            }
-            // init a new CustomChildWindow
-            CompareCountriesChildWindow child = new CompareCountriesChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
-            child.Show();     
-        }
+        #endregion        
 
     }
 }

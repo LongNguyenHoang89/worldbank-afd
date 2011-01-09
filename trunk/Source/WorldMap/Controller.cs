@@ -26,6 +26,10 @@ namespace WorldMap
         /// </summary>
         public event EventHandler GetTabCountryDataCompleted;
 
+        /// <summary>
+        /// Event after tab indicator completed
+        /// </summary>
+        public event EventHandler GetView_TabIndicatorQueryCompleted;
         #endregion
 
         /// <summary>
@@ -37,14 +41,20 @@ namespace WorldMap
             Context = new WBDomainContext();
 
             //Note: Get indicator data
-            Context.Load(Context.GetTbl_indicatorsQuery());    
-       
-            //Note: Get tabs data
-            Context.Load(Context.GetRef_tab_indicatorQuery());
+            var loadTabIndicator = Context.Load(Context.GetView_TabIndicatorQuery());
+            loadTabIndicator.Completed += new EventHandler(loadTabIndicator_Completed);                  
             
             //Note: get country data
-            var load = Context.Load(Context.GetTbl_countriesQuery());
-            load.Completed += new System.EventHandler(load_Completed);            
+            var loadCountry = Context.Load(Context.GetTbl_countriesQuery());
+            loadCountry.Completed += new System.EventHandler(load_Completed);            
+        }
+
+        void loadTabIndicator_Completed(object sender, EventArgs e)
+        {
+            if (this.GetView_TabIndicatorQueryCompleted != null)
+            {
+                GetView_TabIndicatorQueryCompleted(sender, e);
+            }
         }
 
         void load_Completed(object sender, System.EventArgs e)
@@ -76,8 +86,8 @@ namespace WorldMap
 
         public void GetTabCountryData(int country_pk)
         {
-            //var loadTabCountryData = Context.Load(Context.GetView_GeneralCountryQuery(country_pk));
-            //loadTabCountryData.Completed += new EventHandler(loadTabCountryData_Completed);
+            var loadTabCountryData = Context.Load(Context.GetCountryGeneralInfoQuery(country_pk));
+            loadTabCountryData.Completed += new EventHandler(loadTabCountryData_Completed);
 
             //var loadCountryOverviewData = Context.Load(Context.
         }

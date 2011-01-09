@@ -129,6 +129,15 @@ namespace NCRVisual.web.Services
         {
             return this.ObjectContext.View_GeneralCountry;
         }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'View_TabIndicator' query.
+        public IQueryable<View_TabIndicator> GetView_TabIndicator()
+        {
+            return this.ObjectContext.View_TabIndicator;
+        }
     }
 }
 

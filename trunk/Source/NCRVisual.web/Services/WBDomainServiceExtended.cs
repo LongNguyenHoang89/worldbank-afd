@@ -55,5 +55,16 @@ namespace NCRVisual.web.Services
             this.ObjectContext.ref_country_indicator.DeleteObject(ref_country_indicator);
         }
 
+
+        /// <summary>
+        /// Get general information about a country
+        /// </summary>
+        /// <param name="country_pk"></param>
+        /// <returns></returns>
+        ///        
+        public IQueryable<View_GeneralCountry> GetCountryGeneralInfo(int country_pk)
+        {
+            return this.ObjectContext.View_GeneralCountry.Where(c => c.country_id_pk == country_pk);
+        }
     }
 }

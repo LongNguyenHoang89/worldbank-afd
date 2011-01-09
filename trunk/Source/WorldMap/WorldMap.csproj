@@ -103,6 +103,9 @@
     <Compile Include="Controls\DraggablePushpin.xaml.cs">
       <DependentUpon>DraggablePushpin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ErrorNotification.xaml.cs">
+      <DependentUpon>ErrorNotification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Generated_Code\NCRVisual.web.g.cs" />
     <Compile Include="GeocodeLayer.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -144,6 +147,7 @@
     <None Include="Service References\PlatformServices\WorldMap.PlatformServices.GeocodeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <Resource Include="Image\Remove.png" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +178,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DraggablePushpin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ErrorNotification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

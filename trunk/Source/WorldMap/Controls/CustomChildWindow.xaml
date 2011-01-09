@@ -38,14 +38,14 @@
                         <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" FontWeight="Bold" Grid.Row="3">Lending Type:</TextBlock>
                         <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" FontWeight="Bold" Grid.Row="4">Income Level:</TextBlock>
 
-                        <TextBlock Foreground="#FF58BE9A"  VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="2" Grid.Column="1" Name="RegionNameTextBlock"/>
-                        <TextBlock Foreground="#FF58BE9A" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3" Grid.Column="1" Name="LendingTypeTextBlock"/>
-                        <TextBlock Foreground="#FF58BE9A" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" Grid.Column="1" Name="IncomeLevelTextBLock"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="2" Grid.Column="1" Name="RegionNameTextBlock"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3" Grid.Column="1" Name="LendingTypeTextBlock"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" Grid.Column="1" Name="IncomeLevelTextBLock"/>
                     </Grid>
                 </Border>
             </Grid>
         </basics:TabItem>
-        <basics:TabItem Header="Graph" Name="tabItem2">
+        <basics:TabItem Header="Country Data" Name="tabItem2">
             <Grid Background="White" Name="columnChartTabContainer">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="400"></ColumnDefinition>

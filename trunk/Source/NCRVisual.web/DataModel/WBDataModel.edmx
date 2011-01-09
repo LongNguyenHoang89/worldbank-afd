@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="WBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="WBModelStoreContainer">
           <EntitySet Name="ref_country_indicator" EntityType="WBModel.Store.ref_country_indicator" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ref_tab_indicator" EntityType="WBModel.Store.ref_tab_indicator" store:Type="Tables" Schema="dbo" />
@@ -51,6 +51,17 @@
       [View_GeneralCountry].[lending_type_name] AS [lending_type_name], 
       [View_GeneralCountry].[income_level_name] AS [income_level_name]
       FROM [dbo].[View_GeneralCountry] AS [View_GeneralCountry]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_TabIndicator" EntityType="WBModel.Store.View_TabIndicator" store:Type="Views" store:Schema="dbo" store:Name="View_TabIndicator">
+            <DefiningQuery>SELECT 
+      [View_TabIndicator].[tab_id_pk] AS [tab_id_pk], 
+      [View_TabIndicator].[tab_name] AS [tab_name], 
+      [View_TabIndicator].[indicator_id_pk] AS [indicator_id_pk], 
+      [View_TabIndicator].[indicator_code] AS [indicator_code], 
+      [View_TabIndicator].[indicator_description] AS [indicator_description], 
+      [View_TabIndicator].[indicator_name] AS [indicator_name], 
+      [View_TabIndicator].[indicator_unit] AS [indicator_unit]
+      FROM [dbo].[View_TabIndicator] AS [View_TabIndicator]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
         <EntityType Name="ref_country_indicator">
@@ -189,8 +200,23 @@
           <Property Name="lending_type_name" Type="varchar" MaxLength="255" />
           <Property Name="income_level_name" Type="varchar" MaxLength="255" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'WB.dbo.View_TabIndicator' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="View_TabIndicator">
+          <Key>
+            <PropertyRef Name="tab_id_pk" />
+            <PropertyRef Name="indicator_id_pk" />
+          </Key>
+          <Property Name="tab_id_pk" Type="int" Nullable="false" />
+          <Property Name="tab_name" Type="varchar" MaxLength="255" />
+          <Property Name="indicator_id_pk" Type="int" Nullable="false" />
+          <Property Name="indicator_code" Type="varchar" MaxLength="50" />
+          <Property Name="indicator_description" Type="text" />
+          <Property Name="indicator_name" Type="varchar" MaxLength="255" />
+          <Property Name="indicator_unit" Type="varchar" MaxLength="255" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -207,6 +233,7 @@
           <EntitySet Name="View_CountryIndicator" EntityType="WBModel.View_CountryIndicator" />
           <EntitySet Name="View_CountryIndicatorTab" EntityType="WBModel.View_CountryIndicatorTab" />
           <EntitySet Name="View_GeneralCountry" EntityType="WBModel.View_GeneralCountry" />
+          <EntitySet Name="View_TabIndicator" EntityType="WBModel.View_TabIndicator" />
         </EntityContainer>
         <EntityType Name="ref_country_indicator">
           <Key>
@@ -335,6 +362,19 @@
           <Property Name="lending_type_name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Name="income_level_name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
         </EntityType>
+        <EntityType Name="View_TabIndicator">
+          <Key>
+            <PropertyRef Name="tab_id_pk" />
+            <PropertyRef Name="indicator_id_pk" />
+          </Key>
+          <Property Type="Int32" Name="tab_id_pk" Nullable="false" />
+          <Property Type="String" Name="tab_name" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="indicator_id_pk" Nullable="false" />
+          <Property Type="String" Name="indicator_code" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="indicator_description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="indicator_name" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="indicator_unit" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -431,6 +471,19 @@
             <ScalarProperty Name="lending_type_name" ColumnName="lending_type_name" />
             <ScalarProperty Name="income_level_name" ColumnName="income_level_name" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="View_TabIndicator">
+            <EntityTypeMapping TypeName="WBModel.View_TabIndicator">
+              <MappingFragment StoreEntitySet="View_TabIndicator">
+                <ScalarProperty Name="indicator_unit" ColumnName="indicator_unit" />
+                <ScalarProperty Name="indicator_name" ColumnName="indicator_name" />
+                <ScalarProperty Name="indicator_description" ColumnName="indicator_description" />
+                <ScalarProperty Name="indicator_code" ColumnName="indicator_code" />
+                <ScalarProperty Name="indicator_id_pk" ColumnName="indicator_id_pk" />
+                <ScalarProperty Name="tab_name" ColumnName="tab_name" />
+                <ScalarProperty Name="tab_id_pk" ColumnName="tab_id_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -445,13 +498,13 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="WBDataModel">
+      <Diagram Name="WBDataModel" ZoomLevel="83">
         <EntityTypeShape EntityType="WBModel.ref_country_indicator" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9802864583333331" IsExpanded="true" />
         <EntityTypeShape EntityType="WBModel.ref_tab_indicator" Width="1.5" PointX="2.75" PointY="0.75" Height="1.5956835937499996" IsExpanded="true" />
         <EntityTypeShape EntityType="WBModel.tbl_countries" Width="1.5" PointX="0.75" PointY="3.75" Height="3.1340950520833335" IsExpanded="true" />
@@ -464,6 +517,7 @@
         <EntityTypeShape EntityType="WBModel.View_CountryIndicator" Width="1.5" PointX="0.75" PointY="7.75" Height="2.7494921875000031" IsExpanded="true" />
         <EntityTypeShape EntityType="WBModel.View_CountryIndicatorTab" Width="1.5" PointX="2.75" PointY="7.75" Height="3.1340950520833317" IsExpanded="true" />
         <EntityTypeShape EntityType="WBModel.View_GeneralCountry" Width="1.5" PointX="8.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="WBModel.View_TabIndicator" Width="1.5" PointX="9.375" PointY="3.75" Height="2.3648893229166674" />
       </Diagram>
     </Diagrams>
   </Designer>
