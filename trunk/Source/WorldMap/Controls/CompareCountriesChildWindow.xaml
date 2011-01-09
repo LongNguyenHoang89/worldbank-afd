@@ -3,12 +3,15 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" x:Name="chwPopUp"
 	x:Class="WorldMap.CompareCountriesChildWindow"	
-	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="419" d:DesignWidth="564">
 
-    <Grid Height="350" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Name="chartTabGrid">
-        <ComboBox Height="23" HorizontalAlignment="Right" Name="comboBoxIndicatorSelector" VerticalAlignment="Top" Width="337" Margin="0,0,12,0" SelectionChanged="comboBoxIndicatorSelector_SelectionChanged" />
+    <Grid Height="383" Width="543" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Name="chartTabGrid">
+        <ComboBox Height="23" HorizontalAlignment="Right" Name="comboBoxIndicatorSelector" VerticalAlignment="Top" Width="367" Margin="0,0,12,0" />
         <sdk:Label Height="19" HorizontalAlignment="Left" Margin="12,4,0,0" Name="label1" VerticalAlignment="Top" Width="133" Content="Indicator to compare" />
-        <Grid Height="321" HorizontalAlignment="Left" Margin="12,29,0,0" Name="gridChart" VerticalAlignment="Top" Width="476" />
+        <Grid Height="284" HorizontalAlignment="Left" Margin="12,87,0,0" Name="gridChart" VerticalAlignment="Top" Width="519"></Grid>
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="164,29,0,0" Name="comboBoxRenderStyle" VerticalAlignment="Top" Width="367" />
+        <sdk:Label Height="20" HorizontalAlignment="Left" Margin="12,33,0,0" Name="label2" VerticalAlignment="Top" Width="120" Content="Render graph as" />
+        <Button Content="Render graph" Height="23" HorizontalAlignment="Left" Margin="429,58,0,0" Name="button1" VerticalAlignment="Top" Width="102" Click="button1_Click" />
     </Grid>
 
 </basics:ChildWindow>

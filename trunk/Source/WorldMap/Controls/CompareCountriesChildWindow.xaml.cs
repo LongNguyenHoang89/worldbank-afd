@@ -34,6 +34,15 @@ namespace WorldMap
             this._worldMapController = worldMapController;
             this._selectedCountries = selectedCountries;
             this._checkedIndicatorPKs = checkedIndicatorPKs;
+            // pupulate the combobox
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_LINE_DESC);
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_COLUMN_DESC);
+            comboBoxRenderStyle.Items.Add("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC);
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_BAR_DESC);
+            comboBoxRenderStyle.Items.Add("3D " + WorldbankGeneralChartControl.RA_BAR_DESC);
+            comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_AREA_DESC);
+            // select the first choice of the combobox
+            comboBoxRenderStyle.SelectedIndex = 0;
             // query the indicators from DB
             getIndicatorFromPK(_checkedIndicatorPKs);
         }
@@ -61,6 +70,8 @@ namespace WorldMap
             {
                 comboBoxIndicatorSelector.SelectedIndex = 0;
             }
+            // load the graph
+            button1_Click(this, new RoutedEventArgs());
         }
 
         #region funcs to load data needed to show the graph
@@ -105,8 +116,8 @@ namespace WorldMap
             }
             this.columnChartControl.AttributeShownName = key;
             this.columnChartControl.CountriesShown = finalResult;
-            // re-enable the combo box
-            comboBoxIndicatorSelector.IsEnabled = true;
+            // re-enable the render button
+            button1.IsEnabled = true;
         }
         #endregion
 
@@ -120,15 +131,41 @@ namespace WorldMap
             this.DialogResult = false;
         }
 
-        private void comboBoxIndicatorSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void button1_Click(object sender, RoutedEventArgs e)
         {
             WorldbankGeneralChartControl control = new WorldbankDataGraphs.WorldbankGeneralChartControl();
-            control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
             this.columnChartControl = control;
+            // select render style for the graph
+            if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_AREA_DESC))
+            {
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_AREA;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_BAR_DESC))
+            {
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_COLUMN_DESC))
+            {
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_LINE_DESC))
+            {
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC))
+            {
+                control.RenderAs3D = true;
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
+            }
+            else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_BAR_DESC))
+            {
+                control.RenderAs3D = true;
+                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
+            }
             // disable the combobox
-            this.comboBoxIndicatorSelector.IsEnabled = false;
+            this.button1.IsEnabled = false;
             // get the data needed to show the graph
-            GetDataForGraph(_selectedCountries, ((tbl_indicators)e.AddedItems[0]).indicator_id_pk);
+            GetDataForGraph(_selectedCountries, ((tbl_indicators)comboBoxIndicatorSelector.SelectedItem).indicator_id_pk);
             // remove all other graphs from gridChart
             int childCount = gridChart.Children.Count;
             for (int i = 0; i < childCount; i++)
