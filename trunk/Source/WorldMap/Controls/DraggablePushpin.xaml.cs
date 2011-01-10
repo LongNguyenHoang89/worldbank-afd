@@ -42,7 +42,7 @@ namespace WorldMap
         /// <summary>
         /// Title for tooltip
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; }        
 
         /// <summary>
         /// Tooltip details

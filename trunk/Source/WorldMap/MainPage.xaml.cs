@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Microsoft.Maps.MapControl;
 using Microsoft.Maps.MapControl.Design;
 using NCRVisual.web.DataModel;
+using System.Globalization;
 
 namespace WorldMap
 {
@@ -193,11 +194,10 @@ namespace WorldMap
             panel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 
             panel.Orientation = Orientation.Horizontal;
-
+            
             DraggablePushpin dp = new DraggablePushpin();
             dp.Background = pushpin.Background;
-            dp.country = pushpin.country;
-
+            dp.country = pushpin.country;                        
             TextBlock tb = new TextBlock();
             tb.TextAlignment = TextAlignment.Center;
             tb.VerticalAlignment = VerticalAlignment.Center;
@@ -234,6 +234,7 @@ namespace WorldMap
             panel.DataContext = pushpin;
             pushpin.DataContext = panel;
             CountryListBox.Items.Add(panel);
+            pushpin.DataContext = panel;
         }
 
         #region removeButton mouse event
@@ -348,8 +349,8 @@ namespace WorldMap
         // Call service to do reverse geocode ... async call.
         private void ReverseGeocodeAsync(Location location)
         {
-            PlatformServices.ReverseGeocodeRequest request = new PlatformServices.ReverseGeocodeRequest();
-            request.Culture = MyMap.Culture;
+            PlatformServices.ReverseGeocodeRequest request = new PlatformServices.ReverseGeocodeRequest();            
+            request.Culture = "en-US";            
             request.Location = new Location();
             request.Location.Latitude = location.Latitude;
             request.Location.Longitude = location.Longitude;
@@ -392,6 +393,11 @@ namespace WorldMap
                     //Output.Text = "error geocoding ... status <" + e.Result.ResponseSummary.StatusCode.ToString() + ">";
                     ErrorNotification cw = new ErrorNotification("Error while geocoding, please choose another location");
                     cw.Show();
+                    if (_currentPushpin.DataContext != null)
+                    {
+                        this.CountryListBox.Items.Remove(_currentPushpin.DataContext as StackPanel);
+                    }
+
                     this.PushPinLayer.Children.Remove(_currentPushpin);
                 }
                 else if (0 == e.Result.Results.Count)
@@ -399,6 +405,11 @@ namespace WorldMap
                     //Output.Text = outputString + "No results";
                     ErrorNotification cw = new ErrorNotification("Error while geocoding, please choose another location");
                     cw.Show();
+
+                    if (_currentPushpin.DataContext != null)
+                    {
+                        this.CountryListBox.Items.Remove(_currentPushpin.DataContext as StackPanel);
+                    }
                     this.PushPinLayer.Children.Remove(_currentPushpin);
                 }
                 else
