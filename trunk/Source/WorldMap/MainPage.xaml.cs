@@ -10,6 +10,7 @@ using Microsoft.Maps.MapControl;
 using Microsoft.Maps.MapControl.Design;
 using NCRVisual.web.DataModel;
 using System.Globalization;
+using Microsoft.Expression.Controls;
 
 namespace WorldMap
 {
@@ -22,6 +23,10 @@ namespace WorldMap
         private DraggablePushpin _currentPushpin;
         private bool _isAddingNewPushPin;
         private List<int> selectedIndicatorPKs = new List<int>();
+
+        private int _currentImportCountryPK = 0;
+        private int _currentExportCountryPK = 0;
+
         # endregion
 
         #region properties
@@ -172,6 +177,8 @@ namespace WorldMap
             _isAddingNewPushPin = false;
             ReverseGeocodeLocation(p.Location);
             _currentPushpin = p;
+
+            this.ArrowLayer.Children.Clear();
         }
 
         /// <summary>
@@ -217,10 +224,10 @@ namespace WorldMap
                 Height = 25,                                
                 Template = this.Resources["RemoveButton"] as ControlTemplate
             };
-
             bt.MouseEnter += new System.Windows.Input.MouseEventHandler(bt_MouseEnter);
             bt.MouseLeave += new System.Windows.Input.MouseEventHandler(bt_MouseLeave);
             bt.Click += new RoutedEventHandler(bt_Click);
+            
 
             CheckBox chk = new CheckBox();
             chk.VerticalAlignment = VerticalAlignment.Center;
@@ -236,7 +243,7 @@ namespace WorldMap
             CountryListBox.Items.Add(panel);
             pushpin.DataContext = panel;
         }
-
+        
         #region removeButton mouse event
         void bt_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -253,6 +260,7 @@ namespace WorldMap
             StackPanel item = VisualTreeHelper.GetParent(sender as UIElement) as StackPanel;
             PushPinLayer.Children.Remove(item.DataContext as DraggablePushpin);
             CountryListBox.Items.Remove(item);
+            this.ArrowLayer.Children.Clear();
         }
         #endregion
 
@@ -299,6 +307,231 @@ namespace WorldMap
             {
                 ErrorNotification errorPopup = new ErrorNotification("You must select at least 2 country to compare them");
                 errorPopup.Show();
+            }
+        }
+
+        void exbt_Click(object sender, RoutedEventArgs e)
+        {
+            this.ArrowLayer.Children.Clear();
+            StackPanel startPanel = VisualTreeHelper.GetParent(sender as Button) as StackPanel;
+
+            Location start = (startPanel.DataContext as DraggablePushpin).Location;            
+
+            foreach (StackPanel ele in CountryListBox.Items)
+            {                
+                
+                if (!ele.Equals(startPanel))
+                {
+                    DraggablePushpin pp = ele.DataContext as DraggablePushpin;
+                    drawArrow(start, pp.Location,"");
+                }
+            }
+            
+        }
+
+        private void drawArrow(Location start, Location end, string value)
+        {
+            double changeY = start.Latitude - end.Latitude;
+            double changeX = start.Longitude - end.Longitude;
+
+            Grid gr = new Grid();
+            ArrowLayer.AddChild(gr, new LocationRect(start, end));
+            LineArrow arrow = new LineArrow();
+            arrow.EndArrow = Microsoft.Expression.Media.ArrowType.StealthArrow;
+            arrow.ArrowSize = 5;
+            arrow.Stroke = new SolidColorBrush(Colors.Black);
+
+            if (changeX >= 0 && changeY >= 0)
+            {
+                arrow.StartCorner = Microsoft.Expression.Media.CornerType.TopRight;
+            }
+
+            if (changeX >= 0 && changeY < 0)
+            {
+                arrow.StartCorner = Microsoft.Expression.Media.CornerType.BottomRight;
+            }
+
+            if (changeX < 0 && changeY < 0)
+            {
+                arrow.StartCorner = Microsoft.Expression.Media.CornerType.BottomLeft;
+            }
+
+            Border border = new Border
+            {
+                Background = new SolidColorBrush(Colors.Black),
+                CornerRadius = new CornerRadius(5),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            TextBlock content = new TextBlock
+            {
+                Text = value,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,    
+                Foreground = new SolidColorBrush(Colors.White),
+                Margin = new Thickness(2)
+            };
+
+            border.Child = content;
+
+            gr.Children.Add(arrow);
+            gr.Children.Add(border);
+
+            gr.Margin = new Thickness(5);
+        }
+
+        void imbt_Click(object sender, RoutedEventArgs e)
+        {
+            this.ArrowLayer.Children.Clear();
+            StackPanel startPanel = VisualTreeHelper.GetParent(sender as Button) as StackPanel;
+
+            Location end = (startPanel.DataContext as DraggablePushpin).Location;
+
+            foreach (StackPanel ele in CountryListBox.Items)
+            {
+
+                if (!ele.Equals(startPanel))
+                {
+                    DraggablePushpin pp = ele.DataContext as DraggablePushpin;
+                    drawArrow (pp.Location, end,"");
+                }
+            }
+        }
+
+        private void ViewTrade_Click(object sender, RoutedEventArgs e)
+        {
+            List<tbl_countries> countryList = new List<tbl_countries>();
+            foreach (StackPanel panel in CountryListBox.Items)
+            {
+                DraggablePushpin pp = panel.DataContext as DraggablePushpin;
+                countryList.Add(pp.country);
+            }
+
+            TradeMode tradeWindow = new TradeMode(countryList);
+            tradeWindow.Closed += new EventHandler(tradeWindow_Closed);
+            tradeWindow.Show();                        
+        }
+
+        void tradeWindow_Closed(object sender, EventArgs e)
+        {            
+            TradeMode tm = sender as TradeMode;
+            if (tm.DialogResult == true)
+            {
+                tbl_countries a = tm.CountryComboBox.SelectedItem as tbl_countries;
+                string b = tm.TypeComboBox.SelectedItem.ToString();
+                int c = int.Parse(tm.YearComboBox.SelectedItem.ToString());
+
+                if (b == "Import")
+                {
+                    List<int> exportList = new List<int>();
+                    foreach (StackPanel panel in CountryListBox.Items)
+                    {
+                        DraggablePushpin pp = panel.DataContext as DraggablePushpin;
+                        if (a.country_id_pk != pp.country.country_id_pk)
+                        {
+                            exportList.Add(pp.country.country_id_pk);
+                        }
+                    }
+
+                    _currentImportCountryPK = a.country_id_pk;
+                    this.WorldMapController.GetImportData(a.country_id_pk, exportList, c);
+                    this.WorldMapController.GetImportData_Completed += new EventHandler(WorldMapController_GetImportData_Completed);
+                }
+                else
+                {
+                    List<int> importList = new List<int>();
+                    foreach (StackPanel panel in CountryListBox.Items)
+                    {
+                        DraggablePushpin pp = panel.DataContext as DraggablePushpin;
+                        if (a.country_id_pk != pp.country.country_id_pk)
+                        {
+                            importList.Add(pp.country.country_id_pk);
+                        }
+                    }
+
+                    _currentExportCountryPK = a.country_id_pk;
+                    this.WorldMapController.GetExportData(a.country_id_pk, importList, c);
+                    this.WorldMapController.GetExportData_Completed += new EventHandler(WorldMapController_GetExportData_Completed);
+                }
+            }
+        }
+
+        void WorldMapController_GetExportData_Completed(object sender, EventArgs e)
+        {
+            this.ArrowLayer.Children.Clear();
+            Location start = new Location();
+
+            foreach (StackPanel ele in CountryListBox.Items)
+            {
+                if ((ele.DataContext as DraggablePushpin).country.country_id_pk == _currentExportCountryPK)
+                {
+                    start = (ele.DataContext as DraggablePushpin).Location;
+                }
+            }
+
+            foreach (StackPanel ele in CountryListBox.Items)
+            {
+                if ((ele.DataContext as DraggablePushpin).country.country_id_pk != _currentImportCountryPK)
+                {
+                    decimal? value = null;
+                    DraggablePushpin pp = ele.DataContext as DraggablePushpin;
+                    foreach (tbl_trades trd in this.WorldMapController.Context.tbl_trades)
+                    {
+                        if (trd.country_from_id == pp.country.country_id_pk)
+                        {
+                            value = trd.import_value;
+                        }
+                    }
+
+                    if (value != null)
+                    {
+                        drawArrow(start, (ele.DataContext as DraggablePushpin).Location, value.ToString());
+                    }
+                    else
+                    {
+                        drawArrow(start, (ele.DataContext as DraggablePushpin).Location, "No data");
+                    }
+                }
+            }
+        }
+
+        void WorldMapController_GetImportData_Completed(object sender, EventArgs e)
+        {            
+            this.ArrowLayer.Children.Clear();            
+            Location end = new Location();            
+
+            foreach (StackPanel ele in CountryListBox.Items)
+            {
+                if ((ele.DataContext as DraggablePushpin).country.country_id_pk == _currentImportCountryPK )
+                {
+                    end = (ele.DataContext as DraggablePushpin).Location;
+                }                                
+            }
+
+            foreach (StackPanel ele in CountryListBox.Items)
+            {
+                if ((ele.DataContext as DraggablePushpin).country.country_id_pk != _currentImportCountryPK)
+                {
+                    decimal? value = null;
+                    DraggablePushpin pp = ele.DataContext as DraggablePushpin;                    
+                    foreach (tbl_trades trd in this.WorldMapController.Context.tbl_trades)
+                    {
+                        if (trd.country_from_id == pp.country.country_id_pk)
+                        {
+                            value = trd.import_value;
+                        }
+                    }
+
+                    if (value != null)
+                    {
+                        drawArrow((ele.DataContext as DraggablePushpin).Location, end, value.ToString());
+                    }
+                    else
+                    {
+                        drawArrow((ele.DataContext as DraggablePushpin).Location, end, "No data");
+                    }
+                }    
             }
         }
 
@@ -516,7 +749,6 @@ namespace WorldMap
 
         #endregion
 
-
         #region indicator checkboxes event handlers
         private void IndicatorCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -536,7 +768,6 @@ namespace WorldMap
         {
             selectedIndicatorPKs.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
         }
-        #endregion        
-
+        #endregion             
     }
 }

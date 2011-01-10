@@ -106,6 +106,9 @@
     <Compile Include="Controls\ErrorNotification.xaml.cs">
       <DependentUpon>ErrorNotification.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TradeMode.xaml.cs">
+      <DependentUpon>TradeMode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Generated_Code\NCRVisual.web.g.cs" />
     <Compile Include="GeocodeLayer.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -148,6 +151,8 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <Resource Include="Image\Remove.png" />
+    <Resource Include="Image\export.png" />
+    <Resource Include="Image\import.png" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ErrorNotification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TradeMode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

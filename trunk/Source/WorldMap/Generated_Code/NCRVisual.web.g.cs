@@ -2671,6 +2671,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="tbl_trades"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<tbl_trades> tbl_trades
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<tbl_trades>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="ref_country_indicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<ref_country_indicator> ref_country_indicators
@@ -2759,17 +2770,6 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
-        /// Gets the set of <see cref="tbl_trades"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
-        /// </summary>
-        public EntitySet<tbl_trades> tbl_trades
-        {
-            get
-            {
-                return base.EntityContainer.GetEntitySet<tbl_trades>();
-            }
-        }
-        
-        /// <summary>
         /// Gets the set of <see cref="View_CountryIndicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<View_CountryIndicator> View_CountryIndicators
@@ -2813,6 +2813,40 @@ namespace NCRVisual.web.Services
             parameters.Add("country_pk", country_pk);
             this.ValidateMethod("GetCountryGeneralInfoQuery", parameters);
             return base.CreateQuery<View_GeneralCountry>("GetCountryGeneralInfo", parameters, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_trades"/> entities using the 'GetExportData' query.
+        /// </summary>
+        /// <param name="exportCountry">The value for the 'exportCountry' parameter of the query.</param>
+        /// <param name="importCountryIdList">The value for the 'importCountryIdList' parameter of the query.</param>
+        /// <param name="year">The value for the 'year' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_trades"/> entities.</returns>
+        public EntityQuery<tbl_trades> GetExportDataQuery(int exportCountry, IEnumerable<int> importCountryIdList, int year)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("exportCountry", exportCountry);
+            parameters.Add("importCountryIdList", importCountryIdList);
+            parameters.Add("year", year);
+            this.ValidateMethod("GetExportDataQuery", parameters);
+            return base.CreateQuery<tbl_trades>("GetExportData", parameters, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_trades"/> entities using the 'GetImportData' query.
+        /// </summary>
+        /// <param name="importCountry">The value for the 'importCountry' parameter of the query.</param>
+        /// <param name="exportCountryIdList">The value for the 'exportCountryIdList' parameter of the query.</param>
+        /// <param name="year">The value for the 'year' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_trades"/> entities.</returns>
+        public EntityQuery<tbl_trades> GetImportDataQuery(int importCountry, IEnumerable<int> exportCountryIdList, int year)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("importCountry", importCountry);
+            parameters.Add("exportCountryIdList", exportCountryIdList);
+            parameters.Add("year", year);
+            this.ValidateMethod("GetImportDataQuery", parameters);
+            return base.CreateQuery<tbl_trades>("GetImportData", parameters, false, true);
         }
         
         /// <summary>
@@ -3018,6 +3052,48 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetCountryGeneralInfo'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetCountryGeneralInfo' operation.</returns>
             QueryResult<View_GeneralCountry> EndGetCountryGeneralInfo(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetExportData' operation.
+            /// </summary>
+            /// <param name="exportCountry">The value for the 'exportCountry' parameter of this action.</param>
+            /// <param name="importCountryIdList">The value for the 'importCountryIdList' parameter of this action.</param>
+            /// <param name="year">The value for the 'year' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetExportDataDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetExportData", ReplyAction="http://tempuri.org/WBDomainService/GetExportDataResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetExportData(int exportCountry, IEnumerable<int> importCountryIdList, int year, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetExportData'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetExportData'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetExportData' operation.</returns>
+            QueryResult<tbl_trades> EndGetExportData(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetImportData' operation.
+            /// </summary>
+            /// <param name="importCountry">The value for the 'importCountry' parameter of this action.</param>
+            /// <param name="exportCountryIdList">The value for the 'exportCountryIdList' parameter of this action.</param>
+            /// <param name="year">The value for the 'year' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetImportDataDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetImportData", ReplyAction="http://tempuri.org/WBDomainService/GetImportDataResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetImportData(int importCountry, IEnumerable<int> exportCountryIdList, int year, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetImportData'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetImportData'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetImportData' operation.</returns>
+            QueryResult<tbl_trades> EndGetImportData(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetRef_country_indicator' operation.

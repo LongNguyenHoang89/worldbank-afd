@@ -2,6 +2,7 @@
 using System.Linq;
 using NCRVisual.web.DataModel;
 using System;
+using System.Collections.Generic;
 
 namespace WorldMap
 {
@@ -30,6 +31,17 @@ namespace WorldMap
         /// Event after tab indicator completed
         /// </summary>
         public event EventHandler GetView_TabIndicatorQueryCompleted;
+
+        /// <summary>
+        /// Event after get import data completed
+        /// </summary>
+        public event EventHandler GetImportData_Completed;
+
+        /// <summary>
+        /// Event after get export data completed
+        /// </summary>
+        public event EventHandler GetExportData_Completed;
+
         #endregion
 
         /// <summary>
@@ -101,5 +113,33 @@ namespace WorldMap
                 GetTabCountryDataCompleted(sender, e);
             }
         }
+
+        public void GetImportData(int importCountryId, List<int> exportCountryLists, int year)
+        {
+            var getImportData = Context.Load(Context.GetImportDataQuery(importCountryId, exportCountryLists,year));
+            getImportData.Completed += new EventHandler(getImportData_Completed);
+        }
+
+        void getImportData_Completed(object sender, EventArgs e)
+        {
+            if (GetImportData_Completed != null)
+            {
+                GetImportData_Completed(sender, e);
+            }
+        }
+
+        public void GetExportData(int exportCountryId, List<int> importCountryLists, int year)
+        {
+            var getExportData = Context.Load(Context.GetImportDataQuery(exportCountryId, importCountryLists, year));
+            getExportData.Completed += new EventHandler(getExportData_Completed);            
+        }
+
+        void getExportData_Completed(object sender, EventArgs e)
+        {
+            if (GetExportData_Completed != null)
+            {
+                GetExportData_Completed(sender, e);
+            }
+        }        
     }
 }

@@ -66,5 +66,28 @@ namespace NCRVisual.web.Services
         {
             return this.ObjectContext.View_GeneralCountry.Where(c => c.country_id_pk == country_pk);
         }
+
+
+        /// <summary>
+        /// Get all import data of a country and a list of export countries
+        /// </summary>
+        /// <param name="importCountry"></param>
+        /// <param name="exportCountryIdList"></param>
+        /// <returns></returns>
+        public IQueryable<tbl_trades> GetImportData(int importCountry, List<int> exportCountryIdList, int year)
+        {
+            return this.ObjectContext.tbl_trades.Where(c => exportCountryIdList.Contains((int)c.country_from_id) && importCountry == c.country_to_id && c.trade_year == year);
+        }
+
+        /// <summary>
+        /// Get all export data of a country and a list of import countries
+        /// </summary>
+        /// <param name="exportCountry"></param>
+        /// <param name="importCountryIdList"></param>
+        /// <returns></returns>
+        public IQueryable<tbl_trades> GetExportData(int exportCountry, List<int> importCountryIdList, int year)
+        {
+            return this.ObjectContext.tbl_trades.Where(c => importCountryIdList.Contains((int)c.country_to_id) && exportCountry == c.country_from_id && c.trade_year == year);
+        }
     }
 }
