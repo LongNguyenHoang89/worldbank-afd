@@ -2,10 +2,13 @@
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
-           Width="400" Height="300" 
+           Width="416" Height="300" 
            Title="About">
     <Grid x:Name="LayoutRoot" Margin="10,20,10,0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
@@ -25,5 +28,8 @@
         <TextBlock Grid.Row="6" Margin="20,0,0,0">+ Worldbank's data and indicator</TextBlock>
         <TextBlock Grid.Row="7" Margin="20,0,0,0">+ United Nation's Comodity data. You can get it from here:</TextBlock>
         <HyperlinkButton Grid.Row="8" Margin="20,0,0,0" NavigateUri="http://comtrade.un.org/db/mr/rfCommoditiesList.aspx">http://comtrade.un.org/db/mr/rfCommoditiesList.aspx</HyperlinkButton>
+        <TextBlock Grid.Row="9" Margin="10,0,0,0" FontWeight="Bold">Aknowledgements:</TextBlock>
+        <TextBlock Grid.Row="10" Margin="20,0,0,0">We, the entrants have read and agree to be bound by the</TextBlock>
+        <TextBlock Grid.Row="11" Margin="20,0,0,0">official rules of World Bank's Apps for Development challenge</TextBlock>
     </Grid>
 </controls:ChildWindow>
