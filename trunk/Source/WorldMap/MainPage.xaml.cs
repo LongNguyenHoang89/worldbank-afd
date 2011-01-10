@@ -11,6 +11,7 @@ using Microsoft.Maps.MapControl.Design;
 using NCRVisual.web.DataModel;
 using System.Globalization;
 using Microsoft.Expression.Controls;
+using System.Windows.Media.Effects;
 
 namespace WorldMap
 {
@@ -337,9 +338,17 @@ namespace WorldMap
             Grid gr = new Grid();
             ArrowLayer.AddChild(gr, new LocationRect(start, end));
             LineArrow arrow = new LineArrow();
+
+            arrow.StartArrow = Microsoft.Expression.Media.ArrowType.NoArrow;
             arrow.EndArrow = Microsoft.Expression.Media.ArrowType.StealthArrow;
             arrow.ArrowSize = 5;
             arrow.Stroke = new SolidColorBrush(Colors.Black);
+            arrow.BendAmount = 0.8;
+            arrow.StrokeThickness = 3;
+            arrow.Effect = new DropShadowEffect()
+            {
+                BlurRadius = 10
+            };
 
             if (changeX >= 0 && changeY >= 0)
             {
@@ -356,6 +365,7 @@ namespace WorldMap
                 arrow.StartCorner = Microsoft.Expression.Media.CornerType.BottomLeft;
             }
 
+            ToolTipService.SetToolTip(arrow, value);
             Border border = new Border
             {
                 Background = new SolidColorBrush(Colors.Black),
