@@ -1,0 +1,29 @@
+﻿<controls:ChildWindow x:Class="WorldMap.About"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="400" Height="300" 
+           Title="About">
+    <Grid x:Name="LayoutRoot" Margin="10,20,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="10,0,0,0" FontWeight="Bold">This program, [World data visualization], was made by:</TextBlock>
+        <TextBlock Grid.Row="1" Margin="20,0,0,0">+ Nguyen Vu Hung</TextBlock>
+        <TextBlock Grid.Row="2" Margin="20,0,0,0">+ Nguyen Hoang Long</TextBlock>
+        <TextBlock Grid.Row="3" Margin="20,0,0,0">+ Vo Dang Phat</TextBlock>
+        <TextBlock Grid.Row="4" Margin="20,0,0,0">+ Ngo Quang Khanh</TextBlock>
+        <TextBlock Grid.Row="5" Margin="10,0,0,0" FontWeight="Bold">We used the following data:</TextBlock>
+        <TextBlock Grid.Row="6" Margin="20,0,0,0">+ Worldbank's data and indicator</TextBlock>
+        <TextBlock Grid.Row="7" Margin="20,0,0,0">+ United Nation's Comodity data. You can get it from here:</TextBlock>
+        <HyperlinkButton Grid.Row="8" Margin="20,0,0,0" NavigateUri="http://comtrade.un.org/db/mr/rfCommoditiesList.aspx">http://comtrade.un.org/db/mr/rfCommoditiesList.aspx</HyperlinkButton>
+    </Grid>
+</controls:ChildWindow>

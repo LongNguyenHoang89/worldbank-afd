@@ -779,5 +779,11 @@ namespace WorldMap
             selectedIndicatorPKs.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
         }
         #endregion             
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            About b = new About();
+            b.Show();
+        }
     }
 }
