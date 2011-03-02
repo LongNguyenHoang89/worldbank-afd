@@ -4,15 +4,17 @@ using System.ServiceModel;
 using System.Windows;
 using System.Windows.Browser;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
+using BingMapsSL.MultiShape;
+using Microsoft.Expression.Controls;
 using Microsoft.Maps.MapControl;
 using Microsoft.Maps.MapControl.Design;
 using NCRVisual.web.DataModel;
-using System.Globalization;
-using Microsoft.Expression.Controls;
-using System.Windows.Media.Effects;
-using System.Windows.Controls.Primitives;
+using WorldMap.Helper;
+using System.Windows.Interop;
 
 namespace WorldMap
 {
@@ -20,9 +22,10 @@ namespace WorldMap
     {
         #region private variables
         private LocationConverter locConverter = new LocationConverter();
-        private bool _isControlpanelOpened = false;
-        private bool _isCountryListPanelOpened = true;
+
         private DraggablePushpin _currentPushpin;
+        private int _currentLocationCountry;
+
         private bool _isAddingNewPushPin;
         private List<int> selectedIndicatorPKs = new List<int>();
 
@@ -52,7 +55,21 @@ namespace WorldMap
             InitializeComponent();
 
             //Event Handler
-            this.Loaded += new RoutedEventHandler(MainPage_Loaded);            
+            this.Loaded += new RoutedEventHandler(MainPage_Loaded);
+            this.FullScreenButton.Click += new RoutedEventHandler(FullScreenButton_Click);
+        }
+
+        void FullScreenButton_Click(object sender, RoutedEventArgs e)
+        {
+              var btn = (Button)sender;
+            App.Current.Host.Content.IsFullScreen = !App.Current.Host.Content.IsFullScreen;
+           
+            bool fullScreen = App.Current.Host.Content.IsFullScreen;
+           
+            if (fullScreen)
+                btn.Content = "ON";
+            else
+                btn.Content = "OFF";
         }
 
         /// <summary>
@@ -65,7 +82,62 @@ namespace WorldMap
             this.WorldMapController = new Controller();
             this.WorldMapController.LoadInitDataCompleted += new EventHandler(WorldMapController_LoadInitDataCompleted);
             this.WorldMapController.GetView_TabIndicatorQueryCompleted += new EventHandler(WorldMapController_GetView_TabIndicatorQueryCompleted);
+            this.WorldMapController.GetBorder_completed += new EventHandler(WorldMapController_GetBorder_completed);
+            
         }
+
+        #region Draw Country Borders
+
+        void WorldMapController_GetBorder_completed(object sender, EventArgs e)
+        {
+            object[] result = new object[3];
+            (sender as Array).CopyTo(result as Array, 0);
+
+            object[] borderResult = new object[2];
+            (result[0] as Array).CopyTo(borderResult as Array, 0);
+
+            if (borderResult[1].ToString() == "MultiPolygon")
+            {
+                DrawMultiPolygon(borderResult[0] as List<LocationCollection>, result[1] as SolidColorBrush, result[2].ToString());
+            }
+            else if (borderResult[1].ToString() == "Polygon")
+            {
+                DrawPolygon(borderResult[0] as LocationCollection, result[1] as SolidColorBrush, result[2].ToString());
+                //DrawPolygon(borderResult[0] as LocationCollection);
+            }
+        }
+
+        private void DrawMultiPolygon(List<LocationCollection> vertices, SolidColorBrush color, string countryCode)
+        {
+            MapMultiPolygon myPoly = new MapMultiPolygon();
+            myPoly.Vertices = vertices;
+            myPoly.Fill = color;
+            myPoly.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
+            myPoly.Opacity = 0.5;
+            myPoly.DataContext = countryCode;
+            //Add MultiPolygon to map layer
+            PolygonLayer.Children.Add(myPoly);
+        }
+
+        private void DrawPolygon(LocationCollection vertices, SolidColorBrush color, string countryCode)
+        {
+            MapPolygon myPoly = new MapPolygon();
+            myPoly.Locations = vertices;
+            myPoly.Fill = color;
+            myPoly.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
+            myPoly.StrokeThickness = 1;
+            myPoly.Opacity = 0.7;
+            myPoly.DataContext = countryCode;
+            //Add Polygon to map layer
+            PolygonLayer.Children.Add(myPoly);
+        }
+
+        private void DrawCountryBorder(DraggablePushpin p)
+        {
+            WorldMapController.GetCountryBorder(p.country.country_iso_code, p.Background as SolidColorBrush);
+        }
+
+        #endregion
 
         void WorldMapController_GetView_TabIndicatorQueryCompleted(object sender, EventArgs e)
         {
@@ -128,7 +200,7 @@ namespace WorldMap
             DraggablePushpin DefaultPushPin = new DraggablePushpin(PushPinLayer);
             PushPinPanel.Children.Add(DefaultPushPin);
             DefaultPushPin.Pinned += new EventHandler(DefaultPushPin_Pinned);
-        }        
+        }
 
         void DefaultPushPin_Pinned(object sender, EventArgs e)
         {
@@ -148,9 +220,10 @@ namespace WorldMap
         void MapPushpin_Pinned(object sender, EventArgs e)
         {
             DraggablePushpin p = sender as DraggablePushpin;
-
             _isAddingNewPushPin = false;
+            _currentLocationCountry = p.country.country_id_pk;
             ReverseGeocodeLocation(p.Location);
+
             _currentPushpin = p;
 
             this.ArrowLayer.Children.Clear();
@@ -219,6 +292,8 @@ namespace WorldMap
             pushpin.DataContext = panel;
             CountryListBox.Items.Add(panel);
             pushpin.DataContext = panel;
+
+            DrawCountryBorder(pushpin);
         }
 
         #region removeButton mouse event
@@ -241,12 +316,12 @@ namespace WorldMap
         }
         #endregion
 
-        void UpdateCountryPushPin(StackPanel pushpinPanel)
+        void UpdateCountryPushPin(DraggablePushpin p)
         {
+            StackPanel pushpinPanel = p.DataContext as StackPanel;
             DraggablePushpin pushpin = pushpinPanel.DataContext as DraggablePushpin;
             if (pushpin.country != null)
             {
-                int a = pushpinPanel.Children.Count;
                 TextBlock tb = pushpinPanel.Children[3] as TextBlock;
                 tb.Text = pushpin.country.country_name;
             }
@@ -254,6 +329,8 @@ namespace WorldMap
             {
                 (PushPinPanel.Children[3] as TextBlock).Text = "Error country data";
             }
+
+            DrawCountryBorder(p);
         }
 
         private void buttonCompareCountries_Click(object sender, RoutedEventArgs e)
@@ -519,7 +596,7 @@ namespace WorldMap
                     }
                 }
             }
-        }        
+        }
 
         private void CountryListToggleButton_Click(object sender, RoutedEventArgs e)
         {
@@ -640,11 +717,20 @@ namespace WorldMap
                 if (e.Result.ResponseSummary.StatusCode != PlatformServices.ResponseStatusCode.Success)
                 {
                     //Output.Text = "error geocoding ... status <" + e.Result.ResponseSummary.StatusCode.ToString() + ">";
-                    ErrorNotification cw = new ErrorNotification("Error while geocoding, please choose another location");
+                    ErrorNotification cw = new ErrorNotification("Error1: Error while geocoding, please choose another location");
                     cw.Show();
                     if (_currentPushpin.DataContext != null)
                     {
                         this.CountryListBox.Items.Remove(_currentPushpin.DataContext as StackPanel);
+                    }
+
+                    foreach (UIElement ue in PolygonLayer.Children)
+                    {
+                        if (_currentPushpin != null && _currentPushpin.country != null && (ue as UserControl).DataContext.ToString() == _currentPushpin.country.country_iso_code)
+                        {
+                            PolygonLayer.Children.Remove(ue);
+                            break;
+                        }
                     }
 
                     this.PushPinLayer.Children.Remove(_currentPushpin);
@@ -652,14 +738,24 @@ namespace WorldMap
                 else if (0 == e.Result.Results.Count)
                 {
                     //Output.Text = outputString + "No results";
-                    ErrorNotification cw = new ErrorNotification("Error while geocoding, please choose another location");
+                    ErrorNotification cw = new ErrorNotification("Error2: Error while geocoding, please choose another location");
                     cw.Show();
 
                     if (_currentPushpin.DataContext != null)
                     {
                         this.CountryListBox.Items.Remove(_currentPushpin.DataContext as StackPanel);
                     }
-                    this.PushPinLayer.Children.Remove(_currentPushpin);
+
+                    foreach (UIElement ue in PolygonLayer.Children)
+                    {
+                        if (_currentPushpin != null && _currentPushpin.country != null && (ue as UserControl).DataContext.ToString() == _currentPushpin.country.country_iso_code)
+                        {
+                            PolygonLayer.Children.Remove(ue);
+                            break;
+                        }
+                    }
+
+                    this.PushPinLayer.Children.Remove(_currentPushpin);                    
                 }
                 else
                 {
@@ -680,33 +776,67 @@ namespace WorldMap
                         GeocodeLayer.AddResult(e.Result.Results[0]);
                     }
 
-
-                    //Add to pushpin title
-
                     tbl_countries country = WorldMapController.GetCountry(formatted);
-                    _currentPushpin.Title = formatted;
-                    _currentPushpin.country = country;
 
-                    ToolTipService.SetToolTip(_currentPushpin, new ToolTip()
+                    if (!_isAddingNewPushPin && _currentLocationCountry == country.country_id_pk)
                     {
-                        DataContext = _currentPushpin,
-                        Style = this.Resources["CustomInfoboxStyle"] as Style
-                    });
-
-                    if (_isAddingNewPushPin)
-                    {
-                        CreateCountryPushPin(_currentPushpin);
+                        //Do nothing cuz this means moving the pushpin within the country
                     }
                     else
                     {
-                        UpdateCountryPushPin(_currentPushpin.DataContext as StackPanel);
-                    }
+                        //Check if Pushpin is existed ?
+                        bool isExisting = false;
+                        foreach (DraggablePushpin pp in PushPinLayer.Children)
+                        {
+                            if (pp.country != null && country.country_id_pk == pp.country.country_id_pk)
+                            {
+                                isExisting = true;
+                                break;
+                            }
+                        }
 
+                        foreach (UIElement ue in PolygonLayer.Children)
+                        {
+                            if (_currentPushpin != null && _currentPushpin.country != null && (ue as UserControl).DataContext.ToString() == _currentPushpin.country.country_iso_code)
+                            {
+                                PolygonLayer.Children.Remove(ue);
+                                break;
+                            }
+                        }
+
+                        //Add to pushpin title
+                        _currentPushpin.Title = formatted;
+                        _currentPushpin.country = country;
+
+                        if (!isExisting)
+                        {
+                            ToolTipService.SetToolTip(_currentPushpin, new ToolTip()
+                            {
+                                DataContext = _currentPushpin,
+                                Style = this.Resources["CustomInfoboxStyle"] as Style
+                            });
+
+                            if (_isAddingNewPushPin)
+                            {
+                                CreateCountryPushPin(_currentPushpin);
+                            }
+                            else
+                            {
+                                UpdateCountryPushPin(_currentPushpin);
+                            }
+                        }
+                        else
+                        {
+                            this.PushPinLayer.Children.Remove(_currentPushpin);
+                            StackPanel pushpinPanel = _currentPushpin.DataContext as StackPanel;
+                            this.CountryListBox.Items.Remove(pushpinPanel);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                ErrorNotification cw = new ErrorNotification("Error while geocoding the location, please choose another country");
+                ErrorNotification cw = new ErrorNotification("Error3: Error while geocoding the location, please choose another country");
                 cw.Show();
             }
 
@@ -784,6 +914,6 @@ namespace WorldMap
         {
             selectedIndicatorPKs.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
         }
-        #endregion                
+        #endregion
     }
 }

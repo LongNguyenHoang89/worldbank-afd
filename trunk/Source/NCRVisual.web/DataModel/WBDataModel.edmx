@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="WBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="WBModelStoreContainer">
           <EntitySet Name="ref_country_indicator" EntityType="WBModel.Store.ref_country_indicator" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ref_tab_indicator" EntityType="WBModel.Store.ref_tab_indicator" store:Type="Tables" Schema="dbo" />
@@ -15,6 +15,40 @@
           <EntitySet Name="tbl_regions" EntityType="WBModel.Store.tbl_regions" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_tabs" EntityType="WBModel.Store.tbl_tabs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_trades" EntityType="WBModel.Store.tbl_trades" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="View_Borders" EntityType="WBModel.Store.View_Borders" store:Type="Views" store:Schema="dbo" store:Name="View_Borders">
+            <DefiningQuery>SELECT 
+      [View_Borders].[ID] AS [ID], 
+      [View_Borders].[FIPS] AS [FIPS], 
+      [View_Borders].[ISO2] AS [ISO2], 
+      [View_Borders].[ISO3] AS [ISO3], 
+      [View_Borders].[UN] AS [UN], 
+      [View_Borders].[NAME] AS [NAME], 
+      [View_Borders].[AREA] AS [AREA], 
+      [View_Borders].[POP2005] AS [POP2005], 
+      [View_Borders].[REGION] AS [REGION], 
+      [View_Borders].[SUBREGION] AS [SUBREGION], 
+      [View_Borders].[LON] AS [LON], 
+      [View_Borders].[LAT] AS [LAT], 
+      [View_Borders].[geom] AS [geom]
+      FROM [dbo].[View_Borders] AS [View_Borders]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_CountryBorder" EntityType="WBModel.Store.View_CountryBorder" store:Type="Views" store:Schema="dbo" store:Name="View_CountryBorder">
+            <DefiningQuery>SELECT 
+      [View_CountryBorder].[ID] AS [ID], 
+      [View_CountryBorder].[FIPS] AS [FIPS], 
+      [View_CountryBorder].[ISO2] AS [ISO2], 
+      [View_CountryBorder].[ISO3] AS [ISO3], 
+      [View_CountryBorder].[UN] AS [UN], 
+      [View_CountryBorder].[NAME] AS [NAME], 
+      [View_CountryBorder].[AREA] AS [AREA], 
+      [View_CountryBorder].[POP2005] AS [POP2005], 
+      [View_CountryBorder].[REGION] AS [REGION], 
+      [View_CountryBorder].[SUBREGION] AS [SUBREGION], 
+      [View_CountryBorder].[LON] AS [LON], 
+      [View_CountryBorder].[LAT] AS [LAT], 
+      [View_CountryBorder].[geom] AS [geom]
+      FROM [dbo].[View_CountryBorder] AS [View_CountryBorder]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="View_CountryIndicator" EntityType="WBModel.Store.View_CountryIndicator" store:Type="Views" store:Schema="dbo" store:Name="View_CountryIndicator">
             <DefiningQuery>SELECT 
       [View_CountryIndicator].[country_id_pk] AS [country_id_pk], 
@@ -151,6 +185,48 @@
           <Property Name="trade_year" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
+      warning 6002: The table/view 'WB.dbo.View_Borders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="View_Borders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FIPS" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO2" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO3" Type="nvarchar" MaxLength="255" />
+          <Property Name="UN" Type="int" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="AREA" Type="bigint" />
+          <Property Name="POP2005" Type="bigint" />
+          <Property Name="REGION" Type="int" />
+          <Property Name="SUBREGION" Type="int" />
+          <Property Name="LON" Type="float" />
+          <Property Name="LAT" Type="float" />
+          <Property Name="geom" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'WB.dbo.View_CountryBorder' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="View_CountryBorder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FIPS" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO2" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO3" Type="nvarchar" MaxLength="255" />
+          <Property Name="UN" Type="int" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="AREA" Type="bigint" />
+          <Property Name="POP2005" Type="bigint" />
+          <Property Name="REGION" Type="int" />
+          <Property Name="SUBREGION" Type="int" />
+          <Property Name="LON" Type="float" />
+          <Property Name="LAT" Type="float" />
+          <Property Name="geom" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
       warning 6002: The table/view 'WB.dbo.View_CountryIndicator' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="View_CountryIndicator">
@@ -216,8 +292,7 @@
           <Property Name="indicator_name" Type="varchar" MaxLength="255" />
           <Property Name="indicator_unit" Type="varchar" MaxLength="255" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -235,6 +310,8 @@
           <EntitySet Name="View_CountryIndicatorTab" EntityType="WBModel.View_CountryIndicatorTab" />
           <EntitySet Name="View_GeneralCountry" EntityType="WBModel.View_GeneralCountry" />
           <EntitySet Name="View_TabIndicator" EntityType="WBModel.View_TabIndicator" />
+          <EntitySet Name="View_CountryBorder" EntityType="WBModel.View_CountryBorder" />
+          <EntitySet Name="View_Borders" EntityType="WBModel.View_Borders" />
         </EntityContainer>
         <EntityType Name="ref_country_indicator">
           <Key>
@@ -376,6 +453,42 @@
           <Property Name="indicator_name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Name="indicator_unit" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
         </EntityType>
+        <EntityType Name="View_CountryBorder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FIPS" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO2" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO3" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UN" />
+          <Property Type="String" Name="NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="AREA" />
+          <Property Type="Int64" Name="POP2005" />
+          <Property Type="Int32" Name="REGION" />
+          <Property Type="Int32" Name="SUBREGION" />
+          <Property Type="Double" Name="LON" />
+          <Property Type="Double" Name="LAT" />
+          <Property Type="String" Name="geom" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_Borders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FIPS" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO2" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO3" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UN" />
+          <Property Type="String" Name="NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="AREA" />
+          <Property Type="Int64" Name="POP2005" />
+          <Property Type="Int32" Name="REGION" />
+          <Property Type="Int32" Name="SUBREGION" />
+          <Property Type="Double" Name="LON" />
+          <Property Type="Double" Name="LAT" />
+          <Property Type="Binary" Name="geom" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -481,6 +594,44 @@
             <ScalarProperty Name="indicator_name" ColumnName="indicator_name" />
             <ScalarProperty Name="indicator_unit" ColumnName="indicator_unit" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="View_CountryBorder">
+            <EntityTypeMapping TypeName="WBModel.View_CountryBorder">
+              <MappingFragment StoreEntitySet="View_CountryBorder">
+                <ScalarProperty Name="geom" ColumnName="geom" />
+                <ScalarProperty Name="LAT" ColumnName="LAT" />
+                <ScalarProperty Name="LON" ColumnName="LON" />
+                <ScalarProperty Name="SUBREGION" ColumnName="SUBREGION" />
+                <ScalarProperty Name="REGION" ColumnName="REGION" />
+                <ScalarProperty Name="POP2005" ColumnName="POP2005" />
+                <ScalarProperty Name="AREA" ColumnName="AREA" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="UN" ColumnName="UN" />
+                <ScalarProperty Name="ISO3" ColumnName="ISO3" />
+                <ScalarProperty Name="ISO2" ColumnName="ISO2" />
+                <ScalarProperty Name="FIPS" ColumnName="FIPS" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Borders">
+            <EntityTypeMapping TypeName="WBModel.View_Borders">
+              <MappingFragment StoreEntitySet="View_Borders">
+                <ScalarProperty Name="geom" ColumnName="geom" />
+                <ScalarProperty Name="LAT" ColumnName="LAT" />
+                <ScalarProperty Name="LON" ColumnName="LON" />
+                <ScalarProperty Name="SUBREGION" ColumnName="SUBREGION" />
+                <ScalarProperty Name="REGION" ColumnName="REGION" />
+                <ScalarProperty Name="POP2005" ColumnName="POP2005" />
+                <ScalarProperty Name="AREA" ColumnName="AREA" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="UN" ColumnName="UN" />
+                <ScalarProperty Name="ISO3" ColumnName="ISO3" />
+                <ScalarProperty Name="ISO2" ColumnName="ISO2" />
+                <ScalarProperty Name="FIPS" ColumnName="FIPS" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -495,7 +646,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
@@ -515,6 +666,8 @@
         <EntityTypeShape EntityType="WBModel.View_CountryIndicatorTab" Width="1.5" PointX="2.75" PointY="7.75" Height="3.1340950520833317" IsExpanded="true" />
         <EntityTypeShape EntityType="WBModel.View_GeneralCountry" Width="1.5" PointX="8.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
         <EntityTypeShape EntityType="WBModel.View_TabIndicator" Width="1.5" PointX="8.75" PointY="3.75" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="WBModel.View_CountryBorder" Width="1.5" PointX="5.375" PointY="9.75" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="WBModel.View_Borders" Width="1.5" PointX="9.375" PointY="7.75" Height="3.5186979166666674" />
       </Diagram>
     </Diagrams>
   </Designer>

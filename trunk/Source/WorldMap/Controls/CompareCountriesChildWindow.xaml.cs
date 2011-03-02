@@ -8,6 +8,7 @@ using System.ServiceModel.DomainServices.Client;
 using NCRVisual.web.Services;
 using System.Linq;
 using WorldbankDataGraphs;
+using WorldMap.Helper;
 
 namespace WorldMap
 {

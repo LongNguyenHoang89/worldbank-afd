@@ -88,6 +88,16 @@ namespace NCRVisual.web.Services
         public IQueryable<tbl_trades> GetExportData(int exportCountry, List<int> importCountryIdList, int year)
         {
             return this.ObjectContext.tbl_trades.Where(c => importCountryIdList.Contains((int)c.country_to_id) && exportCountry == c.country_from_id && c.trade_year == year);
+        }                
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ISO">Iso code for country</param>
+        /// <returns></returns>
+        public IQueryable<View_CountryBorder> GetCountryBorder(string ISO)
+        {
+            return this.ObjectContext.View_CountryBorder.Where(c => c.ISO2 == ISO);
         }
     }
 }

@@ -272,6 +272,38 @@ namespace NCRVisual.web.DataModel
             }
         }
         private ObjectSet<View_TabIndicator> _View_TabIndicator;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<View_CountryBorder> View_CountryBorder
+        {
+            get
+            {
+                if ((_View_CountryBorder == null))
+                {
+                    _View_CountryBorder = base.CreateObjectSet<View_CountryBorder>("View_CountryBorder");
+                }
+                return _View_CountryBorder;
+            }
+        }
+        private ObjectSet<View_CountryBorder> _View_CountryBorder;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<View_Borders> View_Borders
+        {
+            get
+            {
+                if ((_View_Borders == null))
+                {
+                    _View_Borders = base.CreateObjectSet<View_Borders>("View_Borders");
+                }
+                return _View_Borders;
+            }
+        }
+        private ObjectSet<View_Borders> _View_Borders;
 
         #endregion
         #region AddTo Methods
@@ -378,6 +410,22 @@ namespace NCRVisual.web.DataModel
         public void AddToView_TabIndicator(View_TabIndicator view_TabIndicator)
         {
             base.AddObject("View_TabIndicator", view_TabIndicator);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the View_CountryBorder EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToView_CountryBorder(View_CountryBorder view_CountryBorder)
+        {
+            base.AddObject("View_CountryBorder", view_CountryBorder);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the View_Borders EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToView_Borders(View_Borders view_Borders)
+        {
+            base.AddObject("View_Borders", view_Borders);
         }
 
         #endregion
@@ -1646,6 +1694,692 @@ namespace NCRVisual.web.DataModel
         private Nullable<global::System.Int32> _trade_year;
         partial void Ontrade_yearChanging(Nullable<global::System.Int32> value);
         partial void Ontrade_yearChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="WBModel", Name="View_Borders")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class View_Borders : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new View_Borders object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static View_Borders CreateView_Borders(global::System.Int32 id)
+        {
+            View_Borders view_Borders = new View_Borders();
+            view_Borders.ID = id;
+            return view_Borders;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FIPS
+        {
+            get
+            {
+                return _FIPS;
+            }
+            set
+            {
+                OnFIPSChanging(value);
+                ReportPropertyChanging("FIPS");
+                _FIPS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FIPS");
+                OnFIPSChanged();
+            }
+        }
+        private global::System.String _FIPS;
+        partial void OnFIPSChanging(global::System.String value);
+        partial void OnFIPSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISO2
+        {
+            get
+            {
+                return _ISO2;
+            }
+            set
+            {
+                OnISO2Changing(value);
+                ReportPropertyChanging("ISO2");
+                _ISO2 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISO2");
+                OnISO2Changed();
+            }
+        }
+        private global::System.String _ISO2;
+        partial void OnISO2Changing(global::System.String value);
+        partial void OnISO2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISO3
+        {
+            get
+            {
+                return _ISO3;
+            }
+            set
+            {
+                OnISO3Changing(value);
+                ReportPropertyChanging("ISO3");
+                _ISO3 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISO3");
+                OnISO3Changed();
+            }
+        }
+        private global::System.String _ISO3;
+        partial void OnISO3Changing(global::System.String value);
+        partial void OnISO3Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UN
+        {
+            get
+            {
+                return _UN;
+            }
+            set
+            {
+                OnUNChanging(value);
+                ReportPropertyChanging("UN");
+                _UN = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UN");
+                OnUNChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UN;
+        partial void OnUNChanging(Nullable<global::System.Int32> value);
+        partial void OnUNChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NAME
+        {
+            get
+            {
+                return _NAME;
+            }
+            set
+            {
+                OnNAMEChanging(value);
+                ReportPropertyChanging("NAME");
+                _NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NAME");
+                OnNAMEChanged();
+            }
+        }
+        private global::System.String _NAME;
+        partial void OnNAMEChanging(global::System.String value);
+        partial void OnNAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> AREA
+        {
+            get
+            {
+                return _AREA;
+            }
+            set
+            {
+                OnAREAChanging(value);
+                ReportPropertyChanging("AREA");
+                _AREA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AREA");
+                OnAREAChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _AREA;
+        partial void OnAREAChanging(Nullable<global::System.Int64> value);
+        partial void OnAREAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> POP2005
+        {
+            get
+            {
+                return _POP2005;
+            }
+            set
+            {
+                OnPOP2005Changing(value);
+                ReportPropertyChanging("POP2005");
+                _POP2005 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("POP2005");
+                OnPOP2005Changed();
+            }
+        }
+        private Nullable<global::System.Int64> _POP2005;
+        partial void OnPOP2005Changing(Nullable<global::System.Int64> value);
+        partial void OnPOP2005Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> REGION
+        {
+            get
+            {
+                return _REGION;
+            }
+            set
+            {
+                OnREGIONChanging(value);
+                ReportPropertyChanging("REGION");
+                _REGION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("REGION");
+                OnREGIONChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _REGION;
+        partial void OnREGIONChanging(Nullable<global::System.Int32> value);
+        partial void OnREGIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SUBREGION
+        {
+            get
+            {
+                return _SUBREGION;
+            }
+            set
+            {
+                OnSUBREGIONChanging(value);
+                ReportPropertyChanging("SUBREGION");
+                _SUBREGION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SUBREGION");
+                OnSUBREGIONChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SUBREGION;
+        partial void OnSUBREGIONChanging(Nullable<global::System.Int32> value);
+        partial void OnSUBREGIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> LON
+        {
+            get
+            {
+                return _LON;
+            }
+            set
+            {
+                OnLONChanging(value);
+                ReportPropertyChanging("LON");
+                _LON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LON");
+                OnLONChanged();
+            }
+        }
+        private Nullable<global::System.Double> _LON;
+        partial void OnLONChanging(Nullable<global::System.Double> value);
+        partial void OnLONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> LAT
+        {
+            get
+            {
+                return _LAT;
+            }
+            set
+            {
+                OnLATChanging(value);
+                ReportPropertyChanging("LAT");
+                _LAT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LAT");
+                OnLATChanged();
+            }
+        }
+        private Nullable<global::System.Double> _LAT;
+        partial void OnLATChanging(Nullable<global::System.Double> value);
+        partial void OnLATChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.Byte[] geom
+        {
+            get
+            {
+                return StructuralObject.GetValidValue(_geom);
+            }
+            set
+            {
+                OngeomChanging(value);
+                ReportPropertyChanging("geom");
+                _geom = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("geom");
+                OngeomChanged();
+            }
+        }
+        private global::System.Byte[] _geom;
+        partial void OngeomChanging(global::System.Byte[] value);
+        partial void OngeomChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="WBModel", Name="View_CountryBorder")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class View_CountryBorder : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new View_CountryBorder object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static View_CountryBorder CreateView_CountryBorder(global::System.Int32 id)
+        {
+            View_CountryBorder view_CountryBorder = new View_CountryBorder();
+            view_CountryBorder.ID = id;
+            return view_CountryBorder;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FIPS
+        {
+            get
+            {
+                return _FIPS;
+            }
+            set
+            {
+                OnFIPSChanging(value);
+                ReportPropertyChanging("FIPS");
+                _FIPS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FIPS");
+                OnFIPSChanged();
+            }
+        }
+        private global::System.String _FIPS;
+        partial void OnFIPSChanging(global::System.String value);
+        partial void OnFIPSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISO2
+        {
+            get
+            {
+                return _ISO2;
+            }
+            set
+            {
+                OnISO2Changing(value);
+                ReportPropertyChanging("ISO2");
+                _ISO2 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISO2");
+                OnISO2Changed();
+            }
+        }
+        private global::System.String _ISO2;
+        partial void OnISO2Changing(global::System.String value);
+        partial void OnISO2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISO3
+        {
+            get
+            {
+                return _ISO3;
+            }
+            set
+            {
+                OnISO3Changing(value);
+                ReportPropertyChanging("ISO3");
+                _ISO3 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISO3");
+                OnISO3Changed();
+            }
+        }
+        private global::System.String _ISO3;
+        partial void OnISO3Changing(global::System.String value);
+        partial void OnISO3Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UN
+        {
+            get
+            {
+                return _UN;
+            }
+            set
+            {
+                OnUNChanging(value);
+                ReportPropertyChanging("UN");
+                _UN = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UN");
+                OnUNChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UN;
+        partial void OnUNChanging(Nullable<global::System.Int32> value);
+        partial void OnUNChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NAME
+        {
+            get
+            {
+                return _NAME;
+            }
+            set
+            {
+                OnNAMEChanging(value);
+                ReportPropertyChanging("NAME");
+                _NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NAME");
+                OnNAMEChanged();
+            }
+        }
+        private global::System.String _NAME;
+        partial void OnNAMEChanging(global::System.String value);
+        partial void OnNAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> AREA
+        {
+            get
+            {
+                return _AREA;
+            }
+            set
+            {
+                OnAREAChanging(value);
+                ReportPropertyChanging("AREA");
+                _AREA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AREA");
+                OnAREAChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _AREA;
+        partial void OnAREAChanging(Nullable<global::System.Int64> value);
+        partial void OnAREAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> POP2005
+        {
+            get
+            {
+                return _POP2005;
+            }
+            set
+            {
+                OnPOP2005Changing(value);
+                ReportPropertyChanging("POP2005");
+                _POP2005 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("POP2005");
+                OnPOP2005Changed();
+            }
+        }
+        private Nullable<global::System.Int64> _POP2005;
+        partial void OnPOP2005Changing(Nullable<global::System.Int64> value);
+        partial void OnPOP2005Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> REGION
+        {
+            get
+            {
+                return _REGION;
+            }
+            set
+            {
+                OnREGIONChanging(value);
+                ReportPropertyChanging("REGION");
+                _REGION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("REGION");
+                OnREGIONChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _REGION;
+        partial void OnREGIONChanging(Nullable<global::System.Int32> value);
+        partial void OnREGIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SUBREGION
+        {
+            get
+            {
+                return _SUBREGION;
+            }
+            set
+            {
+                OnSUBREGIONChanging(value);
+                ReportPropertyChanging("SUBREGION");
+                _SUBREGION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SUBREGION");
+                OnSUBREGIONChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SUBREGION;
+        partial void OnSUBREGIONChanging(Nullable<global::System.Int32> value);
+        partial void OnSUBREGIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> LON
+        {
+            get
+            {
+                return _LON;
+            }
+            set
+            {
+                OnLONChanging(value);
+                ReportPropertyChanging("LON");
+                _LON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LON");
+                OnLONChanged();
+            }
+        }
+        private Nullable<global::System.Double> _LON;
+        partial void OnLONChanging(Nullable<global::System.Double> value);
+        partial void OnLONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> LAT
+        {
+            get
+            {
+                return _LAT;
+            }
+            set
+            {
+                OnLATChanging(value);
+                ReportPropertyChanging("LAT");
+                _LAT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LAT");
+                OnLATChanged();
+            }
+        }
+        private Nullable<global::System.Double> _LAT;
+        partial void OnLATChanging(Nullable<global::System.Double> value);
+        partial void OnLATChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String geom
+        {
+            get
+            {
+                return _geom;
+            }
+            set
+            {
+                OngeomChanging(value);
+                ReportPropertyChanging("geom");
+                _geom = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("geom");
+                OngeomChanged();
+            }
+        }
+        private global::System.String _geom;
+        partial void OngeomChanging(global::System.String value);
+        partial void OngeomChanged();
 
         #endregion
     

@@ -1,14 +1,14 @@
-﻿using System.Windows;
-using System;
-using System.Windows.Controls;
-using NCRVisual.web.DataModel;
-using WorldbankDataGraphs.Entities;
+﻿using System;
 using System.Collections.Generic;
-using System.ServiceModel.DomainServices.Client;
-using NCRVisual.web.Services;
 using System.Linq;
-using WorldbankDataGraphs;
+using System.ServiceModel.DomainServices.Client;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using NCRVisual.web.DataModel;
+using WorldbankDataGraphs;
+using WorldbankDataGraphs.Entities;
+using WorldMap.Helper;
 
 namespace WorldMap
 {
@@ -19,8 +19,7 @@ namespace WorldMap
     {
         Controller _worldMapController;
         private WorldbankDataGraphs.WorldbankGeneralChartControl columnChartControl = null;
-        private tbl_countries _selectedCountry;
-        private LoadOperation<tbl_indicators> tblIndLoadOp = null;
+        private tbl_countries _selectedCountry;        
         private LoadOperation<tbl_indicators> tblIndsLoadOp = null;
         private LoadOperation<ref_country_indicator> loadOp = null;
         private List<int> listboxIndicatorPKSelected = new List<int>();

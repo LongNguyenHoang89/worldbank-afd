@@ -1530,6 +1530,818 @@ namespace NCRVisual.web.DataModel
     }
     
     /// <summary>
+    /// The 'View_Borders' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class View_Borders : Entity
+    {
+        
+        private Nullable<long> _area;
+        
+        private string _fips;
+        
+        private byte[] _geom;
+        
+        private int _id;
+        
+        private string _iso2;
+        
+        private string _iso3;
+        
+        private Nullable<double> _lat;
+        
+        private Nullable<double> _lon;
+        
+        private string _name;
+        
+        private Nullable<long> _pop2005;
+        
+        private Nullable<int> _region;
+        
+        private Nullable<int> _subregion;
+        
+        private Nullable<int> _un;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OnAREAChanging(Nullable<long> value);
+        partial void OnAREAChanged();
+        partial void OnFIPSChanging(string value);
+        partial void OnFIPSChanged();
+        partial void OngeomChanging(byte[] value);
+        partial void OngeomChanged();
+        partial void OnIDChanging(int value);
+        partial void OnIDChanged();
+        partial void OnISO2Changing(string value);
+        partial void OnISO2Changed();
+        partial void OnISO3Changing(string value);
+        partial void OnISO3Changed();
+        partial void OnLATChanging(Nullable<double> value);
+        partial void OnLATChanged();
+        partial void OnLONChanging(Nullable<double> value);
+        partial void OnLONChanged();
+        partial void OnNAMEChanging(string value);
+        partial void OnNAMEChanged();
+        partial void OnPOP2005Changing(Nullable<long> value);
+        partial void OnPOP2005Changed();
+        partial void OnREGIONChanging(Nullable<int> value);
+        partial void OnREGIONChanged();
+        partial void OnSUBREGIONChanging(Nullable<int> value);
+        partial void OnSUBREGIONChanged();
+        partial void OnUNChanging(Nullable<int> value);
+        partial void OnUNChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View_Borders"/> class.
+        /// </summary>
+        public View_Borders()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'AREA' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<long> AREA
+        {
+            get
+            {
+                return this._area;
+            }
+            set
+            {
+                if ((this._area != value))
+                {
+                    this.OnAREAChanging(value);
+                    this.RaiseDataMemberChanging("AREA");
+                    this.ValidateProperty("AREA", value);
+                    this._area = value;
+                    this.RaiseDataMemberChanged("AREA");
+                    this.OnAREAChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'FIPS' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string FIPS
+        {
+            get
+            {
+                return this._fips;
+            }
+            set
+            {
+                if ((this._fips != value))
+                {
+                    this.OnFIPSChanging(value);
+                    this.RaiseDataMemberChanging("FIPS");
+                    this.ValidateProperty("FIPS", value);
+                    this._fips = value;
+                    this.RaiseDataMemberChanged("FIPS");
+                    this.OnFIPSChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'geom' value.
+        /// </summary>
+        [DataMember()]
+        public byte[] geom
+        {
+            get
+            {
+                return this._geom;
+            }
+            set
+            {
+                if ((this._geom != value))
+                {
+                    this.OngeomChanging(value);
+                    this.RaiseDataMemberChanging("geom");
+                    this.ValidateProperty("geom", value);
+                    this._geom = value;
+                    this.RaiseDataMemberChanged("geom");
+                    this.OngeomChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ID' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int ID
+        {
+            get
+            {
+                return this._id;
+            }
+            set
+            {
+                if ((this._id != value))
+                {
+                    this.OnIDChanging(value);
+                    this.ValidateProperty("ID", value);
+                    this._id = value;
+                    this.RaisePropertyChanged("ID");
+                    this.OnIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ISO2' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string ISO2
+        {
+            get
+            {
+                return this._iso2;
+            }
+            set
+            {
+                if ((this._iso2 != value))
+                {
+                    this.OnISO2Changing(value);
+                    this.RaiseDataMemberChanging("ISO2");
+                    this.ValidateProperty("ISO2", value);
+                    this._iso2 = value;
+                    this.RaiseDataMemberChanged("ISO2");
+                    this.OnISO2Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ISO3' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string ISO3
+        {
+            get
+            {
+                return this._iso3;
+            }
+            set
+            {
+                if ((this._iso3 != value))
+                {
+                    this.OnISO3Changing(value);
+                    this.RaiseDataMemberChanging("ISO3");
+                    this.ValidateProperty("ISO3", value);
+                    this._iso3 = value;
+                    this.RaiseDataMemberChanged("ISO3");
+                    this.OnISO3Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'LAT' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<double> LAT
+        {
+            get
+            {
+                return this._lat;
+            }
+            set
+            {
+                if ((this._lat != value))
+                {
+                    this.OnLATChanging(value);
+                    this.RaiseDataMemberChanging("LAT");
+                    this.ValidateProperty("LAT", value);
+                    this._lat = value;
+                    this.RaiseDataMemberChanged("LAT");
+                    this.OnLATChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'LON' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<double> LON
+        {
+            get
+            {
+                return this._lon;
+            }
+            set
+            {
+                if ((this._lon != value))
+                {
+                    this.OnLONChanging(value);
+                    this.RaiseDataMemberChanging("LON");
+                    this.ValidateProperty("LON", value);
+                    this._lon = value;
+                    this.RaiseDataMemberChanged("LON");
+                    this.OnLONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'NAME' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string NAME
+        {
+            get
+            {
+                return this._name;
+            }
+            set
+            {
+                if ((this._name != value))
+                {
+                    this.OnNAMEChanging(value);
+                    this.RaiseDataMemberChanging("NAME");
+                    this.ValidateProperty("NAME", value);
+                    this._name = value;
+                    this.RaiseDataMemberChanged("NAME");
+                    this.OnNAMEChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'POP2005' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<long> POP2005
+        {
+            get
+            {
+                return this._pop2005;
+            }
+            set
+            {
+                if ((this._pop2005 != value))
+                {
+                    this.OnPOP2005Changing(value);
+                    this.RaiseDataMemberChanging("POP2005");
+                    this.ValidateProperty("POP2005", value);
+                    this._pop2005 = value;
+                    this.RaiseDataMemberChanged("POP2005");
+                    this.OnPOP2005Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'REGION' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> REGION
+        {
+            get
+            {
+                return this._region;
+            }
+            set
+            {
+                if ((this._region != value))
+                {
+                    this.OnREGIONChanging(value);
+                    this.RaiseDataMemberChanging("REGION");
+                    this.ValidateProperty("REGION", value);
+                    this._region = value;
+                    this.RaiseDataMemberChanged("REGION");
+                    this.OnREGIONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'SUBREGION' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> SUBREGION
+        {
+            get
+            {
+                return this._subregion;
+            }
+            set
+            {
+                if ((this._subregion != value))
+                {
+                    this.OnSUBREGIONChanging(value);
+                    this.RaiseDataMemberChanging("SUBREGION");
+                    this.ValidateProperty("SUBREGION", value);
+                    this._subregion = value;
+                    this.RaiseDataMemberChanged("SUBREGION");
+                    this.OnSUBREGIONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'UN' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> UN
+        {
+            get
+            {
+                return this._un;
+            }
+            set
+            {
+                if ((this._un != value))
+                {
+                    this.OnUNChanging(value);
+                    this.RaiseDataMemberChanging("UN");
+                    this.ValidateProperty("UN", value);
+                    this._un = value;
+                    this.RaiseDataMemberChanged("UN");
+                    this.OnUNChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._id;
+        }
+    }
+    
+    /// <summary>
+    /// The 'View_CountryBorder' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class View_CountryBorder : Entity
+    {
+        
+        private Nullable<long> _area;
+        
+        private string _fips;
+        
+        private string _geom;
+        
+        private int _id;
+        
+        private string _iso2;
+        
+        private string _iso3;
+        
+        private Nullable<double> _lat;
+        
+        private Nullable<double> _lon;
+        
+        private string _name;
+        
+        private Nullable<long> _pop2005;
+        
+        private Nullable<int> _region;
+        
+        private Nullable<int> _subregion;
+        
+        private Nullable<int> _un;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OnAREAChanging(Nullable<long> value);
+        partial void OnAREAChanged();
+        partial void OnFIPSChanging(string value);
+        partial void OnFIPSChanged();
+        partial void OngeomChanging(string value);
+        partial void OngeomChanged();
+        partial void OnIDChanging(int value);
+        partial void OnIDChanged();
+        partial void OnISO2Changing(string value);
+        partial void OnISO2Changed();
+        partial void OnISO3Changing(string value);
+        partial void OnISO3Changed();
+        partial void OnLATChanging(Nullable<double> value);
+        partial void OnLATChanged();
+        partial void OnLONChanging(Nullable<double> value);
+        partial void OnLONChanged();
+        partial void OnNAMEChanging(string value);
+        partial void OnNAMEChanged();
+        partial void OnPOP2005Changing(Nullable<long> value);
+        partial void OnPOP2005Changed();
+        partial void OnREGIONChanging(Nullable<int> value);
+        partial void OnREGIONChanged();
+        partial void OnSUBREGIONChanging(Nullable<int> value);
+        partial void OnSUBREGIONChanged();
+        partial void OnUNChanging(Nullable<int> value);
+        partial void OnUNChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View_CountryBorder"/> class.
+        /// </summary>
+        public View_CountryBorder()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'AREA' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<long> AREA
+        {
+            get
+            {
+                return this._area;
+            }
+            set
+            {
+                if ((this._area != value))
+                {
+                    this.OnAREAChanging(value);
+                    this.RaiseDataMemberChanging("AREA");
+                    this.ValidateProperty("AREA", value);
+                    this._area = value;
+                    this.RaiseDataMemberChanged("AREA");
+                    this.OnAREAChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'FIPS' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string FIPS
+        {
+            get
+            {
+                return this._fips;
+            }
+            set
+            {
+                if ((this._fips != value))
+                {
+                    this.OnFIPSChanging(value);
+                    this.RaiseDataMemberChanging("FIPS");
+                    this.ValidateProperty("FIPS", value);
+                    this._fips = value;
+                    this.RaiseDataMemberChanged("FIPS");
+                    this.OnFIPSChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'geom' value.
+        /// </summary>
+        [DataMember()]
+        public string geom
+        {
+            get
+            {
+                return this._geom;
+            }
+            set
+            {
+                if ((this._geom != value))
+                {
+                    this.OngeomChanging(value);
+                    this.RaiseDataMemberChanging("geom");
+                    this.ValidateProperty("geom", value);
+                    this._geom = value;
+                    this.RaiseDataMemberChanged("geom");
+                    this.OngeomChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ID' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int ID
+        {
+            get
+            {
+                return this._id;
+            }
+            set
+            {
+                if ((this._id != value))
+                {
+                    this.OnIDChanging(value);
+                    this.ValidateProperty("ID", value);
+                    this._id = value;
+                    this.RaisePropertyChanged("ID");
+                    this.OnIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ISO2' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string ISO2
+        {
+            get
+            {
+                return this._iso2;
+            }
+            set
+            {
+                if ((this._iso2 != value))
+                {
+                    this.OnISO2Changing(value);
+                    this.RaiseDataMemberChanging("ISO2");
+                    this.ValidateProperty("ISO2", value);
+                    this._iso2 = value;
+                    this.RaiseDataMemberChanged("ISO2");
+                    this.OnISO2Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ISO3' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string ISO3
+        {
+            get
+            {
+                return this._iso3;
+            }
+            set
+            {
+                if ((this._iso3 != value))
+                {
+                    this.OnISO3Changing(value);
+                    this.RaiseDataMemberChanging("ISO3");
+                    this.ValidateProperty("ISO3", value);
+                    this._iso3 = value;
+                    this.RaiseDataMemberChanged("ISO3");
+                    this.OnISO3Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'LAT' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<double> LAT
+        {
+            get
+            {
+                return this._lat;
+            }
+            set
+            {
+                if ((this._lat != value))
+                {
+                    this.OnLATChanging(value);
+                    this.RaiseDataMemberChanging("LAT");
+                    this.ValidateProperty("LAT", value);
+                    this._lat = value;
+                    this.RaiseDataMemberChanged("LAT");
+                    this.OnLATChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'LON' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<double> LON
+        {
+            get
+            {
+                return this._lon;
+            }
+            set
+            {
+                if ((this._lon != value))
+                {
+                    this.OnLONChanging(value);
+                    this.RaiseDataMemberChanging("LON");
+                    this.ValidateProperty("LON", value);
+                    this._lon = value;
+                    this.RaiseDataMemberChanged("LON");
+                    this.OnLONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'NAME' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string NAME
+        {
+            get
+            {
+                return this._name;
+            }
+            set
+            {
+                if ((this._name != value))
+                {
+                    this.OnNAMEChanging(value);
+                    this.RaiseDataMemberChanging("NAME");
+                    this.ValidateProperty("NAME", value);
+                    this._name = value;
+                    this.RaiseDataMemberChanged("NAME");
+                    this.OnNAMEChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'POP2005' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<long> POP2005
+        {
+            get
+            {
+                return this._pop2005;
+            }
+            set
+            {
+                if ((this._pop2005 != value))
+                {
+                    this.OnPOP2005Changing(value);
+                    this.RaiseDataMemberChanging("POP2005");
+                    this.ValidateProperty("POP2005", value);
+                    this._pop2005 = value;
+                    this.RaiseDataMemberChanged("POP2005");
+                    this.OnPOP2005Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'REGION' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> REGION
+        {
+            get
+            {
+                return this._region;
+            }
+            set
+            {
+                if ((this._region != value))
+                {
+                    this.OnREGIONChanging(value);
+                    this.RaiseDataMemberChanging("REGION");
+                    this.ValidateProperty("REGION", value);
+                    this._region = value;
+                    this.RaiseDataMemberChanged("REGION");
+                    this.OnREGIONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'SUBREGION' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> SUBREGION
+        {
+            get
+            {
+                return this._subregion;
+            }
+            set
+            {
+                if ((this._subregion != value))
+                {
+                    this.OnSUBREGIONChanging(value);
+                    this.RaiseDataMemberChanging("SUBREGION");
+                    this.ValidateProperty("SUBREGION", value);
+                    this._subregion = value;
+                    this.RaiseDataMemberChanged("SUBREGION");
+                    this.OnSUBREGIONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'UN' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> UN
+        {
+            get
+            {
+                return this._un;
+            }
+            set
+            {
+                if ((this._un != value))
+                {
+                    this.OnUNChanging(value);
+                    this.RaiseDataMemberChanging("UN");
+                    this.ValidateProperty("UN", value);
+                    this._un = value;
+                    this.RaiseDataMemberChanged("UN");
+                    this.OnUNChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._id;
+        }
+    }
+    
+    /// <summary>
     /// The 'View_CountryIndicator' entity class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
@@ -2660,6 +3472,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="View_CountryBorder"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<View_CountryBorder> View_CountryBorders
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<View_CountryBorder>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="View_GeneralCountry"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<View_GeneralCountry> View_GeneralCountries
@@ -2770,6 +3593,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="View_Borders"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<View_Borders> View_Borders
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<View_Borders>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="View_CountryIndicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<View_CountryIndicator> View_CountryIndicators
@@ -2800,6 +3634,19 @@ namespace NCRVisual.web.Services
             {
                 return base.EntityContainer.GetEntitySet<View_TabIndicator>();
             }
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_CountryBorder"/> entities using the 'GetCountryBorder' query.
+        /// </summary>
+        /// <param name="ISO">The value for the 'ISO' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_CountryBorder"/> entities.</returns>
+        public EntityQuery<View_CountryBorder> GetCountryBorderQuery(string ISO)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("ISO", ISO);
+            this.ValidateMethod("GetCountryBorderQuery", parameters);
+            return base.CreateQuery<View_CountryBorder>("GetCountryBorder", parameters, false, true);
         }
         
         /// <summary>
@@ -2979,6 +3826,26 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_Borders"/> entities using the 'GetView_Borders' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_Borders"/> entities.</returns>
+        public EntityQuery<View_Borders> GetView_BordersQuery()
+        {
+            this.ValidateMethod("GetView_BordersQuery", null);
+            return base.CreateQuery<View_Borders>("GetView_Borders", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_CountryBorder"/> entities using the 'GetView_CountryBorder' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_CountryBorder"/> entities.</returns>
+        public EntityQuery<View_CountryBorder> GetView_CountryBorderQuery()
+        {
+            this.ValidateMethod("GetView_CountryBorderQuery", null);
+            return base.CreateQuery<View_CountryBorder>("GetView_CountryBorder", null, false, true);
+        }
+        
+        /// <summary>
         /// Gets an EntityQuery instance that can be used to load <see cref="View_CountryIndicator"/> entities using the 'GetView_CountryIndicator' query.
         /// </summary>
         /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_CountryIndicator"/> entities.</returns>
@@ -3033,6 +3900,25 @@ namespace NCRVisual.web.Services
         [ServiceContract()]
         public interface IWBDomainServiceContract
         {
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetCountryBorder' operation.
+            /// </summary>
+            /// <param name="ISO">The value for the 'ISO' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetCountryBorderDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetCountryBorder", ReplyAction="http://tempuri.org/WBDomainService/GetCountryBorderResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetCountryBorder(string ISO, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetCountryBorder'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetCountryBorder'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetCountryBorder' operation.</returns>
+            QueryResult<View_CountryBorder> EndGetCountryBorder(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetCountryGeneralInfo' operation.
@@ -3319,6 +4205,42 @@ namespace NCRVisual.web.Services
             QueryResult<tbl_trades> EndGetTbl_trades(IAsyncResult result);
             
             /// <summary>
+            /// Asynchronously invokes the 'GetView_Borders' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_BordersDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_Borders", ReplyAction="http://tempuri.org/WBDomainService/GetView_BordersResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_Borders(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_Borders'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_Borders'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_Borders' operation.</returns>
+            QueryResult<View_Borders> EndGetView_Borders(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetView_CountryBorder' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_CountryBorderDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_CountryBorder", ReplyAction="http://tempuri.org/WBDomainService/GetView_CountryBorderResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_CountryBorder(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_CountryBorder'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_CountryBorder'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_CountryBorder' operation.</returns>
+            QueryResult<View_CountryBorder> EndGetView_CountryBorder(IAsyncResult result);
+            
+            /// <summary>
             /// Asynchronously invokes the 'GetView_CountryIndicator' operation.
             /// </summary>
             /// <param name="callback">Callback to invoke on completion.</param>
@@ -3423,6 +4345,8 @@ namespace NCRVisual.web.Services
                 this.CreateEntitySet<tbl_regions>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_tabs>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_trades>(EntitySetOperations.None);
+                this.CreateEntitySet<View_Borders>(EntitySetOperations.None);
+                this.CreateEntitySet<View_CountryBorder>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryIndicator>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryIndicatorTab>(EntitySetOperations.None);
                 this.CreateEntitySet<View_GeneralCountry>(EntitySetOperations.None);
