@@ -7,26 +7,33 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <StartPageUrl>NcrVisual.aspx</StartPageUrl>
-          <StartAction>SpecificPage</StartAction>
+          <StartPageUrl>http://ncrvisual.co.cc:8080/Default.aspx</StartPageUrl>
+          <StartAction>URL</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
           <SilverlightDebugging>True</SilverlightDebugging>
           <NativeDebugging>False</NativeDebugging>
           <SQLDebugging>False</SQLDebugging>
           <ExternalProgram>
           </ExternalProgram>
-          <StartExternalURL>
-          </StartExternalURL>
+          <StartExternalURL>http://ncrvisual.co.cc:8080/WorldMap.aspx</StartExternalURL>
           <StartCmdLineArguments>
           </StartCmdLineArguments>
           <StartWorkingDirectory>
           </StartWorkingDirectory>
           <EnableENC>False</EnableENC>
           <AlwaysStartWebServerOnDebug>True</AlwaysStartWebServerOnDebug>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>8080</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <ProjectOutputReferences>
             <Ref Project="{9FE80925-D432-4CCF-BB66-F92C60497AD7}" Folder="ClientBin">NCRVisual.xap</Ref>
-            <Ref Project="{59006AA4-0F00-42D4-B51B-2B1581CA1F5A}" Folder="ClientBin">RelationDiagram.xap</Ref>
-            <Ref Project="{AE289E17-1EA2-4730-8327-F7A181579B8B}" Folder="ClientBin">DataInputAnalysis.xap</Ref>
             <Ref Project="{4473E46C-61FC-4B73-85D2-DF988D42136F}" Folder="ClientBin">WorldMap.xap</Ref>
           </ProjectOutputReferences>
         </WebProjectProperties>

@@ -14,11 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WbTest", "WbTest\WbTest.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldbankDataGraphs", "WorldbankDataGraphs\WorldbankDataGraphs.csproj", "{8B4DE061-5375-45BA-8A1F-6EEFC8061318}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BingMapsSL.MultiShape", "..\Libs\BingSLMultiShapes\BingMapsSL.MultiShape\BingMapsSL.MultiShape.csproj", "{0E5A740A-2458-4F3E-B343-98FFBE145DE7}"
+EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -78,8 +76,22 @@ Global
 		{8B4DE061-5375-45BA-8A1F-6EEFC8061318}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{8B4DE061-5375-45BA-8A1F-6EEFC8061318}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8B4DE061-5375-45BA-8A1F-6EEFC8061318}.Release|x86.ActiveCfg = Release|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0E5A740A-2458-4F3E-B343-98FFBE145DE7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

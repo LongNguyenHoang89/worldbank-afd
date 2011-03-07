@@ -61,18 +61,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BingMapsSL.MultiShape">
-      <HintPath>..\..\Libs\Bing Maps Multi Shape\BingMapsSL.MultiShape.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Expression.Drawing" />
     <Reference Include="Microsoft.Expression.Effects" />
     <Reference Include="Microsoft.Expression.Interactions" />
-    <Reference Include="Microsoft.Maps.MapControl">
-      <HintPath>..\..\Libs\Bing Maps Silverlight Control\V1\Libraries\Microsoft.Maps.MapControl.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Maps.MapControl.Common">
-      <HintPath>..\..\Libs\Bing Maps Silverlight Control\V1\Libraries\Microsoft.Maps.MapControl.Common.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Maps.MapControl, Version=1.0.1.0, Culture=neutral, PublicKeyToken=498d0d22d7936b73, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Maps.MapControl.Common, Version=1.0.1.0, Culture=neutral, PublicKeyToken=498d0d22d7936b73, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
@@ -220,6 +213,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\Libs\BingSLMultiShapes\BingMapsSL.MultiShape\BingMapsSL.MultiShape.csproj">
+      <Project>{0E5A740A-2458-4F3E-B343-98FFBE145DE7}</Project>
+      <Name>BingMapsSL.MultiShape</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WorldbankDataGraphs\WorldbankDataGraphs.csproj">
       <Project>{8B4DE061-5375-45BA-8A1F-6EEFC8061318}</Project>
       <Name>WorldbankDataGraphs</Name>

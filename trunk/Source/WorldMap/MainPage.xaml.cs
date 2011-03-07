@@ -15,9 +15,11 @@ using Microsoft.Maps.MapControl.Design;
 using NCRVisual.web.DataModel;
 using WorldMap.Helper;
 using System.Windows.Interop;
+using System.Windows.Browser;
 
 namespace WorldMap
 {
+    [ScriptableType()]
     public partial class MainPage : UserControl
     {
         #region private variables
@@ -83,7 +85,8 @@ namespace WorldMap
             this.WorldMapController.LoadInitDataCompleted += new EventHandler(WorldMapController_LoadInitDataCompleted);
             this.WorldMapController.GetView_TabIndicatorQueryCompleted += new EventHandler(WorldMapController_GetView_TabIndicatorQueryCompleted);
             this.WorldMapController.GetBorder_completed += new EventHandler(WorldMapController_GetBorder_completed);
-            
+            // Register this as scriptable object (for running JS)
+            HtmlPage.RegisterScriptableObject("MainPage", this);
         }
 
         #region Draw Country Borders
@@ -914,6 +917,44 @@ namespace WorldMap
         {
             selectedIndicatorPKs.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
         }
+        #endregion
+
+        #region Live ID functions
+
+        private void SignInOff_Checked(object sender, RoutedEventArgs e)
+        {
+            HtmlPage.Window.Invoke("signIn");
+            SignInOut.IsChecked = false;
+        }
+
+        private void SignInOff_Unchecked(object sender, RoutedEventArgs e)
+        {
+            HtmlPage.Window.Invoke("signOut");
+        }
+
+        [ScriptableMember()]
+        public void SignInCompleted(bool signedin, string cid)
+        {
+            if (signedin)
+            {
+                SignInOut.Content = "Sign-Out";
+                SignInInformation.Text = "Pending info...";
+                //SignInInformation.Text = cid + " is signed in...";
+            }
+            else
+            {
+                SignInOut.Content = "Sign-In";
+                SignInInformation.Text = "Not signed in";
+                //SignInInformation.Text = cid + " is signed out...";
+            }
+        }
+
+        [ScriptableMember()]
+        public void SignInMessengerCompleted(string cid, string userName)
+        {
+            SignInInformation.Text = userName + " is signed in...";
+        }
+
         #endregion
     }
 }
