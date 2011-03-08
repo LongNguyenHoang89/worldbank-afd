@@ -69,6 +69,61 @@ namespace WbWCF.DataAccess
             con.Close();
         }
 
+        public static void InsertProject(ProjectEntry project)
+        {
+            if (!Is_New_Project(project))
+                return;
+            SqlConnection con = GetConnection();
+            con.Open();            
+            string sql = @"INSERT INTO [tbl_projects]
+                    ([country_id]
+                    ,[project_link]
+                    ,[project_approval_date]
+                    ,[project_close_date]
+                    ,[project_status]
+                    ,[project_cost]
+                    ,[project_region]
+                    ,[project_major_sector]
+                    ,[project_themes]
+                    ,[project_borrower]
+                    ,[project_implement_agency]
+                    ,[project_wb_id]
+                    ,[project_name]
+                    ,[project_outcome])
+                VALUES
+                    (@country_id
+                    ,@project_link
+                    ,@project_approval_date
+                    ,@project_close_date
+                    ,@project_status
+                    ,@project_cost
+                    ,@project_region
+                    ,@project_major_sector
+                    ,@project_themes
+                    ,@project_borrower
+                    ,@project_implement_agency
+                    ,@project_wb_id
+                    ,@project_name
+                    ,@project_outcome)";
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@country_id", project.country_id);
+                cmd.Parameters.AddWithValue("@project_link", project.project_link);
+                cmd.Parameters.AddWithValue("@project_approval_date", project.project_approval_date);
+                cmd.Parameters.AddWithValue("@project_close_date", project.project_closing_date);
+                cmd.Parameters.AddWithValue("@project_status", project.project_status);
+                cmd.Parameters.AddWithValue("@project_cost", project.project_cost);
+                cmd.Parameters.AddWithValue("@project_region", project.project_region);
+                cmd.Parameters.AddWithValue("@project_major_sector", project.project_major_sector);
+                cmd.Parameters.AddWithValue("@project_themes", project.project_themes);
+                cmd.Parameters.AddWithValue("@project_borrower", project.project_borrower);
+                cmd.Parameters.AddWithValue("@project_implement_agency", project.project_implement_agency);
+                cmd.Parameters.AddWithValue("@project_wb_id", project.project_wb_id);
+                cmd.Parameters.AddWithValue("@project_name", project.project_name);
+                cmd.Parameters.AddWithValue("@project_outcome", project.project_outcome);
+                cmd.ExecuteNonQuery();
+                con.Close();
+        }
+
         public static void InsertIndicators(Collection<IndicatorEntry> indicators)
         {
             SqlConnection con = GetConnection();
@@ -224,6 +279,20 @@ namespace WbWCF.DataAccess
                          FROM tbl_trades where country_from_id=" + entry.country_from_id;
             sql += " and country_to_id=" + entry.country_to_id;
             sql += " and trade_year=" + entry.trade_year;
+            SqlDataAdapter da = new SqlDataAdapter(sql, con);
+            DataSet ds = new DataSet();
+            da.Fill(ds, "check");
+            DataTable dt = ds.Tables["check"];
+            con.Close();
+            return dt.Rows.Count == 0;
+        }
+
+        private static bool Is_New_Project(ProjectEntry entry)
+        {
+            SqlConnection con = GetConnection();
+            con.Open();
+            string sql = @"SELECT project_id_pk 
+                         FROM tbl_projects where project_wb_id='" + entry.project_wb_id+"'";            
             SqlDataAdapter da = new SqlDataAdapter(sql, con);
             DataSet ds = new DataSet();
             da.Fill(ds, "check");

@@ -372,7 +372,244 @@ namespace WbTest
             webclient.DownloadFile(link, @"c:\flags\"+name);
 
         }
-        
+
+        public static void crawlOneProject(string link,string countryid)
+        {
+            try
+            {
+                string url = link;
+                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(url);
+                myRequest.Method = "GET";
+                WebResponse myResponse = myRequest.GetResponse();
+                StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+                string result = sr.ReadToEnd();
+                ProjectEntry entry = new ProjectEntry();
+                entry.country_id = Int32.Parse(countryid);
+                entry.project_link = url;
+                // get project_name
+                int td_name_tag_pos = result.IndexOf("<td class\"AWheading\">");
+                int begin_name_tag_pos = result.IndexOf("<h1>", td_name_tag_pos + 1);
+                int end_name_tag_pos = result.IndexOf("</h1>", begin_name_tag_pos + 1);
+                string project_name = result.Substring(begin_name_tag_pos + 4, end_name_tag_pos - begin_name_tag_pos - 4);
+                entry.project_name = project_name;
+
+                //get project_wb_id and project_status
+                int tr_id_tag_pos = result.IndexOf("tabularyellowbg");
+                int strong_end_tag_pos = result.IndexOf("</strong>", tr_id_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                int end_project_id = result.IndexOf("|", strong_end_tag_pos + 1);
+                string project_wb_id = result.Substring(strong_end_tag_pos + 9, end_project_id - strong_end_tag_pos - 10);
+                entry.project_wb_id = project_wb_id;
+
+                //get project_wb_status
+                strong_end_tag_pos = result.IndexOf("</strong>", end_project_id + 1, StringComparison.CurrentCultureIgnoreCase);
+                int td_end_tag_pos = result.IndexOf("</td>", strong_end_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string project_wb_status = result.Substring(strong_end_tag_pos + 9, td_end_tag_pos - strong_end_tag_pos - 9);
+                entry.project_status = project_wb_status;
+
+                //get project_approval date
+                int approval_date_tag = result.IndexOf("Approval Date</a>", td_end_tag_pos, StringComparison.CurrentCultureIgnoreCase);
+                int acroynym_tag = result.IndexOf("acronym", approval_date_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                int acronym_close_tag_pos = result.IndexOf(">", acroynym_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                int acronym_end_tag_pos = result.IndexOf("</acronym>", acronym_close_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string approval_date = result.Substring(acronym_close_tag_pos + 1, acronym_end_tag_pos - acronym_close_tag_pos - 1);
+                entry.project_approval_date = approval_date;
+
+                //get closing_date
+                int closing_date_tag = result.IndexOf("Closing Date</a>", acronym_end_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                acroynym_tag = result.IndexOf("acronym", closing_date_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                acronym_close_tag_pos = result.IndexOf(">", acroynym_tag + 1);
+                acronym_end_tag_pos = result.IndexOf("</acronym>", acronym_close_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string closing_date = result.Substring(acronym_close_tag_pos + 1, acronym_end_tag_pos - acronym_close_tag_pos - 1);
+                entry.project_closing_date = closing_date;
+
+                //get project_cost
+                int project_cost_tag = result.IndexOf("Total Project Cost**</a>", acronym_end_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                acroynym_tag = result.IndexOf("class=\"Txt_AW\"", project_cost_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                acronym_close_tag_pos = result.IndexOf(">", acroynym_tag + 1);
+                acronym_end_tag_pos = result.IndexOf("</td>", acronym_close_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string project_cost = result.Substring(acronym_close_tag_pos + 1, acronym_end_tag_pos - acronym_close_tag_pos - 1);
+                entry.project_cost = project_cost;
+
+                //get project region
+                int region_tag = result.IndexOf("Region</a>", acronym_end_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                acroynym_tag = result.IndexOf("class=\"Txt_AW\"", region_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                acronym_close_tag_pos = result.IndexOf(">", acroynym_tag + 1);
+                acronym_end_tag_pos = result.IndexOf("</td>", acronym_close_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string region = result.Substring(acronym_close_tag_pos + 1, acronym_end_tag_pos - acronym_close_tag_pos - 1);
+                entry.project_region = region;
+
+                //get project major sector
+                int major_sector_tag = result.IndexOf("Major Sector (Sector) (%)</a>", acronym_end_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                acroynym_tag = result.IndexOf("class=\"Txt_AW\"", major_sector_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                acronym_close_tag_pos = result.IndexOf(">", acroynym_tag + 1);
+                acronym_end_tag_pos = result.IndexOf("</td>", acronym_close_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string major_sector = result.Substring(acronym_close_tag_pos + 1, acronym_end_tag_pos - acronym_close_tag_pos - 1);
+                entry.project_major_sector = major_sector;
+
+                //get project_themes 
+                int theme_tag = result.IndexOf("Themes (%)</a>", acronym_end_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                acroynym_tag = result.IndexOf("class=\"Txt_AW\"", theme_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                acronym_close_tag_pos = result.IndexOf(">", acroynym_tag + 1);
+                acronym_end_tag_pos = result.IndexOf("</td>", acronym_close_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string theme = result.Substring(acronym_close_tag_pos + 1, acronym_end_tag_pos - acronym_close_tag_pos - 1);
+                entry.project_themes = theme;
+
+                //get project_borrower
+                int borrower_tag = result.IndexOf("Borrower/Recipient</a>", acronym_end_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                acroynym_tag = result.IndexOf("class=\"Txt_AW\"", borrower_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                acronym_close_tag_pos = result.IndexOf(">", acroynym_tag + 1);
+                acronym_end_tag_pos = result.IndexOf("</td>", acronym_close_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string borrower = result.Substring(acronym_close_tag_pos + 1, acronym_end_tag_pos - acronym_close_tag_pos - 1);
+                entry.project_borrower = borrower;
+
+                //get project implementation agency
+                int implement_agency_tag = result.IndexOf("Implementing Agency</a>", acronym_end_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                acroynym_tag = result.IndexOf("class=\"Txt_AW\"", implement_agency_tag + 1, StringComparison.CurrentCultureIgnoreCase);
+                acronym_close_tag_pos = result.IndexOf(">", acroynym_tag + 1);
+                acronym_end_tag_pos = result.IndexOf("</td>", acronym_close_tag_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                string implement_agency = result.Substring(acronym_close_tag_pos + 1, acronym_end_tag_pos - acronym_close_tag_pos - 1);
+                entry.project_implement_agency = implement_agency;
+
+                //get outcome
+                int outcome_link = result.IndexOf("&Type=Implementation", 9, StringComparison.CurrentCultureIgnoreCase);
+                int outcome_href = result.IndexOf("href", outcome_link - 200);
+                int outcome_end_link = result.IndexOf("\"", outcome_link);
+                string outcome_string = result.Substring(outcome_href + 6, outcome_end_link - outcome_href - 6);
+
+                url = outcome_string;
+                myRequest = (HttpWebRequest)WebRequest.Create(url);
+                myRequest.Method = "GET";
+                myResponse = myRequest.GetResponse();
+                sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+                result = sr.ReadToEnd();
+
+                //get thematic outcome
+                int first_tr_pos = result.IndexOf("Targeted Thematic Outcomes...");
+                int first_tr_end_pos = result.IndexOf("</tr>", first_tr_pos, StringComparison.CurrentCultureIgnoreCase);
+                int tbody_end_pos = result.IndexOf("</table>", first_tr_end_pos, StringComparison.CurrentCultureIgnoreCase);
+                int end_tr_pos = first_tr_end_pos;
+                string outcome = "";
+                bool ok = true;
+                do
+                {
+                    int value_tr_pos = result.IndexOf("<tr", end_tr_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+                    int value_td_pos = result.IndexOf("<td", value_tr_pos, StringComparison.CurrentCultureIgnoreCase);
+                    int value_td_end_pos = result.IndexOf(">", value_td_pos + 1);
+                    int value_td_close_pos = result.IndexOf("</td", value_td_end_pos, StringComparison.CurrentCultureIgnoreCase);
+                    if (value_td_close_pos < tbody_end_pos)
+                    {
+                        string value = result.Substring(value_td_end_pos + 1, value_td_close_pos - value_td_end_pos - 1);
+                        outcome = outcome + value + " /n";
+                    }
+                    end_tr_pos = result.IndexOf("</tr>", value_td_close_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+
+                    ok = (value_tr_pos > 0) && (value_td_pos > 0) && (value_td_end_pos > 0) && (value_td_close_pos > 0);
+                }
+                while (end_tr_pos < tbody_end_pos && end_tr_pos > first_tr_pos && ok);
+
+                entry.project_outcome = outcome;
+                WBAccess.InsertProject(entry);
+            }
+            catch
+            {
+            }
+            // get millenium goals
+            //first_tr_pos = result.IndexOf("Millennium Development Goals for This Project");
+            //first_tr_end_pos = result.IndexOf("</tr>", first_tr_pos, StringComparison.CurrentCultureIgnoreCase);
+            //tbody_end_pos = result.IndexOf("</table>", first_tr_end_pos, StringComparison.CurrentCultureIgnoreCase);
+            //end_tr_pos = first_tr_end_pos;
+
+            //string goals = "";
+            //do
+            //{
+            //    int value_tr_pos = result.IndexOf("<tr", end_tr_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+            //    int value_td_pos = result.IndexOf("<td", value_tr_pos, StringComparison.CurrentCultureIgnoreCase);
+            //    //check if have javascript
+            //    int java_script = result.IndexOf("</script>", value_td_pos, StringComparison.CurrentCultureIgnoreCase);
+            //    if (java_script < tbody_end_pos && java_script > value_td_pos)
+            //        value_td_pos = java_script;
+
+            //    int value_td_end_pos = result.IndexOf(">", value_td_pos + 1);                
+            //    int value_td_close_pos = result.IndexOf("</td", value_td_end_pos, StringComparison.CurrentCultureIgnoreCase);
+            //    string value = result.Substring(value_td_end_pos + 1, value_td_close_pos - value_td_end_pos - 1);
+            //    goals = goals + value + " /n";
+            //    end_tr_pos = result.IndexOf("</tr>", value_td_close_pos + 1, StringComparison.CurrentCultureIgnoreCase);
+            //    ok = (value_tr_pos > 0) && (value_td_pos > 0) && (value_td_end_pos > 0) && (value_td_close_pos > 0);
+            //}
+            //while (end_tr_pos < tbody_end_pos && end_tr_pos > first_tr_pos);
+
+            //entry.project_millenium_outcome = goals;
+
+        }
+
+        public static void crawlAllCountryProject(string link,string countryid)
+        {
+            try
+            {
+                string url = link;
+                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(url);
+                myRequest.Method = "GET";
+                WebResponse myResponse = myRequest.GetResponse();
+                StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+                string result = sr.ReadToEnd();
+                // get total page
+                int class_pos = result.IndexOf("AWProjectsContractNormalText");
+                if (class_pos == -1)
+                    return;
+                int strong_pos = result.IndexOf("<strong>", class_pos);
+                strong_pos = result.IndexOf("<strong>", strong_pos + 1);
+                int end_strong_pos = result.IndexOf("</strong>", strong_pos);
+
+                int total_page = Int16.Parse(result.Substring(strong_pos + 8, end_strong_pos - strong_pos - 8));
+
+                //get page 1 project
+                //thead1 
+                int end = 0;
+                bool ok = true;
+                do
+                {
+                    int first_thead1 = result.IndexOf("Thead1", end,StringComparison.CurrentCultureIgnoreCase);
+                    //get project link :
+                    int link_class = result.IndexOf("AWcontentSmallLink", first_thead1 + 1);
+                    int link_href = result.IndexOf("href", link_class + 1);
+                    int link_end = result.IndexOf("\"", link_href + 6);
+                    string link_project = result.Substring(link_href + 6, link_end - link_href - 6);
+                    end = link_end + 1;
+                    link_project = link_project.Replace("amp;", "");
+                    crawlOneProject(link_project, countryid);
+                    ok = (first_thead1 > 0) && (link_class > 0) && (link_href > 0) && (link_end > 0);
+                }
+                while (ok);
+            }
+            catch
+            {
+            }
+        }
+
+        public static void crawlAllCountryProjectLinks(string country_id, string country_iso_code)
+        {
+            try
+            {
+                string url = "http://web.worldbank.org/WBSITE/EXTERNAL/PROJECTS/0,,category:country~menuPK:51559~pagePK:221246~piPK:95913~theSitePK:40941,00.html";
+                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(url);
+                myRequest.Method = "GET";
+                WebResponse myResponse = myRequest.GetResponse();
+                StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+                string result = sr.ReadToEnd();
+
+                //get link 
+                int country_link_pos = result.IndexOf("countrycode=" + country_iso_code, StringComparison.CurrentCultureIgnoreCase);
+                if (country_link_pos <= 0) return;
+                int country_begin_link_pos = result.IndexOf("href", country_link_pos - 200, StringComparison.CurrentCultureIgnoreCase);
+                int country_end_link_pos = result.IndexOf("\"", country_link_pos);
+                string link = result.Substring(country_begin_link_pos + 6, country_end_link_pos - country_begin_link_pos - 6) + "&sortby=PROJECTID&sortorder=DESC";
+                link = link.Replace("amp;", "");
+                crawlAllCountryProject(link, country_id);
+            }
+            catch
+            {
+            }
+        }        
         public static void downloadFlag(Dictionary<string,int> mapping)
         {
             
