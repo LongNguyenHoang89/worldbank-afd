@@ -176,6 +176,10 @@
     <Resource Include="Image\Feeds.png" />
     <Resource Include="Image\VIE.png" />
     <Resource Include="Image\Project.png" />
+    <Resource Include="Image\Country_Icon.png" />
+    <Resource Include="Image\Navigation_Icon.png" />
+    <Resource Include="Image\Personal_icon.png" />
+    <Resource Include="Image\SearchMap_Icon.png" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>

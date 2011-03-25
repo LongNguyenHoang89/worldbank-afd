@@ -118,6 +118,7 @@ namespace WorldMap
             myPoly.DataContext = countryCode;
             myPoly.MouseEnter += new MouseEventHandler(myPoly_MouseEnter);
             myPoly.MouseLeave += new MouseEventHandler(myPoly_MouseLeave);
+            
             //Add MultiPolygon to map layer
             PolygonLayer.Children.Add(myPoly);
         }
@@ -155,7 +156,9 @@ namespace WorldMap
         #endregion
 
         void WorldMapController_GetView_TabIndicatorQueryCompleted(object sender, EventArgs e)
-        {            
+        {
+            MyWorkSpace.PopulateFavouritedIndicatorsTab(WorldMapController.Context.View_TabIndicators);
+
             //TreeViewItem item = new
             List<int> tabId = new List<int>();
             foreach (View_TabIndicator indicator in WorldMapController.Context.View_TabIndicators)

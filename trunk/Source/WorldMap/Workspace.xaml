@@ -16,7 +16,10 @@
                     <GradientStop Color="#FFA5A5A5" Offset="1"/>
                 </LinearGradientBrush>
             </sdk:TabControl.Background>
-            <sdk:TabItem Header="Navigation" Name="NavigationTabItem" BorderBrush="#FF354452">
+            <sdk:TabItem Name="NavigationTabItem" BorderBrush="#FF354452">
+                <sdk:TabItem.Header>                    
+                    <Image Source="/WorldMap;component/Image/Navigation_Icon.png" Width="30" Height="30"></Image>
+                </sdk:TabItem.Header>
                 <StackPanel>
                     <Border Margin="10" CornerRadius="5" Background="Gray">
                         <TextBlock Text="SET VIEW POINT" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
@@ -36,7 +39,10 @@
                     </StackPanel>
                 </StackPanel>
             </sdk:TabItem>
-            <sdk:TabItem Header="Search" Name="SearchTabItem">
+            <sdk:TabItem Name="SearchTabItem">
+                <sdk:TabItem.Header>
+                    <Image Source="/WorldMap;component/Image/SearchMap_Icon.png" Width="30" Height="30"></Image>
+                </sdk:TabItem.Header>
                 <sdk:TabControl HorizontalAlignment="Stretch" Margin="0,5" VerticalAlignment="Stretch">
                     <sdk:TabItem Header="Indicators" >
                         <Grid>
@@ -57,19 +63,19 @@
                                 <TextBlock Text="SEARCH COUNTRY BY INDICATORS" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
                             </Border>
                             <ComboBox Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0"></ComboBox>
-                            
-                            <TextBlock Grid.Row="2" Margin="10,5" HorizontalAlignment="Right">From Year</TextBlock>                            
+
+                            <TextBlock Grid.Row="2" Margin="10,5" HorizontalAlignment="Right">From Year</TextBlock>
                             <ComboBox Grid.Row="2" Margin="10,5" Grid.Column="1"></ComboBox>
 
                             <TextBlock Grid.Row="3" Margin="10,5" HorizontalAlignment="Right">To Year</TextBlock>
                             <ComboBox Grid.Row="3" Margin="10,5" Grid.Column="1"></ComboBox>
-                            
+
                             <TextBlock Grid.Row="4" Margin="10,5" HorizontalAlignment="Right">From Value</TextBlock>
                             <TextBox Grid.Row="4" Margin="10,5" Grid.Column="1"></TextBox>
-                            
+
                             <TextBlock Grid.Row="5" Margin="10,6" HorizontalAlignment="Right">To Value</TextBlock>
                             <TextBox Grid.Row="5" Margin="10,5" Grid.Column="1"></TextBox>
-                            
+
                             <Button Grid.Row="6" Margin="10,0">Search</Button>
                         </Grid>
                     </sdk:TabItem>
@@ -87,8 +93,57 @@
                     </sdk:TabItem>
                 </sdk:TabControl>
             </sdk:TabItem>
-            <sdk:TabItem Header="Country" Name="CountryTabItem">
+            <sdk:TabItem Name="CountryTabItem">
+                <sdk:TabItem.Header>
+                    <Image Source="/WorldMap;component/Image/Country_Icon.png" Width="30" Height="30"></Image>
+                </sdk:TabItem.Header>
                 <local:CountryDetails x:Name="CountryDetailsControl"></local:CountryDetails>
+            </sdk:TabItem>
+            <sdk:TabItem>
+                <sdk:TabItem.Header>
+                    <Image Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30"></Image>
+                </sdk:TabItem.Header>
+                <sdk:TabControl>
+                    <sdk:TabItem Header="Shorcuts">
+                        <StackPanel>
+                            <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
+                                <TextBlock Text="FAVOURITED DATA" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                            </Border>
+                            <ListBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="5" Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30"></Image>
+                                    <TextBlock VerticalAlignment="Center">VietNam_GDP</TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="5" Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30"></Image>
+                                    <TextBlock VerticalAlignment="Center">VietNam_GDP</TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="5" Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30"></Image>
+                                    <TextBlock VerticalAlignment="Center">VietNam_GDP</TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="5" Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30"></Image>
+                                    <TextBlock VerticalAlignment="Center">VietNam_GDP</TextBlock>
+                                </StackPanel>
+                            </ListBox>
+                        </StackPanel>
+                    </sdk:TabItem>
+                    <sdk:TabItem Header="Indicators">
+                        <StackPanel>
+                            <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
+                                <TextBlock Text="FAVOURITE INDICATORS" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                            </Border>
+                            <toolkit:Accordion x:Name="IndicatorsAccordion">                                
+                            </toolkit:Accordion>
+                        </StackPanel>
+                    </sdk:TabItem>
+                    <sdk:TabItem Header="Settings">
+                        <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
+                            <TextBlock Text="CONFIGURATION" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                        </Border>
+                    </sdk:TabItem>
+                </sdk:TabControl>
             </sdk:TabItem>
         </sdk:TabControl>
     </Grid>
