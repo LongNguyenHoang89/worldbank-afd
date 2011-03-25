@@ -99,9 +99,6 @@
     <Compile Include="Controls\CountryDetails.xaml.cs">
       <DependentUpon>CountryDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FeedViewer.xaml.cs">
-      <DependentUpon>FeedViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Helper\Controller.cs" />
     <Compile Include="Controls\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
@@ -136,9 +133,6 @@
     <Compile Include="Helper\WKTToGeomatryPoint.cs" />
     <Compile Include="Workspace.xaml.cs">
       <DependentUpon>Workspace.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Workspace_Demo1.xaml.cs">
-      <DependentUpon>Workspace_Demo1.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -227,10 +221,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\FeedViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\TradeMode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -240,10 +230,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Workspace.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Workspace_Demo1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
