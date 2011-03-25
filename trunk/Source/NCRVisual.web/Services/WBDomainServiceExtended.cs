@@ -91,13 +91,23 @@ namespace NCRVisual.web.Services
         }                
 
         /// <summary>
-        /// 
+        /// Get the border of a selected country
         /// </summary>
         /// <param name="ISO">Iso code for country</param>
         /// <returns></returns>
         public IQueryable<View_CountryBorder> GetCountryBorder(string ISO)
         {
             return this.ObjectContext.View_CountryBorder.Where(c => c.ISO2 == ISO);
+        }
+
+        /// <summary>
+        /// Get the worl bank project list of a specific country
+        /// </summary>
+        /// <param name="countryId">Country Id</param>
+        /// <returns></returns>
+        public IQueryable<tbl_projects> GetCountryProjects(int countryId)        
+        {
+            return this.ObjectContext.tbl_projects.Where(c => c.country_id == countryId);
         }
     }
 }

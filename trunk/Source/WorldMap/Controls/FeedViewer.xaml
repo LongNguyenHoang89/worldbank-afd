@@ -1,0 +1,72 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"	
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ec="http://schemas.microsoft.com/expression/2010/controls" 
+    xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+    mc:Ignorable="d"
+	x:Class="WorldMap.FeedViewer"
+	d:DesignWidth="1024" d:DesignHeight="768">
+
+    <Grid x:Name="LayoutRoot" Background="Black">
+        <Grid x:Name="MainContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image HorizontalAlignment="left" Source="../Image/Feeds.png" Stretch="None" Grid.Column="1" Height="500" Width="auto" Margin="90,236,0,32" />
+            <Grid x:Name="LOB" Grid.Row="1" Grid.RowSpan="2" Background="Black" Margin="20" VerticalAlignment="Top">
+                <Grid x:Name="graph">
+                    <Grid >
+                        <Rectangle x:Name="background1"/>
+                        <Ellipse x:Name="ellipseGrid01_Copy" HorizontalAlignment="Center" Height="160" VerticalAlignment="Center" Width="160"/>
+                                                
+                        <Ellipse x:Name="pathMonths" HorizontalAlignment="Center" Height="520" VerticalAlignment="Center" Width="520"/>
+                        <Ellipse x:Name="ellipse" HorizontalAlignment="Center" Width=".5" Height=".5" Stroke="Black"/>
+                        <ec:PathListBox x:Name="IndicatorsListBox" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                            <ec:PathListBox.LayoutPaths>
+                                <ec:LayoutPath Distribution="Even" SourceElement="{Binding ElementName=ellipse}" FillBehavior="NoOverlap" Orientation="OrientToPath" Padding="0" Start="0.08"/>
+                            </ec:PathListBox.LayoutPaths>                            
+                        </ec:PathListBox>
+                    </Grid>
+                    <Ellipse x:Name="ellipseGrid01_Copy7" HorizontalAlignment="Center" Height="400" VerticalAlignment="Center" Width="400" Opacity="0.39">
+                        <Ellipse.Fill>
+                            <RadialGradientBrush>
+                                <GradientStop Color="Black" Offset="1"/>
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="Black" Offset="0.965"/>
+                                <GradientStop Color="#FFF6F6F6" Offset="0.135"/>
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Ellipse x:Name="ellipseGrid01_Copy6" HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="250" Opacity="0.975" Fill="Black">
+                    </Ellipse>
+
+                    <ec:PathListBox x:Name="IndicatorTextListBox" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0" FontSize="10" Foreground="Black" Background="Black">
+                        <ec:PathListBox.LayoutPaths>
+                            <ec:LayoutPath SourceElement="{Binding ElementName=pathMonths}" Orientation="OrientToPath" Distribution="Even" Padding="0" FillBehavior="NoOverlap"/>
+                        </ec:PathListBox.LayoutPaths>
+                    </ec:PathListBox>
+
+                    <TextBlock x:Name="months_textBlock_Copy1" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Choose Category" VerticalAlignment="Bottom" FontSize="10" Margin="0,0,-160,9" Foreground="#FF646464"/>
+                    <Grid x:Name="arrowRight" Height="59" Margin="0,0,-116,23" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="223" d:LayoutOverrides="HorizontalAlignment">
+                        <Grid.RenderTransform>
+                            <CompositeTransform ScaleX="-1"/>
+                        </Grid.RenderTransform>
+                        <ed:LineArrow Fill="#FFF4F4F5" HorizontalAlignment="Right" Stroke="Gray" Width="78" BendAmount="0" ArrowSize="6" RenderTransformOrigin="0.5,0.5" EndArrow="OvalArrow" Margin="0,-23,-6,-17">
+                            <ed:LineArrow.RenderTransform>
+                                <CompositeTransform ScaleY="-1"/>
+                            </ed:LineArrow.RenderTransform>
+                        </ed:LineArrow>
+                        <Path Data="M256,412 L67.904282,412" Fill="#FFF4F4F5" Height="1" Margin="-51,0,71,-17" Stretch="Fill" Stroke="Gray" UseLayoutRounding="False" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </Grid>
+
+            </Grid>
+        </Grid>        
+    </Grid>
+</UserControl>

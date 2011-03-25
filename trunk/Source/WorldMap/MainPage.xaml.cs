@@ -14,8 +14,6 @@ using Microsoft.Maps.MapControl;
 using Microsoft.Maps.MapControl.Design;
 using NCRVisual.web.DataModel;
 using WorldMap.Helper;
-using System.Windows.Interop;
-using System.Windows.Browser;
 
 namespace WorldMap
 {
@@ -118,8 +116,20 @@ namespace WorldMap
             myPoly.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
             myPoly.Opacity = 0.5;
             myPoly.DataContext = countryCode;
+            myPoly.MouseEnter += new MouseEventHandler(myPoly_MouseEnter);
+            myPoly.MouseLeave += new MouseEventHandler(myPoly_MouseLeave);
             //Add MultiPolygon to map layer
             PolygonLayer.Children.Add(myPoly);
+        }
+
+        void myPoly_MouseLeave(object sender, MouseEventArgs e)
+        {
+            (sender as UIElement).Opacity = 0.5;
+        }
+
+        void myPoly_MouseEnter(object sender, MouseEventArgs e)
+        {
+            (sender as UIElement).Opacity = 0.8;
         }
 
         private void DrawPolygon(LocationCollection vertices, SolidColorBrush color, string countryCode)
@@ -129,8 +139,10 @@ namespace WorldMap
             myPoly.Fill = color;
             myPoly.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
             myPoly.StrokeThickness = 1;
-            myPoly.Opacity = 0.7;
+            myPoly.Opacity = 0.5;
             myPoly.DataContext = countryCode;
+            myPoly.MouseEnter += new MouseEventHandler(myPoly_MouseEnter);
+            myPoly.MouseLeave += new MouseEventHandler(myPoly_MouseLeave);
             //Add Polygon to map layer
             PolygonLayer.Children.Add(myPoly);
         }
@@ -143,7 +155,7 @@ namespace WorldMap
         #endregion
 
         void WorldMapController_GetView_TabIndicatorQueryCompleted(object sender, EventArgs e)
-        {
+        {            
             //TreeViewItem item = new
             List<int> tabId = new List<int>();
             foreach (View_TabIndicator indicator in WorldMapController.Context.View_TabIndicators)
@@ -206,7 +218,7 @@ namespace WorldMap
         }
 
         void DefaultPushPin_Pinned(object sender, EventArgs e)
-        {
+        {            
             DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer);
             pushPin.IsOnMap = true;
             PushPinLayer.AddChild(pushPin, (sender as DraggablePushpin).Location);
@@ -218,6 +230,10 @@ namespace WorldMap
 
             pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
             pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
+
+            //Mapnavigation
+            MyMap.Center = pushPin.Location;
+            MyMap.ZoomLevel = 5;
         }
 
         void MapPushpin_Pinned(object sender, EventArgs e)
@@ -226,10 +242,8 @@ namespace WorldMap
             _isAddingNewPushPin = false;
             _currentLocationCountry = p.country.country_id_pk;
             ReverseGeocodeLocation(p.Location);
-
             _currentPushpin = p;
-
-            this.ArrowLayer.Children.Clear();
+            this.ArrowLayer.Children.Clear();                        
         }
 
         /// <summary>
@@ -241,9 +255,16 @@ namespace WorldMap
         {
             // get the selected countries
             tbl_countries thisPinOnCountry = ((DraggablePushpin)sender).country;
+            this.MyMap.Center = ((DraggablePushpin)sender).Location;
+            this.MyMap.ZoomLevel = 5;
+
+            /* Obsolete code from the previous version using custom child window
             // init a new CustomChildWindow
             CustomChildWindow child = new CustomChildWindow(WorldMapController, thisPinOnCountry, selectedIndicatorPKs);
             child.Show();
+             */
+
+            MyWorkSpace.CountryDetailsControl.PopulateData(WorldMapController, thisPinOnCountry, selectedIndicatorPKs);
         }
 
         void CreateCountryPushPin(DraggablePushpin pushpin)
@@ -252,7 +273,7 @@ namespace WorldMap
 
             panel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 
-            panel.Orientation = Orientation.Horizontal;
+            panel.Orientation = System.Windows.Controls.Orientation.Horizontal;
 
             DraggablePushpin dp = new DraggablePushpin();
             dp.Background = pushpin.Background;
@@ -605,11 +626,11 @@ namespace WorldMap
         {
             if ((sender as ToggleButton).IsChecked == true)
             {
-                this.CountryListUnhide.Begin();
+                this.CountryListUnhide.Begin();                
             }
             else
             {
-                this.CountryListHide.Begin();
+                this.CountryListHide.Begin();                
             }
         }
 
@@ -779,7 +800,7 @@ namespace WorldMap
                         GeocodeLayer.AddResult(e.Result.Results[0]);
                     }
 
-                    tbl_countries country = WorldMapController.GetCountry(formatted);
+                    tbl_countries country = WorldMapController.GetCountry(formatted);                   
 
                     if (!_isAddingNewPushPin && _currentLocationCountry == country.country_id_pk)
                     {
@@ -955,6 +976,6 @@ namespace WorldMap
             SignInInformation.Text = userName + " is signed in...";
         }
 
-        #endregion
+        #endregion        
     }
 }

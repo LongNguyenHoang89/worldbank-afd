@@ -23,7 +23,6 @@ namespace WorldMap.Helper
         /// </summary>
         public WKTToGeomatryPoint GeomatryConverter { get; set; }
 
-
         #region EventHandler
         /// <summary>
         /// Event after loading base data completed
@@ -54,6 +53,11 @@ namespace WorldMap.Helper
         /// Event after getting Border of a country completed;
         /// </summary>
         public event EventHandler GetBorder_completed;
+
+        /// <summary>
+        ///  Event after getting WB Project list of a country completed;
+        /// </summary>
+        public event EventHandler GetCountryWBProject_completed;
         #endregion
 
         /// <summary>
@@ -109,6 +113,10 @@ namespace WorldMap.Helper
             return null;
         }
 
+        /// <summary>
+        /// Get the overview country data
+        /// </summary>
+        /// <param name="country_pk"></param>
         public void GetTabCountryData(int country_pk)
         {
             var loadTabCountryData = Context.Load(Context.GetCountryGeneralInfoQuery(country_pk));
@@ -182,6 +190,24 @@ namespace WorldMap.Helper
             {
                 GetExportData_Completed(sender, e);
             }
-        }        
+        }
+
+        /// <summary>
+        /// Get country project data
+        /// </summary>
+        /// <param name="countryId"></param>
+        public void GetCountryWBProject(int countryId)
+        {
+            var getCountryProjectData = Context.Load(Context.GetCountryProjectsQuery(countryId));
+            getCountryProjectData.Completed += new EventHandler(getCountryProjectData_Completed);
+        }
+
+        void getCountryProjectData_Completed(object sender, EventArgs e)
+        {
+            if (GetCountryWBProject_completed != null)
+            {
+                GetCountryWBProject_completed(sender, e);
+            }
+        }
     }
 }

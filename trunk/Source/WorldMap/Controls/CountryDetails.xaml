@@ -1,0 +1,181 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"     
+	x:Class="WorldMap.CountryDetails"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+
+    <basics:TabControl HorizontalAlignment="Stretch" Name="tabControl1">
+        <basics:TabItem Header="Country Overview" Name="OverviewTab">
+            <Grid x:Name="LayoutRoot" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="Flag" Width="70" Height="40" Stretch="Fill" Margin="5,0,10,0"/>
+                    <TextBlock FontSize="30" Name="CountryNameTextBlock"></TextBlock>
+                </StackPanel>
+
+                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0,2" Margin="5">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
+                            <TextBlock Text="COUNTRY OVERVIEW" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                        </Border>
+
+                        <TextBlock VerticalAlignment="Center" FontSize="12" HorizontalAlignment="Right" Margin="10,0,0,0" Grid.Row="2">Region Name:</TextBlock>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" HorizontalAlignment="Right" Grid.Row="3">Lending Type:</TextBlock>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" HorizontalAlignment="Right" Grid.Row="4">Income Level:</TextBlock>
+
+                        <TextBlock VerticalAlignment="Center" FontSize="12" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="2" Grid.Column="1" Name="RegionNameTextBlock"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3" Grid.Column="1" Name="LendingTypeTextBlock"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" Grid.Column="1" Name="IncomeLevelTextBLock"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </basics:TabItem>
+        <basics:TabItem Header="Country Data" Name="tabItem2">
+            <Grid Background="White" Name="columnChartTabContainer" Height="350">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Background="White" Name="columnChartTab" Width="400" HorizontalAlignment="Left">
+
+                </Grid>
+                <Grid Name="IndicatorsGrid" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Name="IndicatorListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch" ToolTipService.ToolTip="{Binding indicator_description}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox IsChecked="True" Name="IndicatorCheckbox" Checked="IndicatorCheckbox_Checked" Tag="{Binding indicator_id_pk}" Unchecked="IndicatorCheckbox_Unchecked"></CheckBox>
+                                    <TextBlock Grid.Column="1" Text="{Binding indicator_name}"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ComboBox Name="comboBoxRenderStyle" Grid.Row="1" Height="23"></ComboBox>
+                    <Button Grid.Row="2" Margin="5" Name="buttonRenderChart" Click="buttonRenderChart_Click" IsEnabled="False">Render chart</Button>
+                </Grid>
+            </Grid>
+        </basics:TabItem>
+        <basics:TabItem Header="WorldBank Projects">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Margin="5" CornerRadius="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Border Margin="10" CornerRadius="5" Background="Gray">
+                            <TextBlock Text="PROJECT LIST" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                        </Border>
+                        <sdk:DataGrid Grid.Row="1" Margin="10,0" AutoGenerateColumns="False" x:Name="ProjectListDataGrid">
+                            <sdk:DataGrid.Columns>
+                                <sdk:DataGridTextColumn Header="Project Name" Binding="{Binding project_name}"/>
+                                <sdk:DataGridTextColumn Header="Status" Binding="{Binding project_status}"/>
+                            </sdk:DataGrid.Columns>
+                        </sdk:DataGrid>
+
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1" Margin="5" CornerRadius="5" MaxWidth="400">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
+                            <TextBlock Text="PROJECT OVERVIEW" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                        </Border>
+                        <TextBlock Grid.Row="1" Margin="10,0" HorizontalAlignment="Right">Id</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">P122235</TextBlock>
+
+                        <TextBlock Grid.Row="2" Margin="10,0" HorizontalAlignment="Right">Name</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0" TextWrapping="Wrap">Irrigation Restoration and Development Project</TextBlock>
+
+                        <TextBlock Grid.Row="3" Margin="10,0" HorizontalAlignment="Right">Link</TextBlock>
+                        <HyperlinkButton Grid.Row="3" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left" NavigateUri="http://web.worldbank.org/external/projects/main?pagePK=64283627&amp;piPK=73230&amp;theSitePK=40941&amp;menuPK=228424&amp;Projectid=P122235">Link to WorldBank</HyperlinkButton>
+
+                        <TextBlock Grid.Row="4" Margin="10,0" HorizontalAlignment="Right">Status</TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left">Pipeline</TextBlock>
+
+                        <TextBlock Grid.Row="5" Margin="10,0" HorizontalAlignment="Right">Cost</TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left">145</TextBlock>
+
+                        <TextBlock Grid.Row="6" Margin="10,0" HorizontalAlignment="Right">Approval Date</TextBlock>
+                        <TextBlock Grid.Row="6" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left">N/A</TextBlock>
+
+                        <TextBlock Grid.Row="7" Margin="10,0" HorizontalAlignment="Right">Close Date</TextBlock>
+                        <TextBlock Grid.Row="7" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left">N/A</TextBlock>
+
+                        <TextBlock Grid.Row="8" Margin="10,0" HorizontalAlignment="Right">Region</TextBlock>
+                        <TextBlock Grid.Row="8" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left">South Asia</TextBlock>
+
+                        <TextBlock Grid.Row="9" Margin="10,0" HorizontalAlignment="Right">Borrower</TextBlock>
+                        <TextBlock Grid.Row="9" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left" TextWrapping="Wrap">ISLAMIC REPUBLIC OF AFGHANISTAN</TextBlock>
+
+                        <TextBlock Grid.Row="10" Margin="10,0" HorizontalAlignment="Right">Implement Agency</TextBlock>
+                        <TextBlock Grid.Row="10" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left" TextWrapping="Wrap">MINISTRIES OF ENERGY AND WATER, AND MAIL</TextBlock>
+
+                        <TextBlock Grid.Row="11" Margin="10,0" HorizontalAlignment="Right">Major Sector</TextBlock>
+                        <TextBlock Grid.Row="11" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left" TextWrapping="Wrap">Agriculture, fishing, and forestry (Irrigation and drainage) (100%)</TextBlock>
+
+                        <TextBlock Grid.Row="12" Margin="10,0" HorizontalAlignment="Right">Project Themes</TextBlock>
+                        <TextBlock Grid.Row="12" Grid.Column="1" Margin="10,0" HorizontalAlignment="Left" TextWrapping="Wrap">Water resource management (100%)</TextBlock>
+
+                        <TextBlock Grid.Row="13" Margin="10,0" HorizontalAlignment="Right">Outcome</TextBlock>
+                        <TextBlock Grid.Row="13" Grid.Column="1" Margin="10,0,10,10" HorizontalAlignment="Left" TextWrapping="Wrap">Other public sector governance(10%) Economic statistics, modeling and forecasting(60%)</TextBlock>
+                    </Grid>
+                </Border>
+            </Grid>
+        </basics:TabItem>
+        <basics:TabItem Header="News">
+        </basics:TabItem>
+    </basics:TabControl>
+</UserControl>

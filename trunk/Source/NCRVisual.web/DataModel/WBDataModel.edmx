@@ -12,6 +12,7 @@
           <EntitySet Name="tbl_income_levels" EntityType="WBModel.Store.tbl_income_levels" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_indicators" EntityType="WBModel.Store.tbl_indicators" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_lending_types" EntityType="WBModel.Store.tbl_lending_types" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_projects" EntityType="WBModel.Store.tbl_projects" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_regions" EntityType="WBModel.Store.tbl_regions" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_tabs" EntityType="WBModel.Store.tbl_tabs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_trades" EntityType="WBModel.Store.tbl_trades" store:Type="Tables" Schema="dbo" />
@@ -158,6 +159,26 @@
           </Key>
           <Property Name="lending_type_id_pk" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="lending_type_name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tbl_projects">
+          <Key>
+            <PropertyRef Name="project_id_pk" />
+          </Key>
+          <Property Name="project_id_pk" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="country_id" Type="int" />
+          <Property Name="project_link" Type="varchar" MaxLength="255" />
+          <Property Name="project_approval_date" Type="varchar" MaxLength="50" />
+          <Property Name="project_close_date" Type="varchar" MaxLength="50" />
+          <Property Name="project_status" Type="nvarchar" MaxLength="50" />
+          <Property Name="project_cost" Type="varchar" MaxLength="50" />
+          <Property Name="project_region" Type="varchar" MaxLength="255" />
+          <Property Name="project_major_sector" Type="ntext" />
+          <Property Name="project_themes" Type="varchar" MaxLength="1000" />
+          <Property Name="project_borrower" Type="varchar" MaxLength="255" />
+          <Property Name="project_implement_agency" Type="varchar" MaxLength="255" />
+          <Property Name="project_wb_id" Type="varchar" MaxLength="50" />
+          <Property Name="project_name" Type="varchar" MaxLength="255" />
+          <Property Name="project_outcome" Type="ntext" />
         </EntityType>
         <EntityType Name="tbl_regions">
           <Key>
@@ -312,6 +333,7 @@
           <EntitySet Name="View_TabIndicator" EntityType="WBModel.View_TabIndicator" />
           <EntitySet Name="View_CountryBorder" EntityType="WBModel.View_CountryBorder" />
           <EntitySet Name="View_Borders" EntityType="WBModel.View_Borders" />
+          <EntitySet Name="tbl_projects" EntityType="WBModel.tbl_projects" />
         </EntityContainer>
         <EntityType Name="ref_country_indicator">
           <Key>
@@ -489,6 +511,26 @@
           <Property Type="Double" Name="LAT" />
           <Property Type="Binary" Name="geom" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="tbl_projects">
+          <Key>
+            <PropertyRef Name="project_id_pk" />
+          </Key>
+          <Property Type="Int32" Name="project_id_pk" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="country_id" />
+          <Property Type="String" Name="project_link" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_approval_date" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_close_date" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_status" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="project_cost" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_region" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_major_sector" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="project_themes" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_borrower" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_implement_agency" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_wb_id" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_name" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="project_outcome" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -632,6 +674,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_projects">
+            <EntityTypeMapping TypeName="WBModel.tbl_projects">
+              <MappingFragment StoreEntitySet="tbl_projects">
+                <ScalarProperty Name="project_outcome" ColumnName="project_outcome" />
+                <ScalarProperty Name="project_name" ColumnName="project_name" />
+                <ScalarProperty Name="project_wb_id" ColumnName="project_wb_id" />
+                <ScalarProperty Name="project_implement_agency" ColumnName="project_implement_agency" />
+                <ScalarProperty Name="project_borrower" ColumnName="project_borrower" />
+                <ScalarProperty Name="project_themes" ColumnName="project_themes" />
+                <ScalarProperty Name="project_major_sector" ColumnName="project_major_sector" />
+                <ScalarProperty Name="project_region" ColumnName="project_region" />
+                <ScalarProperty Name="project_cost" ColumnName="project_cost" />
+                <ScalarProperty Name="project_status" ColumnName="project_status" />
+                <ScalarProperty Name="project_close_date" ColumnName="project_close_date" />
+                <ScalarProperty Name="project_approval_date" ColumnName="project_approval_date" />
+                <ScalarProperty Name="project_link" ColumnName="project_link" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="project_id_pk" ColumnName="project_id_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -668,6 +731,7 @@
         <EntityTypeShape EntityType="WBModel.View_TabIndicator" Width="1.5" PointX="8.75" PointY="3.75" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="WBModel.View_CountryBorder" Width="1.5" PointX="5.375" PointY="9.75" Height="3.5186979166666674" />
         <EntityTypeShape EntityType="WBModel.View_Borders" Width="1.5" PointX="9.375" PointY="7.75" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="WBModel.tbl_projects" Width="1.5" PointX="11.375" PointY="0.75" Height="3.9033007812500031" />
       </Diagram>
     </Diagrams>
   </Designer>

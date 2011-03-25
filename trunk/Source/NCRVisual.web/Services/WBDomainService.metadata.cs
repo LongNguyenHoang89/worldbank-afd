@@ -222,6 +222,61 @@ namespace NCRVisual.web.DataModel
         }
     }
 
+    // The MetadataTypeAttribute identifies tbl_projectsMetadata as the class
+    // that carries additional metadata for the tbl_projects class.
+    [MetadataTypeAttribute(typeof(tbl_projects.tbl_projectsMetadata))]
+    public partial class tbl_projects
+    {
+
+        // This class allows you to attach custom attributes to properties
+        // of the tbl_projects class.
+        //
+        // For example, the following marks the Xyz property as a
+        // required property and specifies the format for valid values:
+        //    [Required]
+        //    [RegularExpression("[A-Z][A-Za-z0-9]*")]
+        //    [StringLength(32)]
+        //    public string Xyz { get; set; }
+        internal sealed class tbl_projectsMetadata
+        {
+
+            // Metadata classes are not meant to be instantiated.
+            private tbl_projectsMetadata()
+            {
+            }
+
+            public Nullable<int> country_id { get; set; }
+
+            public string project_approval_date { get; set; }
+
+            public string project_borrower { get; set; }
+
+            public string project_close_date { get; set; }
+
+            public string project_cost { get; set; }
+
+            public int project_id_pk { get; set; }
+
+            public string project_implement_agency { get; set; }
+
+            public string project_link { get; set; }
+
+            public string project_major_sector { get; set; }
+
+            public string project_name { get; set; }
+
+            public string project_outcome { get; set; }
+
+            public string project_region { get; set; }
+
+            public string project_status { get; set; }
+
+            public string project_themes { get; set; }
+
+            public string project_wb_id { get; set; }
+        }
+    }
+
     // The MetadataTypeAttribute identifies tbl_regionsMetadata as the class
     // that carries additional metadata for the tbl_regions class.
     [MetadataTypeAttribute(typeof(tbl_regions.tbl_regionsMetadata))]

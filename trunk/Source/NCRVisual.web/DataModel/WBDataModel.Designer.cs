@@ -304,6 +304,22 @@ namespace NCRVisual.web.DataModel
             }
         }
         private ObjectSet<View_Borders> _View_Borders;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<tbl_projects> tbl_projects
+        {
+            get
+            {
+                if ((_tbl_projects == null))
+                {
+                    _tbl_projects = base.CreateObjectSet<tbl_projects>("tbl_projects");
+                }
+                return _tbl_projects;
+            }
+        }
+        private ObjectSet<tbl_projects> _tbl_projects;
 
         #endregion
         #region AddTo Methods
@@ -426,6 +442,14 @@ namespace NCRVisual.web.DataModel
         public void AddToView_Borders(View_Borders view_Borders)
         {
             base.AddObject("View_Borders", view_Borders);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the tbl_projects EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTotbl_projects(tbl_projects tbl_projects)
+        {
+            base.AddObject("tbl_projects", tbl_projects);
         }
 
         #endregion
@@ -1361,6 +1385,397 @@ namespace NCRVisual.web.DataModel
         private global::System.String _lending_type_name;
         partial void Onlending_type_nameChanging(global::System.String value);
         partial void Onlending_type_nameChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="WBModel", Name="tbl_projects")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class tbl_projects : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new tbl_projects object.
+        /// </summary>
+        /// <param name="project_id_pk">Initial value of the project_id_pk property.</param>
+        public static tbl_projects Createtbl_projects(global::System.Int32 project_id_pk)
+        {
+            tbl_projects tbl_projects = new tbl_projects();
+            tbl_projects.project_id_pk = project_id_pk;
+            return tbl_projects;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 project_id_pk
+        {
+            get
+            {
+                return _project_id_pk;
+            }
+            set
+            {
+                if (_project_id_pk != value)
+                {
+                    Onproject_id_pkChanging(value);
+                    ReportPropertyChanging("project_id_pk");
+                    _project_id_pk = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("project_id_pk");
+                    Onproject_id_pkChanged();
+                }
+            }
+        }
+        private global::System.Int32 _project_id_pk;
+        partial void Onproject_id_pkChanging(global::System.Int32 value);
+        partial void Onproject_id_pkChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> country_id
+        {
+            get
+            {
+                return _country_id;
+            }
+            set
+            {
+                Oncountry_idChanging(value);
+                ReportPropertyChanging("country_id");
+                _country_id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("country_id");
+                Oncountry_idChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _country_id;
+        partial void Oncountry_idChanging(Nullable<global::System.Int32> value);
+        partial void Oncountry_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_link
+        {
+            get
+            {
+                return _project_link;
+            }
+            set
+            {
+                Onproject_linkChanging(value);
+                ReportPropertyChanging("project_link");
+                _project_link = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_link");
+                Onproject_linkChanged();
+            }
+        }
+        private global::System.String _project_link;
+        partial void Onproject_linkChanging(global::System.String value);
+        partial void Onproject_linkChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_approval_date
+        {
+            get
+            {
+                return _project_approval_date;
+            }
+            set
+            {
+                Onproject_approval_dateChanging(value);
+                ReportPropertyChanging("project_approval_date");
+                _project_approval_date = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_approval_date");
+                Onproject_approval_dateChanged();
+            }
+        }
+        private global::System.String _project_approval_date;
+        partial void Onproject_approval_dateChanging(global::System.String value);
+        partial void Onproject_approval_dateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_close_date
+        {
+            get
+            {
+                return _project_close_date;
+            }
+            set
+            {
+                Onproject_close_dateChanging(value);
+                ReportPropertyChanging("project_close_date");
+                _project_close_date = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_close_date");
+                Onproject_close_dateChanged();
+            }
+        }
+        private global::System.String _project_close_date;
+        partial void Onproject_close_dateChanging(global::System.String value);
+        partial void Onproject_close_dateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_status
+        {
+            get
+            {
+                return _project_status;
+            }
+            set
+            {
+                Onproject_statusChanging(value);
+                ReportPropertyChanging("project_status");
+                _project_status = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_status");
+                Onproject_statusChanged();
+            }
+        }
+        private global::System.String _project_status;
+        partial void Onproject_statusChanging(global::System.String value);
+        partial void Onproject_statusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_cost
+        {
+            get
+            {
+                return _project_cost;
+            }
+            set
+            {
+                Onproject_costChanging(value);
+                ReportPropertyChanging("project_cost");
+                _project_cost = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_cost");
+                Onproject_costChanged();
+            }
+        }
+        private global::System.String _project_cost;
+        partial void Onproject_costChanging(global::System.String value);
+        partial void Onproject_costChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_region
+        {
+            get
+            {
+                return _project_region;
+            }
+            set
+            {
+                Onproject_regionChanging(value);
+                ReportPropertyChanging("project_region");
+                _project_region = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_region");
+                Onproject_regionChanged();
+            }
+        }
+        private global::System.String _project_region;
+        partial void Onproject_regionChanging(global::System.String value);
+        partial void Onproject_regionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_major_sector
+        {
+            get
+            {
+                return _project_major_sector;
+            }
+            set
+            {
+                Onproject_major_sectorChanging(value);
+                ReportPropertyChanging("project_major_sector");
+                _project_major_sector = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_major_sector");
+                Onproject_major_sectorChanged();
+            }
+        }
+        private global::System.String _project_major_sector;
+        partial void Onproject_major_sectorChanging(global::System.String value);
+        partial void Onproject_major_sectorChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_themes
+        {
+            get
+            {
+                return _project_themes;
+            }
+            set
+            {
+                Onproject_themesChanging(value);
+                ReportPropertyChanging("project_themes");
+                _project_themes = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_themes");
+                Onproject_themesChanged();
+            }
+        }
+        private global::System.String _project_themes;
+        partial void Onproject_themesChanging(global::System.String value);
+        partial void Onproject_themesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_borrower
+        {
+            get
+            {
+                return _project_borrower;
+            }
+            set
+            {
+                Onproject_borrowerChanging(value);
+                ReportPropertyChanging("project_borrower");
+                _project_borrower = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_borrower");
+                Onproject_borrowerChanged();
+            }
+        }
+        private global::System.String _project_borrower;
+        partial void Onproject_borrowerChanging(global::System.String value);
+        partial void Onproject_borrowerChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_implement_agency
+        {
+            get
+            {
+                return _project_implement_agency;
+            }
+            set
+            {
+                Onproject_implement_agencyChanging(value);
+                ReportPropertyChanging("project_implement_agency");
+                _project_implement_agency = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_implement_agency");
+                Onproject_implement_agencyChanged();
+            }
+        }
+        private global::System.String _project_implement_agency;
+        partial void Onproject_implement_agencyChanging(global::System.String value);
+        partial void Onproject_implement_agencyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_wb_id
+        {
+            get
+            {
+                return _project_wb_id;
+            }
+            set
+            {
+                Onproject_wb_idChanging(value);
+                ReportPropertyChanging("project_wb_id");
+                _project_wb_id = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_wb_id");
+                Onproject_wb_idChanged();
+            }
+        }
+        private global::System.String _project_wb_id;
+        partial void Onproject_wb_idChanging(global::System.String value);
+        partial void Onproject_wb_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_name
+        {
+            get
+            {
+                return _project_name;
+            }
+            set
+            {
+                Onproject_nameChanging(value);
+                ReportPropertyChanging("project_name");
+                _project_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_name");
+                Onproject_nameChanged();
+            }
+        }
+        private global::System.String _project_name;
+        partial void Onproject_nameChanging(global::System.String value);
+        partial void Onproject_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String project_outcome
+        {
+            get
+            {
+                return _project_outcome;
+            }
+            set
+            {
+                Onproject_outcomeChanging(value);
+                ReportPropertyChanging("project_outcome");
+                _project_outcome = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("project_outcome");
+                Onproject_outcomeChanged();
+            }
+        }
+        private global::System.String _project_outcome;
+        partial void Onproject_outcomeChanging(global::System.String value);
+        partial void Onproject_outcomeChanged();
 
         #endregion
     

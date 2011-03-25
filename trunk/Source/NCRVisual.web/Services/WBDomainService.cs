@@ -79,6 +79,15 @@ namespace NCRVisual.web.Services
         // TODO:
         // Consider constraining the results of your query method.  If you need additional input you can
         // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'tbl_projects' query.
+        public IQueryable<tbl_projects> GetTbl_projects()
+        {
+            return this.ObjectContext.tbl_projects;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
         // To support paging you will need to add ordering to the 'tbl_regions' query.
         public IQueryable<tbl_regions> GetTbl_regions()
         {
@@ -101,6 +110,24 @@ namespace NCRVisual.web.Services
         public IQueryable<tbl_trades> GetTbl_trades()
         {
             return this.ObjectContext.tbl_trades;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'View_Borders' query.
+        public IQueryable<View_Borders> GetView_Borders()
+        {
+            return this.ObjectContext.View_Borders;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'View_CountryBorder' query.
+        public IQueryable<View_CountryBorder> GetView_CountryBorder()
+        {
+            return this.ObjectContext.View_CountryBorder;
         }
 
         // TODO:

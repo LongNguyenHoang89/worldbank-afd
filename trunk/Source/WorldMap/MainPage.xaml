@@ -36,7 +36,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
         </Style>
 
         <Storyboard x:Name="IndicatorListHide">
@@ -51,11 +50,11 @@
         </Storyboard>
 
         <Storyboard x:Name="CountryListHide">
-            <DoubleAnimation Duration="0:0:0.5" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CountryListBorder" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.5" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MyWorkspace" d:IsOptimized="True"/>
         </Storyboard>
 
         <Storyboard x:Name="CountryListUnhide">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CountryListBorder">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MyWorkspace">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
@@ -123,17 +122,36 @@
 
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.RowDefinitions>     
+    <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">        
+        <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <m:Map CredentialsProvider="AnDFcb6V80_dRKOObV5Q-K0ACvlPNjpllC76dk3Trd7tG1Gjlau_T14711TdnLSe" x:Name="MyMap" AllowDrop="True" IsEnabled="False" Grid.Row="1">
+            <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+        <m:Map CredentialsProvider="AnDFcb6V80_dRKOObV5Q-K0ACvlPNjpllC76dk3Trd7tG1Gjlau_T14711TdnLSe" x:Name="MyMap" 
+               AllowDrop="True" Grid.Row="1" VerticalAlignment="Stretch"
+               NavigationVisibility="Collapsed">
             <m:MapLayer x:Name="ArrowLayer"/>
-            <m:MapLayer x:Name="PolygonLayer">                
+            <m:MapLayer x:Name="PolygonLayer">
             </m:MapLayer>
-        </m:Map>        		
+        </m:Map>
+            <Border CornerRadius="0,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Height="60" Grid.Row ="1"  Background="Black">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel HorizontalAlignment="Center" x:Name="PushPinPanel"/>
+                    <TextBlock Grid.Row="1" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"><Run Text="[Drag this to world map]"/></TextBlock>
+                </Grid>
+            </Border>            
+        <local:Workspace Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="MyWorkSpace">
+            <local:Workspace.Effect>
+                <DropShadowEffect Opacity="0.3" ShadowDepth="10" BlurRadius="10">                    
+                </DropShadowEffect>
+            </local:Workspace.Effect>
+        </local:Workspace>
         <Border Height="30" VerticalAlignment="Top">
             <Border.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -146,15 +164,15 @@
             <TextBlock x:Name="textBlock" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" ><Run Text="WORLD STATE VISUALIZATION"/></TextBlock>
         </Border>
 
-        <Border x:Name="CountryListBorder" Height="70"  HorizontalAlignment="Stretch"  VerticalAlignment="Bottom" CornerRadius="10" Background="Black" Grid.RowSpan="2">
-        	<Border.Effect>
-        		<DropShadowEffect BlurRadius="20" Direction="319"/>
-        	</Border.Effect>
+        <Border x:Name="CountryListBorder" Height="70"  HorizontalAlignment="Stretch"  VerticalAlignment="Bottom" Background="Black" Grid.Row="3">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" Direction="319"/>
+            </Border.Effect>
             <Grid Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="100"/>
-                </Grid.ColumnDefinitions>                
+                </Grid.ColumnDefinitions>
                 <ListBox Grid.Row="1" x:Name="CountryListBox" Margin="10,0,0,0" Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -170,7 +188,7 @@
                         <Image Source="Image/Compare.png"/>
                     </Button>
                 </StackPanel>
-            </Grid>            
+            </Grid>
         </Border>
 
         <StackPanel Grid.RowSpan="2" VerticalAlignment="Top"  HorizontalAlignment="Right" Orientation="Horizontal">
@@ -195,26 +213,15 @@
         </StackPanel>
 
         <Border x:Name="ControlPanelBorder" CornerRadius="0,10,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,120" Width="400" Height="200" Grid.RowSpan="2" Background="Black">
-        	<Border.Effect>
-        		<DropShadowEffect BlurRadius="10" Direction="355"/>
-        	</Border.Effect>            
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" Direction="355"/>
+            </Border.Effect>
             <Grid Margin="5">
-                <Grid.RowDefinitions>                    
+                <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>                
+                </Grid.RowDefinitions>
 
                 <sdk:TreeView x:Name="IndicatorTreeView" Background="Transparent" Margin="0,1,0,-1" />
-            </Grid>
-        </Border>
-
-        <Border CornerRadius="0,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Height="60" Grid.Row ="1"  Background="Black">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="20"/>
-                </Grid.RowDefinitions>
-                <StackPanel HorizontalAlignment="Center" x:Name="PushPinPanel"/>
-                <TextBlock Grid.Row="1" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"><Run Text="[Drag this to world map]"/></TextBlock>
             </Grid>
         </Border>        
 
@@ -227,8 +234,7 @@
         </StackPanel>
 
         <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Name="FullScreenButton">Full Screen</Button>
-
-        
+                  
     </Grid>
 </UserControl>
 

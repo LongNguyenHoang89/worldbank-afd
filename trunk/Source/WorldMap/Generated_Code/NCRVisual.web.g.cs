@@ -1132,6 +1132,475 @@ namespace NCRVisual.web.DataModel
     }
     
     /// <summary>
+    /// The 'tbl_projects' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class tbl_projects : Entity
+    {
+        
+        private Nullable<int> _country_id;
+        
+        private string _project_approval_date;
+        
+        private string _project_borrower;
+        
+        private string _project_close_date;
+        
+        private string _project_cost;
+        
+        private int _project_id_pk;
+        
+        private string _project_implement_agency;
+        
+        private string _project_link;
+        
+        private string _project_major_sector;
+        
+        private string _project_name;
+        
+        private string _project_outcome;
+        
+        private string _project_region;
+        
+        private string _project_status;
+        
+        private string _project_themes;
+        
+        private string _project_wb_id;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Oncountry_idChanging(Nullable<int> value);
+        partial void Oncountry_idChanged();
+        partial void Onproject_approval_dateChanging(string value);
+        partial void Onproject_approval_dateChanged();
+        partial void Onproject_borrowerChanging(string value);
+        partial void Onproject_borrowerChanged();
+        partial void Onproject_close_dateChanging(string value);
+        partial void Onproject_close_dateChanged();
+        partial void Onproject_costChanging(string value);
+        partial void Onproject_costChanged();
+        partial void Onproject_id_pkChanging(int value);
+        partial void Onproject_id_pkChanged();
+        partial void Onproject_implement_agencyChanging(string value);
+        partial void Onproject_implement_agencyChanged();
+        partial void Onproject_linkChanging(string value);
+        partial void Onproject_linkChanged();
+        partial void Onproject_major_sectorChanging(string value);
+        partial void Onproject_major_sectorChanged();
+        partial void Onproject_nameChanging(string value);
+        partial void Onproject_nameChanged();
+        partial void Onproject_outcomeChanging(string value);
+        partial void Onproject_outcomeChanged();
+        partial void Onproject_regionChanging(string value);
+        partial void Onproject_regionChanged();
+        partial void Onproject_statusChanging(string value);
+        partial void Onproject_statusChanged();
+        partial void Onproject_themesChanging(string value);
+        partial void Onproject_themesChanged();
+        partial void Onproject_wb_idChanging(string value);
+        partial void Onproject_wb_idChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="tbl_projects"/> class.
+        /// </summary>
+        public tbl_projects()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_id' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> country_id
+        {
+            get
+            {
+                return this._country_id;
+            }
+            set
+            {
+                if ((this._country_id != value))
+                {
+                    this.Oncountry_idChanging(value);
+                    this.RaiseDataMemberChanging("country_id");
+                    this.ValidateProperty("country_id", value);
+                    this._country_id = value;
+                    this.RaiseDataMemberChanged("country_id");
+                    this.Oncountry_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_approval_date' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string project_approval_date
+        {
+            get
+            {
+                return this._project_approval_date;
+            }
+            set
+            {
+                if ((this._project_approval_date != value))
+                {
+                    this.Onproject_approval_dateChanging(value);
+                    this.RaiseDataMemberChanging("project_approval_date");
+                    this.ValidateProperty("project_approval_date", value);
+                    this._project_approval_date = value;
+                    this.RaiseDataMemberChanged("project_approval_date");
+                    this.Onproject_approval_dateChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_borrower' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string project_borrower
+        {
+            get
+            {
+                return this._project_borrower;
+            }
+            set
+            {
+                if ((this._project_borrower != value))
+                {
+                    this.Onproject_borrowerChanging(value);
+                    this.RaiseDataMemberChanging("project_borrower");
+                    this.ValidateProperty("project_borrower", value);
+                    this._project_borrower = value;
+                    this.RaiseDataMemberChanged("project_borrower");
+                    this.Onproject_borrowerChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_close_date' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string project_close_date
+        {
+            get
+            {
+                return this._project_close_date;
+            }
+            set
+            {
+                if ((this._project_close_date != value))
+                {
+                    this.Onproject_close_dateChanging(value);
+                    this.RaiseDataMemberChanging("project_close_date");
+                    this.ValidateProperty("project_close_date", value);
+                    this._project_close_date = value;
+                    this.RaiseDataMemberChanged("project_close_date");
+                    this.Onproject_close_dateChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_cost' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string project_cost
+        {
+            get
+            {
+                return this._project_cost;
+            }
+            set
+            {
+                if ((this._project_cost != value))
+                {
+                    this.Onproject_costChanging(value);
+                    this.RaiseDataMemberChanging("project_cost");
+                    this.ValidateProperty("project_cost", value);
+                    this._project_cost = value;
+                    this.RaiseDataMemberChanged("project_cost");
+                    this.Onproject_costChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int project_id_pk
+        {
+            get
+            {
+                return this._project_id_pk;
+            }
+            set
+            {
+                if ((this._project_id_pk != value))
+                {
+                    this.Onproject_id_pkChanging(value);
+                    this.ValidateProperty("project_id_pk", value);
+                    this._project_id_pk = value;
+                    this.RaisePropertyChanged("project_id_pk");
+                    this.Onproject_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_implement_agency' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string project_implement_agency
+        {
+            get
+            {
+                return this._project_implement_agency;
+            }
+            set
+            {
+                if ((this._project_implement_agency != value))
+                {
+                    this.Onproject_implement_agencyChanging(value);
+                    this.RaiseDataMemberChanging("project_implement_agency");
+                    this.ValidateProperty("project_implement_agency", value);
+                    this._project_implement_agency = value;
+                    this.RaiseDataMemberChanged("project_implement_agency");
+                    this.Onproject_implement_agencyChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_link' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string project_link
+        {
+            get
+            {
+                return this._project_link;
+            }
+            set
+            {
+                if ((this._project_link != value))
+                {
+                    this.Onproject_linkChanging(value);
+                    this.RaiseDataMemberChanging("project_link");
+                    this.ValidateProperty("project_link", value);
+                    this._project_link = value;
+                    this.RaiseDataMemberChanged("project_link");
+                    this.Onproject_linkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_major_sector' value.
+        /// </summary>
+        [DataMember()]
+        public string project_major_sector
+        {
+            get
+            {
+                return this._project_major_sector;
+            }
+            set
+            {
+                if ((this._project_major_sector != value))
+                {
+                    this.Onproject_major_sectorChanging(value);
+                    this.RaiseDataMemberChanging("project_major_sector");
+                    this.ValidateProperty("project_major_sector", value);
+                    this._project_major_sector = value;
+                    this.RaiseDataMemberChanged("project_major_sector");
+                    this.Onproject_major_sectorChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string project_name
+        {
+            get
+            {
+                return this._project_name;
+            }
+            set
+            {
+                if ((this._project_name != value))
+                {
+                    this.Onproject_nameChanging(value);
+                    this.RaiseDataMemberChanging("project_name");
+                    this.ValidateProperty("project_name", value);
+                    this._project_name = value;
+                    this.RaiseDataMemberChanged("project_name");
+                    this.Onproject_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_outcome' value.
+        /// </summary>
+        [DataMember()]
+        public string project_outcome
+        {
+            get
+            {
+                return this._project_outcome;
+            }
+            set
+            {
+                if ((this._project_outcome != value))
+                {
+                    this.Onproject_outcomeChanging(value);
+                    this.RaiseDataMemberChanging("project_outcome");
+                    this.ValidateProperty("project_outcome", value);
+                    this._project_outcome = value;
+                    this.RaiseDataMemberChanged("project_outcome");
+                    this.Onproject_outcomeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_region' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string project_region
+        {
+            get
+            {
+                return this._project_region;
+            }
+            set
+            {
+                if ((this._project_region != value))
+                {
+                    this.Onproject_regionChanging(value);
+                    this.RaiseDataMemberChanging("project_region");
+                    this.ValidateProperty("project_region", value);
+                    this._project_region = value;
+                    this.RaiseDataMemberChanged("project_region");
+                    this.Onproject_regionChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_status' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string project_status
+        {
+            get
+            {
+                return this._project_status;
+            }
+            set
+            {
+                if ((this._project_status != value))
+                {
+                    this.Onproject_statusChanging(value);
+                    this.RaiseDataMemberChanging("project_status");
+                    this.ValidateProperty("project_status", value);
+                    this._project_status = value;
+                    this.RaiseDataMemberChanged("project_status");
+                    this.Onproject_statusChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_themes' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(1000)]
+        public string project_themes
+        {
+            get
+            {
+                return this._project_themes;
+            }
+            set
+            {
+                if ((this._project_themes != value))
+                {
+                    this.Onproject_themesChanging(value);
+                    this.RaiseDataMemberChanging("project_themes");
+                    this.ValidateProperty("project_themes", value);
+                    this._project_themes = value;
+                    this.RaiseDataMemberChanged("project_themes");
+                    this.Onproject_themesChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_wb_id' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string project_wb_id
+        {
+            get
+            {
+                return this._project_wb_id;
+            }
+            set
+            {
+                if ((this._project_wb_id != value))
+                {
+                    this.Onproject_wb_idChanging(value);
+                    this.RaiseDataMemberChanging("project_wb_id");
+                    this.ValidateProperty("project_wb_id", value);
+                    this._project_wb_id = value;
+                    this.RaiseDataMemberChanged("project_wb_id");
+                    this.Onproject_wb_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._project_id_pk;
+        }
+    }
+    
+    /// <summary>
     /// The 'tbl_regions' entity class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
@@ -1526,6 +1995,412 @@ namespace NCRVisual.web.DataModel
         public override object GetIdentity()
         {
             return this._trade_id_pk;
+        }
+    }
+    
+    /// <summary>
+    /// The 'View_Borders' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class View_Borders : Entity
+    {
+        
+        private Nullable<long> _area;
+        
+        private string _fips;
+        
+        private byte[] _geom;
+        
+        private int _id;
+        
+        private string _iso2;
+        
+        private string _iso3;
+        
+        private Nullable<double> _lat;
+        
+        private Nullable<double> _lon;
+        
+        private string _name;
+        
+        private Nullable<long> _pop2005;
+        
+        private Nullable<int> _region;
+        
+        private Nullable<int> _subregion;
+        
+        private Nullable<int> _un;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OnAREAChanging(Nullable<long> value);
+        partial void OnAREAChanged();
+        partial void OnFIPSChanging(string value);
+        partial void OnFIPSChanged();
+        partial void OngeomChanging(byte[] value);
+        partial void OngeomChanged();
+        partial void OnIDChanging(int value);
+        partial void OnIDChanged();
+        partial void OnISO2Changing(string value);
+        partial void OnISO2Changed();
+        partial void OnISO3Changing(string value);
+        partial void OnISO3Changed();
+        partial void OnLATChanging(Nullable<double> value);
+        partial void OnLATChanged();
+        partial void OnLONChanging(Nullable<double> value);
+        partial void OnLONChanged();
+        partial void OnNAMEChanging(string value);
+        partial void OnNAMEChanged();
+        partial void OnPOP2005Changing(Nullable<long> value);
+        partial void OnPOP2005Changed();
+        partial void OnREGIONChanging(Nullable<int> value);
+        partial void OnREGIONChanged();
+        partial void OnSUBREGIONChanging(Nullable<int> value);
+        partial void OnSUBREGIONChanged();
+        partial void OnUNChanging(Nullable<int> value);
+        partial void OnUNChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View_Borders"/> class.
+        /// </summary>
+        public View_Borders()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'AREA' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<long> AREA
+        {
+            get
+            {
+                return this._area;
+            }
+            set
+            {
+                if ((this._area != value))
+                {
+                    this.OnAREAChanging(value);
+                    this.RaiseDataMemberChanging("AREA");
+                    this.ValidateProperty("AREA", value);
+                    this._area = value;
+                    this.RaiseDataMemberChanged("AREA");
+                    this.OnAREAChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'FIPS' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string FIPS
+        {
+            get
+            {
+                return this._fips;
+            }
+            set
+            {
+                if ((this._fips != value))
+                {
+                    this.OnFIPSChanging(value);
+                    this.RaiseDataMemberChanging("FIPS");
+                    this.ValidateProperty("FIPS", value);
+                    this._fips = value;
+                    this.RaiseDataMemberChanged("FIPS");
+                    this.OnFIPSChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'geom' value.
+        /// </summary>
+        [DataMember()]
+        public byte[] geom
+        {
+            get
+            {
+                return this._geom;
+            }
+            set
+            {
+                if ((this._geom != value))
+                {
+                    this.OngeomChanging(value);
+                    this.RaiseDataMemberChanging("geom");
+                    this.ValidateProperty("geom", value);
+                    this._geom = value;
+                    this.RaiseDataMemberChanged("geom");
+                    this.OngeomChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ID' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int ID
+        {
+            get
+            {
+                return this._id;
+            }
+            set
+            {
+                if ((this._id != value))
+                {
+                    this.OnIDChanging(value);
+                    this.ValidateProperty("ID", value);
+                    this._id = value;
+                    this.RaisePropertyChanged("ID");
+                    this.OnIDChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ISO2' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string ISO2
+        {
+            get
+            {
+                return this._iso2;
+            }
+            set
+            {
+                if ((this._iso2 != value))
+                {
+                    this.OnISO2Changing(value);
+                    this.RaiseDataMemberChanging("ISO2");
+                    this.ValidateProperty("ISO2", value);
+                    this._iso2 = value;
+                    this.RaiseDataMemberChanged("ISO2");
+                    this.OnISO2Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ISO3' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string ISO3
+        {
+            get
+            {
+                return this._iso3;
+            }
+            set
+            {
+                if ((this._iso3 != value))
+                {
+                    this.OnISO3Changing(value);
+                    this.RaiseDataMemberChanging("ISO3");
+                    this.ValidateProperty("ISO3", value);
+                    this._iso3 = value;
+                    this.RaiseDataMemberChanged("ISO3");
+                    this.OnISO3Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'LAT' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<double> LAT
+        {
+            get
+            {
+                return this._lat;
+            }
+            set
+            {
+                if ((this._lat != value))
+                {
+                    this.OnLATChanging(value);
+                    this.RaiseDataMemberChanging("LAT");
+                    this.ValidateProperty("LAT", value);
+                    this._lat = value;
+                    this.RaiseDataMemberChanged("LAT");
+                    this.OnLATChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'LON' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<double> LON
+        {
+            get
+            {
+                return this._lon;
+            }
+            set
+            {
+                if ((this._lon != value))
+                {
+                    this.OnLONChanging(value);
+                    this.RaiseDataMemberChanging("LON");
+                    this.ValidateProperty("LON", value);
+                    this._lon = value;
+                    this.RaiseDataMemberChanged("LON");
+                    this.OnLONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'NAME' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string NAME
+        {
+            get
+            {
+                return this._name;
+            }
+            set
+            {
+                if ((this._name != value))
+                {
+                    this.OnNAMEChanging(value);
+                    this.RaiseDataMemberChanging("NAME");
+                    this.ValidateProperty("NAME", value);
+                    this._name = value;
+                    this.RaiseDataMemberChanged("NAME");
+                    this.OnNAMEChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'POP2005' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<long> POP2005
+        {
+            get
+            {
+                return this._pop2005;
+            }
+            set
+            {
+                if ((this._pop2005 != value))
+                {
+                    this.OnPOP2005Changing(value);
+                    this.RaiseDataMemberChanging("POP2005");
+                    this.ValidateProperty("POP2005", value);
+                    this._pop2005 = value;
+                    this.RaiseDataMemberChanged("POP2005");
+                    this.OnPOP2005Changed();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'REGION' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> REGION
+        {
+            get
+            {
+                return this._region;
+            }
+            set
+            {
+                if ((this._region != value))
+                {
+                    this.OnREGIONChanging(value);
+                    this.RaiseDataMemberChanging("REGION");
+                    this.ValidateProperty("REGION", value);
+                    this._region = value;
+                    this.RaiseDataMemberChanged("REGION");
+                    this.OnREGIONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'SUBREGION' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> SUBREGION
+        {
+            get
+            {
+                return this._subregion;
+            }
+            set
+            {
+                if ((this._subregion != value))
+                {
+                    this.OnSUBREGIONChanging(value);
+                    this.RaiseDataMemberChanging("SUBREGION");
+                    this.ValidateProperty("SUBREGION", value);
+                    this._subregion = value;
+                    this.RaiseDataMemberChanged("SUBREGION");
+                    this.OnSUBREGIONChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'UN' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> UN
+        {
+            get
+            {
+                return this._un;
+            }
+            set
+            {
+                if ((this._un != value))
+                {
+                    this.OnUNChanging(value);
+                    this.RaiseDataMemberChanging("UN");
+                    this.ValidateProperty("UN", value);
+                    this._un = value;
+                    this.RaiseDataMemberChanged("UN");
+                    this.OnUNChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._id;
         }
     }
     
@@ -3088,6 +3963,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="tbl_projects"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<tbl_projects> tbl_projects
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<tbl_projects>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="tbl_trades"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<tbl_trades> tbl_trades
@@ -3187,6 +4073,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="View_Borders"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<View_Borders> View_Borders
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<View_Borders>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="View_CountryIndicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<View_CountryIndicator> View_CountryIndicators
@@ -3243,6 +4140,19 @@ namespace NCRVisual.web.Services
             parameters.Add("country_pk", country_pk);
             this.ValidateMethod("GetCountryGeneralInfoQuery", parameters);
             return base.CreateQuery<View_GeneralCountry>("GetCountryGeneralInfo", parameters, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_projects"/> entities using the 'GetCountryProjects' query.
+        /// </summary>
+        /// <param name="countryId">The value for the 'countryId' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_projects"/> entities.</returns>
+        public EntityQuery<tbl_projects> GetCountryProjectsQuery(int countryId)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("countryId", countryId);
+            this.ValidateMethod("GetCountryProjectsQuery", parameters);
+            return base.CreateQuery<tbl_projects>("GetCountryProjects", parameters, false, true);
         }
         
         /// <summary>
@@ -3379,6 +4289,16 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_projects"/> entities using the 'GetTbl_projects' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_projects"/> entities.</returns>
+        public EntityQuery<tbl_projects> GetTbl_projectsQuery()
+        {
+            this.ValidateMethod("GetTbl_projectsQuery", null);
+            return base.CreateQuery<tbl_projects>("GetTbl_projects", null, false, true);
+        }
+        
+        /// <summary>
         /// Gets an EntityQuery instance that can be used to load <see cref="tbl_regions"/> entities using the 'GetTbl_regions' query.
         /// </summary>
         /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_regions"/> entities.</returns>
@@ -3406,6 +4326,26 @@ namespace NCRVisual.web.Services
         {
             this.ValidateMethod("GetTbl_tradesQuery", null);
             return base.CreateQuery<tbl_trades>("GetTbl_trades", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_Borders"/> entities using the 'GetView_Borders' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_Borders"/> entities.</returns>
+        public EntityQuery<View_Borders> GetView_BordersQuery()
+        {
+            this.ValidateMethod("GetView_BordersQuery", null);
+            return base.CreateQuery<View_Borders>("GetView_Borders", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_CountryBorder"/> entities using the 'GetView_CountryBorder' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_CountryBorder"/> entities.</returns>
+        public EntityQuery<View_CountryBorder> GetView_CountryBorderQuery()
+        {
+            this.ValidateMethod("GetView_CountryBorderQuery", null);
+            return base.CreateQuery<View_CountryBorder>("GetView_CountryBorder", null, false, true);
         }
         
         /// <summary>
@@ -3501,6 +4441,25 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetCountryGeneralInfo'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetCountryGeneralInfo' operation.</returns>
             QueryResult<View_GeneralCountry> EndGetCountryGeneralInfo(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetCountryProjects' operation.
+            /// </summary>
+            /// <param name="countryId">The value for the 'countryId' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetCountryProjectsDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetCountryProjects", ReplyAction="http://tempuri.org/WBDomainService/GetCountryProjectsResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetCountryProjects(int countryId, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetCountryProjects'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetCountryProjects'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetCountryProjects' operation.</returns>
+            QueryResult<tbl_projects> EndGetCountryProjects(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetExportData' operation.
@@ -3714,6 +4673,24 @@ namespace NCRVisual.web.Services
             QueryResult<tbl_lending_types> EndGetTbl_lending_types(IAsyncResult result);
             
             /// <summary>
+            /// Asynchronously invokes the 'GetTbl_projects' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetTbl_projectsDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetTbl_projects", ReplyAction="http://tempuri.org/WBDomainService/GetTbl_projectsResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetTbl_projects(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetTbl_projects'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_projects'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetTbl_projects' operation.</returns>
+            QueryResult<tbl_projects> EndGetTbl_projects(IAsyncResult result);
+            
+            /// <summary>
             /// Asynchronously invokes the 'GetTbl_regions' operation.
             /// </summary>
             /// <param name="callback">Callback to invoke on completion.</param>
@@ -3766,6 +4743,42 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_trades'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetTbl_trades' operation.</returns>
             QueryResult<tbl_trades> EndGetTbl_trades(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetView_Borders' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_BordersDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_Borders", ReplyAction="http://tempuri.org/WBDomainService/GetView_BordersResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_Borders(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_Borders'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_Borders'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_Borders' operation.</returns>
+            QueryResult<View_Borders> EndGetView_Borders(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetView_CountryBorder' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_CountryBorderDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_CountryBorder", ReplyAction="http://tempuri.org/WBDomainService/GetView_CountryBorderResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_CountryBorder(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_CountryBorder'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_CountryBorder'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_CountryBorder' operation.</returns>
+            QueryResult<View_CountryBorder> EndGetView_CountryBorder(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetView_CountryIndicator' operation.
@@ -3869,9 +4882,11 @@ namespace NCRVisual.web.Services
                 this.CreateEntitySet<tbl_income_levels>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_indicators>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_lending_types>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_projects>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_regions>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_tabs>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_trades>(EntitySetOperations.None);
+                this.CreateEntitySet<View_Borders>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryBorder>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryIndicator>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryIndicatorTab>(EntitySetOperations.None);
