@@ -42,6 +42,8 @@ namespace WorldMap
         /// Map Layer for custom pushpin
         /// </summary>
         public MapLayer PushPinLayer { get; set; }
+
+        public tbl_users user { get; set; }
         #endregion
 
         /// <summary>
@@ -176,13 +178,6 @@ namespace WorldMap
             DraggablePushpin DefaultPushPin = new DraggablePushpin(PushPinLayer, new Random());
             PushPinPanel.Children.Add(DefaultPushPin);
             DefaultPushPin.Pinned += new EventHandler(DefaultPushPin_Pinned);
-
-            //TEST
-            Random backgroundSeed = new Random();
-            LoadCountryPushpin(new Location(34.52280, 69.17610), backgroundSeed);
-            LoadCountryPushpin(new Location(69.17610, 34.52280), backgroundSeed);
-            LoadCountryPushpin(new Location(-34.61180, -58.41730), backgroundSeed);
-            LoadCountryPushpin(new Location(45.42150, -75.69190), backgroundSeed);
         }
 
         void DefaultPushPin_Pinned(object sender, EventArgs e)
@@ -889,19 +884,9 @@ namespace WorldMap
                 SignInInformation.Text = "Not signed in";
                 //SignInInformation.Text = cid + " is signed out...";
             }
-        }
+        }        
 
-        [ScriptableMember()]
-        public void SignInMessengerCompleted(string cid, string userName)
-        {
-            SignInInformation.Text = userName + " is signed in...";
-        }
-
-        #endregion
-
-        private void SaveCountry_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        #endregion        
 
         public void LoadCountryPushpin(Location loc, Random seed)
         {
@@ -915,5 +900,88 @@ namespace WorldMap
             pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
             pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
         }
+        
+        #region workspace save n load
+
+        private void SaveCountry_Click(object sender, RoutedEventArgs e)
+        {
+            SaveCountryList(user);
+        }
+
+        [ScriptableMember()]
+        public void SignInMessengerCompleted(string cid, string userName, string contacts)
+        {
+            //check if first time user            
+            user = new tbl_users();
+            user.user_name = userName;
+            user.msn_id = cid;
+            WorldMapController.CheckExist(cid);
+            WorldMapController.LoadUserData_Completed += new EventHandler(WorldMapController_LoadUserData_Completed);       
+     
+
+        }
+
+        void WorldMapController_LoadUserData_Completed(object sender, EventArgs e)
+        {
+            string userName = "";
+            if (sender !=null)
+                user = sender as tbl_users;
+            if (user != null)
+            {
+                userName = user.user_name;
+            }
+            else
+            {                                
+                WorldMapController.InsertUser(user);
+                //map msn_id to user                
+            }
+            SignInInformation.Text = userName + " is signed in...";
+            // load data here
+            WorldMapController.LoadUserCountry_Completed += new EventHandler(WorldMapController_LoadUserCountry_Completed);
+            WorldMapController.LoadUserCountry();            
+        }       
+
+        private void SaveCountryList(tbl_users tbl_user)
+        {
+            List<ref_user_country> countryList = new List<ref_user_country>();
+            foreach (StackPanel panel in CountryListBox.Items)
+            {
+                DraggablePushpin pp = panel.DataContext as DraggablePushpin;
+                Location location = pp.Location;
+                ref_user_country user_country = new ref_user_country();
+                user_country.country_id = pp.country.country_id_pk;
+                user_country.lat = (decimal)location.Latitude;
+                user_country.@long = (decimal)location.Longitude;
+                countryList.Add(user_country);
+            }
+            WorldMapController.InsertUserCountry(tbl_user, countryList);            
+        }
+        private void SaveIndicatorList()
+        {
+        }
+        void WorldMapController_LoadUserCountry_Completed(object sender, EventArgs e)
+        {
+            LoadCountryList();
+        }
+        private void LoadCountryList()
+        {
+            List<ref_user_country> user_countries=WorldMapController.LoadRefUserCountry(user);
+            //TEST
+            Random backgroundSeed = new Random();
+            foreach (ref_user_country user_country in user_countries)
+            {
+                LoadCountryPushpin(new Location((double)user_country.lat, (double)user_country.@long), backgroundSeed);
+            }
+            //LoadCountryPushpin(new Location(34.52280, 69.17610), backgroundSeed);
+            //LoadCountryPushpin(new Location(69.17610, 34.52280), backgroundSeed);
+            //LoadCountryPushpin(new Location(-34.61180, -58.41730), backgroundSeed);
+            //LoadCountryPushpin(new Location(45.42150, -75.69190), backgroundSeed);
+        }
+        private void LoadIndicatorList()
+        {
+
+        }
+        
+        #endregion
     }
 }

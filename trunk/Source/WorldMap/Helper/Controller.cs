@@ -58,6 +58,13 @@ namespace WorldMap.Helper
         ///  Event after getting WB Project list of a country completed;
         /// </summary>
         public event EventHandler GetCountryWBProject_completed;
+
+        public event EventHandler LoadUserData_Completed;
+        public event EventHandler CheckUserCompleted;
+
+        public event EventHandler DeleteUserCountry_Completed;
+        public event EventHandler InsertUserCountry_Completed;
+        public event EventHandler LoadUserCountry_Completed;
         #endregion
 
         /// <summary>
@@ -71,13 +78,13 @@ namespace WorldMap.Helper
 
             //Note: Get indicator data
             var loadTabIndicator = Context.Load(Context.GetView_TabIndicatorQuery());
-            loadTabIndicator.Completed += new EventHandler(loadTabIndicator_Completed);                  
-            
+            loadTabIndicator.Completed += new EventHandler(loadTabIndicator_Completed);
+
             //Note: get country data
             var loadCountry = Context.Load(Context.GetTbl_countriesQuery());
-            loadCountry.Completed += new System.EventHandler(load_Completed);            
+            loadCountry.Completed += new System.EventHandler(load_Completed);
         }
-               
+
         void loadTabIndicator_Completed(object sender, EventArgs e)
         {
             if (this.GetView_TabIndicatorQueryCompleted != null)
@@ -85,6 +92,7 @@ namespace WorldMap.Helper
                 GetView_TabIndicatorQueryCompleted(sender, e);
             }
         }
+
 
         void load_Completed(object sender, System.EventArgs e)
         {
@@ -101,11 +109,11 @@ namespace WorldMap.Helper
         /// <returns></returns>
         public tbl_countries GetCountry(string countryName)
         {
-            var country = from n in Context.tbl_countries 
+            var country = from n in Context.tbl_countries
                           where n.country_name == countryName
                           select n;
 
-            foreach(var a in country)
+            foreach (var a in country)
             {
                 return a as tbl_countries;
             }
@@ -120,7 +128,7 @@ namespace WorldMap.Helper
         public void GetTabCountryData(int country_pk)
         {
             var loadTabCountryData = Context.Load(Context.GetCountryGeneralInfoQuery(country_pk));
-            loadTabCountryData.Completed += new EventHandler(loadTabCountryData_Completed);         
+            loadTabCountryData.Completed += new EventHandler(loadTabCountryData_Completed);
         }
 
         /// <summary>
@@ -128,7 +136,7 @@ namespace WorldMap.Helper
         /// </summary>
         /// <param name="countryCode"></param>
         public void GetCountryBorder(string countryCode, SolidColorBrush color)
-        {                       
+        {
             EntityQuery<View_CountryBorder> query = Context.GetCountryBorderQuery(countryCode);
             Action<LoadOperation<View_CountryBorder>> completeProcessing = delegate(LoadOperation<View_CountryBorder> loadOp)
             {
@@ -142,7 +150,7 @@ namespace WorldMap.Helper
                 }
 
             };
-            LoadOperation<View_CountryBorder> loadOperation = Context.Load(query,completeProcessing,true);
+            LoadOperation<View_CountryBorder> loadOperation = Context.Load(query, completeProcessing, true);
         }
 
         private void loadBorder_Completed(IEnumerable<View_CountryBorder> results, SolidColorBrush countryColor, string countryCode)
@@ -166,7 +174,7 @@ namespace WorldMap.Helper
 
         public void GetImportData(int importCountryId, List<int> exportCountryLists, int year)
         {
-            var getImportData = Context.Load(Context.GetImportDataQuery(importCountryId, exportCountryLists,year));
+            var getImportData = Context.Load(Context.GetImportDataQuery(importCountryId, exportCountryLists, year));
             getImportData.Completed += new EventHandler(getImportData_Completed);
         }
 
@@ -181,7 +189,7 @@ namespace WorldMap.Helper
         public void GetExportData(int exportCountryId, List<int> importCountryLists, int year)
         {
             var getExportData = Context.Load(Context.GetImportDataQuery(exportCountryId, importCountryLists, year));
-            getExportData.Completed += new EventHandler(getExportData_Completed);            
+            getExportData.Completed += new EventHandler(getExportData_Completed);
         }
 
         void getExportData_Completed(object sender, EventArgs e)
@@ -209,5 +217,136 @@ namespace WorldMap.Helper
                 GetCountryWBProject_completed(sender, e);
             }
         }
+
+        #region save n load data
+
+        public void InsertUser(tbl_users tbl_user)
+        {
+            Context.tbl_users.Add(tbl_user);
+            Context.SubmitChanges();
+
+        }
+
+        void loadUserData_Completed(IEnumerable<tbl_users> r, string cid)
+        {
+            var a = from n in r
+                    where n.msn_id == cid
+                    select n;
+            tbl_users user = new tbl_users();
+            foreach (tbl_users x in a)
+            {
+                user = x;
+            }
+            if (this.LoadUserData_Completed != null)
+            {
+                LoadUserData_Completed(user, null);
+            }
+        }
+        
+
+        public void CheckExist(string cid)
+        {            
+
+            //EntityQuery<View_CountryBorder> query = Context.GetCountryBorderQuery(countryCode);
+            Action<LoadOperation<tbl_users>> completeProcessing = delegate(LoadOperation<tbl_users> loadOp)
+            {
+                if (!loadOp.HasError)
+                {
+                    loadUserData_Completed(loadOp.Entities, cid);
+                }
+                else
+                {
+                    //LogAndNotify(loadOp.Error);
+                }
+
+            };
+            //LoadOperation<View_CountryBorder> loadOperation = Context.Load(query, completeProcessing, true);
+            var loadUser_Data = Context.Load(Context.GetUserQuery(cid),completeProcessing,true);
+            
+        }
+
+        public tbl_users GetUser(string cid)
+        {
+            Context.Load(Context.GetUserQuery(cid));
+            var user = from n in Context.tbl_users
+                       where n.msn_id == cid
+                       select n;
+
+            foreach (var a in user)
+            {
+                return a as tbl_users;
+            }
+
+            return null;
+        }
+
+        void loadUserCountry_Completed(IEnumerable<ref_user_country> r, tbl_users tbl_users, List<ref_user_country> countries)
+        {
+            
+            var a = from n in r
+                    where tbl_users.user_id_pk == n.user_id
+                    select n;
+            foreach (ref_user_country x in a)
+            {
+                Context.ref_user_countries.Remove(x);
+            }
+            foreach (ref_user_country x in countries)
+            {
+                x.user_id = tbl_users.user_id_pk;
+                Context.ref_user_countries.Add(x);
+            }
+
+            Context.SubmitChanges();            
+                        
+        }
+
+        public void InsertUserCountry(tbl_users tbl_user, List<ref_user_country> countries)
+        {
+            //EntityQuery<View_CountryBorder> query = Context.GetCountryBorderQuery(countryCode);
+            Action<LoadOperation<ref_user_country>> completeProcessing = delegate(LoadOperation<ref_user_country> loadOp)
+            {
+                if (!loadOp.HasError)
+                {
+                    loadUserCountry_Completed(loadOp.Entities, tbl_user, countries);
+                }
+                else
+                {
+                    //LogAndNotify(loadOp.Error);
+                }
+
+            };
+            //LoadOperation<View_CountryBorder> loadOperation = Context.Load(query, completeProcessing, true);
+            var loadUser_Data = Context.Load(Context.GetRef_user_countryQuery(), completeProcessing, true);
+        }
+
+        void loadRefUserCountry_Completed(object sender, EventArgs e)
+        {
+            if (this.LoadUserCountry_Completed != null)
+            {
+                LoadUserCountry_Completed(sender, e);
+            }
+
+        }
+
+        public void LoadUserCountry()
+        {
+            var loadRefUserCountry = Context.Load(Context.GetRef_user_countryQuery());
+            loadRefUserCountry.Completed += new EventHandler(loadRefUserCountry_Completed);            
+        }
+
+        public List<ref_user_country> LoadRefUserCountry(tbl_users tbl_user)
+        {
+            var ref_user_country = from n in Context.ref_user_countries
+                                   where n.user_id == tbl_user.user_id_pk
+                                   select n;
+            List<ref_user_country> listCountry = new List<ref_user_country>();
+            foreach (var a in ref_user_country)
+            {
+                listCountry.Add(a);
+            }
+            return listCountry;
+        }
+
+        #endregion
     }
 }
