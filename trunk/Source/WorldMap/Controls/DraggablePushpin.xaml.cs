@@ -66,10 +66,14 @@ namespace WorldMap
         {
         }
 
-        public DraggablePushpin(MapLayer map)
+        /// <summary>
+        /// Initiate new Draggable Pushpin
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="ra"></param>
+        public DraggablePushpin(MapLayer map, Random ra)
             : base()
-        {
-            Random ra = new Random();
+        {                        
             SolidColorBrush randomColor = new SolidColorBrush(Color.FromArgb(255, (byte)ra.Next(0, 255), (byte)ra.Next(0, 255), (byte)ra.Next(0, 255)));
 
             this.Background = randomColor;

@@ -81,6 +81,7 @@
     <Content Include="ClientBin\RelationDiagram.xap" />
     <Content Include="ClientBin\WindowsLiveID.xap" />
     <Content Include="ClientBin\WorldMap.xap" />
+    <Content Include="Dev.aspx" />
     <Content Include="flags\.gif" />
     <Content Include="flags\af.gif" />
     <Content Include="flags\ag.gif" />
@@ -275,6 +276,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WBDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Dev.aspx.cs">
+      <DependentUpon>Dev.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dev.aspx.designer.cs">
+      <DependentUpon>Dev.aspx</DependentUpon>
     </Compile>
     <Compile Include="Items\Email.cs" />
     <Compile Include="Items\ForumPost.cs" />

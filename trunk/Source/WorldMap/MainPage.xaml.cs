@@ -22,8 +22,6 @@ namespace WorldMap
     {
         #region private variables
         private LocationConverter locConverter = new LocationConverter();
-
-        private DraggablePushpin _currentPushpin;
         private int _currentLocationCountry;
 
         private bool _isAddingNewPushPin;
@@ -88,11 +86,11 @@ namespace WorldMap
 
             //Populate event for workspace
             this.MyWorkSpace.CompareControl.Refresh += new EventHandler(CompareControl_Refresh);
-            
+
             this.MyWorkSpace.TradeDataControl.Refresh += new EventHandler(TradeDataControl_Refresh);
             this.MyWorkSpace.TradeDataControl.Complete += new EventHandler(TradeDataControl_Complete);
         }
-              
+
         #region Draw Country Borders
 
         void WorldMapController_GetBorder_completed(object sender, EventArgs e)
@@ -221,21 +219,27 @@ namespace WorldMap
             PushPinLayer.Name = "PushPinLayer";
             MyMap.Children.Add(PushPinLayer);
 
-            DraggablePushpin DefaultPushPin = new DraggablePushpin(PushPinLayer);
+            DraggablePushpin DefaultPushPin = new DraggablePushpin(PushPinLayer, new Random());
             PushPinPanel.Children.Add(DefaultPushPin);
             DefaultPushPin.Pinned += new EventHandler(DefaultPushPin_Pinned);
+
+            //TEST
+            Random backgroundSeed = new Random();
+            LoadCountryPushpin(new Location(34.52280, 69.17610), backgroundSeed);
+            LoadCountryPushpin(new Location(69.17610, 34.52280), backgroundSeed);
+            LoadCountryPushpin(new Location(-34.61180, -58.41730), backgroundSeed);
+            LoadCountryPushpin(new Location(45.42150, -75.69190), backgroundSeed);
         }
 
         void DefaultPushPin_Pinned(object sender, EventArgs e)
         {
-            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer);
+            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer, new Random());
             pushPin.IsOnMap = true;
             PushPinLayer.AddChild(pushPin, (sender as DraggablePushpin).Location);
             pushPin.Location = (sender as DraggablePushpin).Location;
 
             _isAddingNewPushPin = true;
-            ReverseGeocodeLocation((sender as DraggablePushpin).Location);
-            _currentPushpin = pushPin;
+            ReverseGeocodeLocation(pushPin);
 
             pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
             pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
@@ -250,8 +254,7 @@ namespace WorldMap
             DraggablePushpin p = sender as DraggablePushpin;
             _isAddingNewPushPin = false;
             _currentLocationCountry = p.country.country_id_pk;
-            ReverseGeocodeLocation(p.Location);
-            _currentPushpin = p;
+            ReverseGeocodeLocation(p);
             this.ArrowLayer.Children.Clear();
         }
 
@@ -397,7 +400,7 @@ namespace WorldMap
                 //errorPopup.Show();
             }
         }
-     
+
         void exbt_Click(object sender, RoutedEventArgs e)
         {
             this.ArrowLayer.Children.Clear();
@@ -504,13 +507,13 @@ namespace WorldMap
                 DraggablePushpin pp = panel.DataContext as DraggablePushpin;
                 countryList.Add(pp.country);
             }
-            
+
             MyWorkSpace.TradeDataControl.PopulateData(countryList);
         }
-               
+
         void TradeDataControl_Complete(object sender, EventArgs e)
         {
-            
+
             tbl_countries a = MyWorkSpace.TradeDataControl.CountryComboBox.SelectedItem as tbl_countries;
             string b = MyWorkSpace.TradeDataControl.TypeComboBox.SelectedItem.ToString();
             int c = int.Parse(MyWorkSpace.TradeDataControl.YearComboBox.SelectedItem.ToString());
@@ -703,13 +706,13 @@ namespace WorldMap
         }
 
         // Call service to do reverse geocode ... async call.
-        private void ReverseGeocodeAsync(Location location)
+        private void ReverseGeocodeAsync(DraggablePushpin pushpin)
         {
             PlatformServices.ReverseGeocodeRequest request = new PlatformServices.ReverseGeocodeRequest();
             request.Culture = "en-US";
             request.Location = new Location();
-            request.Location.Latitude = location.Latitude;
-            request.Location.Longitude = location.Longitude;
+            request.Location.Latitude = pushpin.Location.Latitude;
+            request.Location.Longitude = pushpin.Location.Longitude;
             // Don't raise exceptions.
             request.ExecutionOptions = new PlatformServices.ExecutionOptions();
             request.ExecutionOptions.SuppressFaults = true;
@@ -724,7 +727,7 @@ namespace WorldMap
                     request.Credentials = credentials;
 
                     // Make asynchronous call to fetch the data ... pass state object.
-                    GeocodeClient.ReverseGeocodeAsync(request, location);
+                    GeocodeClient.ReverseGeocodeAsync(request, pushpin);
                 });
         }
 
@@ -739,7 +742,8 @@ namespace WorldMap
                 geocodesInProgress--;
             }
 
-            Location location = (Location)e.UserState;
+            DraggablePushpin _currentPushpin = (DraggablePushpin)e.UserState;
+            Location location = _currentPushpin.Location;
             string outputString = string.Format("Location ({0:f6}, {1:f6}) : ", location.Latitude, location.Longitude);
 
             try
@@ -875,10 +879,10 @@ namespace WorldMap
         }
 
         // Throttle calls on geocoding service.
-        private const int MaxGeocodes = 3;
+        private const int MaxGeocodes = 1;
 
         // Locations waiting to be reverse geocoded.
-        private Queue<Location> waitingToReverseGeocode = new Queue<Location>();
+        private Queue<DraggablePushpin> waitingToReverseGeocode = new Queue<DraggablePushpin>();
 
         // Waiting for results from the server for this many.
         int geocodesInProgress = 0;
@@ -900,22 +904,21 @@ namespace WorldMap
             }
         }
 
-
-        private void ReverseGeocodeLocation(Location location)
+        private void ReverseGeocodeLocation(DraggablePushpin pushpin)
         {
             // All calls go through the queue.
             lock (waitingToReverseGeocode)
             {
-                waitingToReverseGeocode.Enqueue(location);
+                waitingToReverseGeocode.Enqueue(pushpin);
                 ReverseGeocodeFromQueue();
             }
         }
 
-        private void ReverseGeocodeLocation(IList<Location> locations)
+        private void ReverseGeocodeLocation(IList<DraggablePushpin> locations)
         {
             lock (waitingToReverseGeocode)
             {
-                foreach (Location location in locations)
+                foreach (DraggablePushpin location in locations)
                 {
                     waitingToReverseGeocode.Enqueue(location);
                 }
@@ -986,7 +989,19 @@ namespace WorldMap
 
         private void SaveCountry_Click(object sender, RoutedEventArgs e)
         {
+        }
 
+        public void LoadCountryPushpin(Location loc, Random seed)
+        {
+            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer, seed);
+            pushPin.IsOnMap = true;
+            PushPinLayer.AddChild(pushPin, loc);
+            pushPin.Location = loc;
+
+            _isAddingNewPushPin = true;
+            ReverseGeocodeLocation(pushPin);
+            pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
+            pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
         }
     }
 }
