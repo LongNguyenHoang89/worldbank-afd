@@ -181,12 +181,9 @@
                     </ListBox.ItemsPanel>
                 </ListBox>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
-                    <Button Height="40" Margin="0,0,10,0" x:Name="ViewTrade" ToolTipService.ToolTip="Trade Data">
+                    <Button Height="40" Margin="0,0,10,0" x:Name="SaveCountry" ToolTipService.ToolTip="Save Country Data" Click="SaveCountry_Click">
                         <Image Source="Image/TradeData.png"/>
-                    </Button>
-                    <Button Height="40" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="buttonCompareCountries" ToolTipService.ToolTip="Compare">
-                        <Image Source="Image/Compare.png"/>
-                    </Button>
+                    </Button>                    
                 </StackPanel>
             </Grid>
         </Border>

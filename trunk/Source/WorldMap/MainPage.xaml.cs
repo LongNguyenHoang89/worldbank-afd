@@ -983,5 +983,10 @@ namespace WorldMap
         }
 
         #endregion
+
+        private void SaveCountry_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
