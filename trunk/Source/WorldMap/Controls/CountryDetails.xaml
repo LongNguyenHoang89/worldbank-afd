@@ -79,7 +79,12 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <ComboBox Name="comboBoxRenderStyle" Grid.Row="1" Height="23"></ComboBox>
-                    <Button Grid.Row="2" Margin="5" Name="buttonRenderChart" Click="buttonRenderChart_Click" IsEnabled="False">Render chart</Button>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <Button  Margin="5" Name="buttonRenderChart" Click="buttonRenderChart_Click" IsEnabled="False">Render chart</Button>
+                        <Button  Margin="5" Name="ButtonSaveShortCut" IsEnabled="False" Click="ButtonSaveShortCut_Click">
+                            <Image Source="/WorldMap;component/Image/BookMark_Icon.png"></Image>
+                        </Button>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </basics:TabItem>

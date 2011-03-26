@@ -109,7 +109,9 @@ namespace WorldMap
             // enable the render button
             buttonRenderChart.IsEnabled = true;
             buttonRenderChart_Click(this, new RoutedEventArgs());
-        }
+
+            ButtonSaveShortCut.IsEnabled = true;            
+        }        
 
         private List<tbl_indicators> getIndicatorFromPKForGraph(List<int> indPKs)
         {
@@ -260,6 +262,11 @@ namespace WorldMap
         private void IndicatorCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             listboxIndicatorPKSelected.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
+        }
+
+        private void ButtonSaveShortCut_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

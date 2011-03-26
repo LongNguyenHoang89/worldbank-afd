@@ -1,17 +1,21 @@
-﻿<basics:ChildWindow
+﻿<UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" x:Name="chwPopUp"
-	x:Class="WorldMap.CompareCountriesChildWindow"	
-	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="419" d:DesignWidth="564">
-
+	x:Class="WorldMap.CompareCountriesChildWindow"		
+    mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+>
     <Grid Height="383" Width="543" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Name="chartTabGrid">
         <ComboBox Height="23" HorizontalAlignment="Right" Name="comboBoxIndicatorSelector" VerticalAlignment="Top" Width="367" Margin="0,0,12,0" />
-        <sdk:Label Height="19" HorizontalAlignment="Left" Margin="12,4,0,0" Name="label1" VerticalAlignment="Top" Width="133" Content="Indicator to compare" />
-        <Grid Height="284" HorizontalAlignment="Left" Margin="12,87,0,0" Name="gridChart" VerticalAlignment="Top" Width="519"></Grid>
+        <TextBlock Height="19" HorizontalAlignment="Left" Margin="12,4,0,0" Name="label1" VerticalAlignment="Top" Width="133" Text="Indicator to compare" />
+        <Grid Height="284" HorizontalAlignment="Left" Margin="12,95,0,0" Name="gridChart" VerticalAlignment="Top" Width="519"></Grid>
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="164,29,0,0" Name="comboBoxRenderStyle" VerticalAlignment="Top" Width="367" />
-        <sdk:Label Height="20" HorizontalAlignment="Left" Margin="12,33,0,0" Name="label2" VerticalAlignment="Top" Width="120" Content="Render graph as" />
-        <Button Content="Render graph" Height="23" HorizontalAlignment="Left" Margin="429,58,0,0" Name="button1" VerticalAlignment="Top" Width="102" Click="button1_Click" />
+        <TextBlock Height="20" HorizontalAlignment="Left" Margin="12,33,0,0" Name="label2" VerticalAlignment="Top" Width="120" Text="Render graph as" />
+        <Button Height="30" Width="30" Margin="0,58,120,296" HorizontalAlignment="Right" Name="RefeshButton" Click="RefeshButton_Click">
+            <Image Source="/WorldMap;component/Image/Refresh_Icon.png"></Image>
+        </Button>
+        <Button Content="Render graph" Height="30" HorizontalAlignment="Left" Margin="429,58,0,0" Name="button1" VerticalAlignment="Top" Width="102" Click="button1_Click" />
     </Grid>
 
-</basics:ChildWindow>
+</UserControl>

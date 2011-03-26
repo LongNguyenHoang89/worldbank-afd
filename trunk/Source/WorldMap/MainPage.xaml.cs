@@ -61,11 +61,11 @@ namespace WorldMap
 
         void FullScreenButton_Click(object sender, RoutedEventArgs e)
         {
-              var btn = (Button)sender;
+            var btn = (Button)sender;
             App.Current.Host.Content.IsFullScreen = !App.Current.Host.Content.IsFullScreen;
-           
+
             bool fullScreen = App.Current.Host.Content.IsFullScreen;
-           
+
             if (fullScreen)
                 btn.Content = "ON";
             else
@@ -85,8 +85,14 @@ namespace WorldMap
             this.WorldMapController.GetBorder_completed += new EventHandler(WorldMapController_GetBorder_completed);
             // Register this as scriptable object (for running JS)
             HtmlPage.RegisterScriptableObject("MainPage", this);
-        }
 
+            //Populate event for workspace
+            this.MyWorkSpace.CompareControl.Refresh += new EventHandler(CompareControl_Refresh);
+            
+            this.MyWorkSpace.TradeDataControl.Refresh += new EventHandler(TradeDataControl_Refresh);
+            this.MyWorkSpace.TradeDataControl.Complete += new EventHandler(TradeDataControl_Complete);
+        }
+              
         #region Draw Country Borders
 
         void WorldMapController_GetBorder_completed(object sender, EventArgs e)
@@ -118,7 +124,7 @@ namespace WorldMap
             myPoly.DataContext = countryCode;
             myPoly.MouseEnter += new MouseEventHandler(myPoly_MouseEnter);
             myPoly.MouseLeave += new MouseEventHandler(myPoly_MouseLeave);
-            
+
             //Add MultiPolygon to map layer
             PolygonLayer.Children.Add(myPoly);
         }
@@ -221,7 +227,7 @@ namespace WorldMap
         }
 
         void DefaultPushPin_Pinned(object sender, EventArgs e)
-        {            
+        {
             DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer);
             pushPin.IsOnMap = true;
             PushPinLayer.AddChild(pushPin, (sender as DraggablePushpin).Location);
@@ -246,7 +252,7 @@ namespace WorldMap
             _currentLocationCountry = p.country.country_id_pk;
             ReverseGeocodeLocation(p.Location);
             _currentPushpin = p;
-            this.ArrowLayer.Children.Clear();                        
+            this.ArrowLayer.Children.Clear();
         }
 
         /// <summary>
@@ -360,7 +366,7 @@ namespace WorldMap
             DrawCountryBorder(p);
         }
 
-        private void buttonCompareCountries_Click(object sender, RoutedEventArgs e)
+        void CompareControl_Refresh(object sender, EventArgs e)
         {
             // get the selected countries
             List<tbl_countries> selectedCountries = new List<tbl_countries>();
@@ -376,21 +382,22 @@ namespace WorldMap
             if (selectedCountries.Count > 1 && selectedIndicatorPKs.Count > 0)
             {
                 // init a new CustomChildWindow
-                CompareCountriesChildWindow child = new CompareCountriesChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
-                child.Show();
+                //CompareCountriesChildWindow child = new CompareCountriesChildWindow(WorldMapController, selectedCountries, selectedIndicatorPKs);
+                //child.Show();
+                MyWorkSpace.CompareControl.PopulateData(WorldMapController, selectedCountries, selectedIndicatorPKs);
             }
             else if (selectedIndicatorPKs.Count < 1)
             {
-                ErrorNotification errorPopup = new ErrorNotification("You must select at least 1 indicator");
-                errorPopup.Show();
+                //ErrorNotification errorPopup = new ErrorNotification("You must select at least 1 indicator");
+                //errorPopup.Show();
             }
             else
             {
-                ErrorNotification errorPopup = new ErrorNotification("You must select at least 2 country to compare them");
-                errorPopup.Show();
+                //ErrorNotification errorPopup = new ErrorNotification("You must select at least 2 country to compare them");
+                //errorPopup.Show();
             }
         }
-
+     
         void exbt_Click(object sender, RoutedEventArgs e)
         {
             this.ArrowLayer.Children.Clear();
@@ -489,7 +496,7 @@ namespace WorldMap
             }
         }
 
-        private void ViewTrade_Click(object sender, RoutedEventArgs e)
+        void TradeDataControl_Refresh(object sender, EventArgs e)
         {
             List<tbl_countries> countryList = new List<tbl_countries>();
             foreach (StackPanel panel in CountryListBox.Items)
@@ -497,54 +504,50 @@ namespace WorldMap
                 DraggablePushpin pp = panel.DataContext as DraggablePushpin;
                 countryList.Add(pp.country);
             }
-
-            TradeMode tradeWindow = new TradeMode(countryList);
-            tradeWindow.Closed += new EventHandler(tradeWindow_Closed);
-            tradeWindow.Show();
+            
+            MyWorkSpace.TradeDataControl.PopulateData(countryList);
         }
-
-        void tradeWindow_Closed(object sender, EventArgs e)
+               
+        void TradeDataControl_Complete(object sender, EventArgs e)
         {
-            TradeMode tm = sender as TradeMode;
-            if (tm.DialogResult == true)
+            
+            tbl_countries a = MyWorkSpace.TradeDataControl.CountryComboBox.SelectedItem as tbl_countries;
+            string b = MyWorkSpace.TradeDataControl.TypeComboBox.SelectedItem.ToString();
+            int c = int.Parse(MyWorkSpace.TradeDataControl.YearComboBox.SelectedItem.ToString());
+
+            if (b == "Import")
             {
-                tbl_countries a = tm.CountryComboBox.SelectedItem as tbl_countries;
-                string b = tm.TypeComboBox.SelectedItem.ToString();
-                int c = int.Parse(tm.YearComboBox.SelectedItem.ToString());
-
-                if (b == "Import")
+                List<int> exportList = new List<int>();
+                foreach (StackPanel panel in CountryListBox.Items)
                 {
-                    List<int> exportList = new List<int>();
-                    foreach (StackPanel panel in CountryListBox.Items)
+                    DraggablePushpin pp = panel.DataContext as DraggablePushpin;
+                    if (a.country_id_pk != pp.country.country_id_pk)
                     {
-                        DraggablePushpin pp = panel.DataContext as DraggablePushpin;
-                        if (a.country_id_pk != pp.country.country_id_pk)
-                        {
-                            exportList.Add(pp.country.country_id_pk);
-                        }
+                        exportList.Add(pp.country.country_id_pk);
                     }
-
-                    _currentImportCountryPK = a.country_id_pk;
-                    this.WorldMapController.GetImportData(a.country_id_pk, exportList, c);
-                    this.WorldMapController.GetImportData_Completed += new EventHandler(WorldMapController_GetImportData_Completed);
                 }
-                else
-                {
-                    List<int> importList = new List<int>();
-                    foreach (StackPanel panel in CountryListBox.Items)
-                    {
-                        DraggablePushpin pp = panel.DataContext as DraggablePushpin;
-                        if (a.country_id_pk != pp.country.country_id_pk)
-                        {
-                            importList.Add(pp.country.country_id_pk);
-                        }
-                    }
 
-                    _currentExportCountryPK = a.country_id_pk;
-                    this.WorldMapController.GetExportData(a.country_id_pk, importList, c);
-                    this.WorldMapController.GetExportData_Completed += new EventHandler(WorldMapController_GetExportData_Completed);
-                }
+                _currentImportCountryPK = a.country_id_pk;
+                this.WorldMapController.GetImportData(a.country_id_pk, exportList, c);
+                this.WorldMapController.GetImportData_Completed += new EventHandler(WorldMapController_GetImportData_Completed);
             }
+            else
+            {
+                List<int> importList = new List<int>();
+                foreach (StackPanel panel in CountryListBox.Items)
+                {
+                    DraggablePushpin pp = panel.DataContext as DraggablePushpin;
+                    if (a.country_id_pk != pp.country.country_id_pk)
+                    {
+                        importList.Add(pp.country.country_id_pk);
+                    }
+                }
+
+                _currentExportCountryPK = a.country_id_pk;
+                this.WorldMapController.GetExportData(a.country_id_pk, importList, c);
+                this.WorldMapController.GetExportData_Completed += new EventHandler(WorldMapController_GetExportData_Completed);
+            }
+            //}
         }
 
         void WorldMapController_GetExportData_Completed(object sender, EventArgs e)
@@ -629,11 +632,11 @@ namespace WorldMap
         {
             if ((sender as ToggleButton).IsChecked == true)
             {
-                this.CountryListUnhide.Begin();                
+                this.CountryListUnhide.Begin();
             }
             else
             {
-                this.CountryListHide.Begin();                
+                this.CountryListHide.Begin();
             }
         }
 
@@ -782,7 +785,7 @@ namespace WorldMap
                         }
                     }
 
-                    this.PushPinLayer.Children.Remove(_currentPushpin);                    
+                    this.PushPinLayer.Children.Remove(_currentPushpin);
                 }
                 else
                 {
@@ -803,7 +806,7 @@ namespace WorldMap
                         GeocodeLayer.AddResult(e.Result.Results[0]);
                     }
 
-                    tbl_countries country = WorldMapController.GetCountry(formatted);                   
+                    tbl_countries country = WorldMapController.GetCountry(formatted);
 
                     if (!_isAddingNewPushPin && _currentLocationCountry == country.country_id_pk)
                     {
@@ -979,6 +982,6 @@ namespace WorldMap
             SignInInformation.Text = userName + " is signed in...";
         }
 
-        #endregion        
+        #endregion
     }
 }

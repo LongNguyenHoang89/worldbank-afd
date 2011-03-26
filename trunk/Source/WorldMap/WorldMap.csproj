@@ -180,6 +180,10 @@
     <Resource Include="Image\Navigation_Icon.png" />
     <Resource Include="Image\Personal_icon.png" />
     <Resource Include="Image\SearchMap_Icon.png" />
+    <Resource Include="Image\BookMark_Icon.png" />
+    <Resource Include="Image\Tool_icon.png" />
+    <Resource Include="Image\Refresh_Icon.png" />
+    <Resource Include="Image\OK_icon.png" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>

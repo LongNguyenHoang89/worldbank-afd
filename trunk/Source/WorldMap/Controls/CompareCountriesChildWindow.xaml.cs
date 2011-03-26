@@ -24,14 +24,23 @@ namespace WorldMap
         private LoadOperation<tbl_indicators> tblIndLoadOp = null;
         private LoadOperation<ref_country_indicator> loadOp = null;
 
+        public event EventHandler Refresh;
+
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="worldMapController"></param>
-        /// <param name="country"></param>
-        public CompareCountriesChildWindow(Controller worldMapController, List<tbl_countries> selectedCountries, List<int> checkedIndicatorPKs)
+        public CompareCountriesChildWindow()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// populate All data
+        /// </summary>
+        /// <param name="worldMapController"></param>
+        /// <param name="country"></param>
+        public void PopulateData(Controller worldMapController, List<tbl_countries> selectedCountries, List<int> checkedIndicatorPKs)
+        {            
             this._worldMapController = worldMapController;
             this._selectedCountries = selectedCountries;
             this._checkedIndicatorPKs = checkedIndicatorPKs;
@@ -121,17 +130,7 @@ namespace WorldMap
             button1.IsEnabled = true;
         }
         #endregion
-
-        private void OKButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = false;
-        }
-
+        
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             WorldbankGeneralChartControl control = new WorldbankDataGraphs.WorldbankGeneralChartControl();
@@ -175,6 +174,14 @@ namespace WorldMap
             }
             // add the chart to the gridChart
             this.gridChart.Children.Add(control);
+        }
+
+        private void RefeshButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Refresh != null)
+            {
+                Refresh(sender, null);
+            }
         }
     }
 }

@@ -2,14 +2,25 @@
 using System.Windows.Controls;
 using NCRVisual.web.DataModel;
 using System.Collections.Generic;
+using System;
 
 namespace WorldMap
 {
-    public partial class TradeMode : ChildWindow
+    public partial class TradeMode
     {
-        public TradeMode(IList<tbl_countries> country)
+        public event EventHandler Refresh;
+        public event EventHandler Complete;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public TradeMode()
         {
             InitializeComponent();
+        }
+
+        public void PopulateData(IList<tbl_countries> country)
+        {            
             this.TypeComboBox.SelectionChanged += new SelectionChangedEventHandler(ComboBox_SelectionChanged);
             this.YearComboBox.SelectionChanged += new SelectionChangedEventHandler(ComboBox_SelectionChanged);
             this.CountryComboBox.SelectionChanged += new SelectionChangedEventHandler(ComboBox_SelectionChanged);
@@ -35,13 +46,19 @@ namespace WorldMap
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            if (Complete != null)
+            {
+                Complete(sender, null);
+            }
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
-        }
+            if (Refresh != null)
+            {
+                Refresh(sender, null);
+            }
+        }        
     }
 }
 
