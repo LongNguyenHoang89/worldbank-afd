@@ -24,8 +24,7 @@ namespace WorldMap
         private LocationConverter locConverter = new LocationConverter();
         private int _currentLocationCountry;
 
-        private bool _isAddingNewPushPin;
-        private List<int> selectedIndicatorPKs = new List<int>();
+        private bool _isAddingNewPushPin;        
 
         private int _currentImportCountryPK = 0;
         private int _currentExportCountryPK = 0;
@@ -161,52 +160,7 @@ namespace WorldMap
 
         void WorldMapController_GetView_TabIndicatorQueryCompleted(object sender, EventArgs e)
         {
-            MyWorkSpace.PopulateFavouritedIndicatorsTab(WorldMapController.Context.View_TabIndicators);
-
-            //TreeViewItem item = new
-            List<int> tabId = new List<int>();
-            foreach (View_TabIndicator indicator in WorldMapController.Context.View_TabIndicators)
-            {
-                if (!tabId.Contains(indicator.tab_id_pk))
-                {
-                    tabId.Add(indicator.tab_id_pk);
-                    TreeViewItem item = new TreeViewItem();
-                    item.Header = indicator.tab_name;
-                    item.DataContext = indicator.tab_id_pk;
-                    item.Foreground = new SolidColorBrush(Colors.White);
-                    this.IndicatorTreeView.Items.Add(item);
-                }
-
-                foreach (TreeViewItem item in this.IndicatorTreeView.Items)
-                {
-                    if (item.Header.ToString() == indicator.tab_name.ToString())
-                    {
-                        Grid grid = new Grid();
-                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20) });
-                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength() });
-
-                        ToolTipService.SetToolTip(grid, new ToolTip()
-                        {
-                            Content = indicator.indicator_description,
-                            //Style = this.Resources["CustomInfoboxStyle"] as Style,
-                        });
-
-                        TextBlock name = new TextBlock { Text = indicator.indicator_name };
-                        CheckBox chk = new CheckBox();
-                        chk.Tag = indicator.indicator_id_pk;
-                        chk.Checked += new RoutedEventHandler(IndicatorCheckbox_Checked);
-                        chk.Unchecked += new RoutedEventHandler(IndicatorCheckbox_Unchecked);
-
-                        grid.Children.Add(name);
-                        grid.Children.Add(chk);
-
-                        Grid.SetColumn(name, 1);
-
-                        item.Items.Add(grid);
-                        break;
-                    }
-                }
-            }
+            MyWorkSpace.PopulateFavouritedIndicatorsTab(WorldMapController.Context.View_TabIndicators);            
         }
 
         void WorldMapController_LoadInitDataCompleted(object sender, EventArgs e)
@@ -246,7 +200,7 @@ namespace WorldMap
 
             //Mapnavigation
             MyMap.Center = pushPin.Location;
-            MyMap.ZoomLevel = 5;
+            MyMap.ZoomLevel = 3;
         }
 
         void MapPushpin_Pinned(object sender, EventArgs e)
@@ -275,8 +229,9 @@ namespace WorldMap
             CustomChildWindow child = new CustomChildWindow(WorldMapController, thisPinOnCountry, selectedIndicatorPKs);
             child.Show();
              */
-
-            MyWorkSpace.CountryDetailsControl.PopulateData(WorldMapController, thisPinOnCountry, selectedIndicatorPKs);
+            
+            MyWorkSpace.CountryDetailsControl.PopulateData(WorldMapController, thisPinOnCountry, MyWorkSpace.IndicatorIDList);
+            MyWorkSpace.MainTabControl.SelectedIndex = 2;
         }
 
         void CreateCountryPushPin(DraggablePushpin pushpin)
@@ -381,6 +336,8 @@ namespace WorldMap
                     selectedCountries.Add(tmpDP.country);
                 }
             }
+
+            List<int> selectedIndicatorPKs = MyWorkSpace.IndicatorIDList;
 
             if (selectedCountries.Count > 1 && selectedIndicatorPKs.Count > 0)
             {
@@ -630,37 +587,13 @@ namespace WorldMap
                 }
             }
         }
-
-        private void CountryListToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            if ((sender as ToggleButton).IsChecked == true)
-            {
-                this.CountryListUnhide.Begin();
-            }
-            else
-            {
-                this.CountryListHide.Begin();
-            }
-        }
-
+   
         private void HelpToggleButton_Click(object sender, RoutedEventArgs e)
         {
             About b = new About();
             b.Show();
         }
-
-        private void IndicatorListToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            if ((sender as ToggleButton).IsChecked == true)
-            {
-                this.IndicatorListUnhide.Begin();
-            }
-            else
-            {
-                this.IndicatorListHide.Begin();
-            }
-        }
-
+  
         #region Reverse Geocode region
         private PlatformServices.GeocodeServiceClient geocodeClient;
 
@@ -926,28 +859,7 @@ namespace WorldMap
             }
         }
 
-        #endregion
-
-        #region indicator checkboxes event handlers
-        private void IndicatorCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-
-            //if (CountryListBox.Items.Count > 1 && selectedIndicatorPKs.Count > 0)
-            //{
-            //    MessageBox.Show("You can only choose 1 indicator if 2 or more countries are choosen");
-            //    ((CheckBox)sender).IsChecked = false;
-            //}
-            //else
-            //{
-            selectedIndicatorPKs.Add(Convert.ToInt32(((CheckBox)sender).Tag));
-            //}
-        }
-
-        private void IndicatorCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            selectedIndicatorPKs.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
-        }
-        #endregion
+        #endregion       
 
         #region Live ID functions
 

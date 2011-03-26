@@ -37,29 +37,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <Storyboard x:Name="IndicatorListHide">
-            <DoubleAnimation Duration="0:0:0.5" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ControlPanelBorder" d:IsOptimized="True"/>
-        </Storyboard>
         
-        <Storyboard x:Name="IndicatorListUnhide">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ControlPanelBorder">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-
-        <Storyboard x:Name="CountryListHide">
-            <DoubleAnimation Duration="0:0:0.5" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MyWorkspace" d:IsOptimized="True"/>
-        </Storyboard>
-
-        <Storyboard x:Name="CountryListUnhide">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MyWorkspace">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-
         <ControlTemplate x:Key="RemoveButton" TargetType="Button">
             <Image Source="Image/Remove.png" ToolTipService.ToolTip="Remove"/>
         </ControlTemplate>
@@ -189,10 +167,6 @@
         </Border>
 
         <StackPanel Grid.RowSpan="2" VerticalAlignment="Top"  HorizontalAlignment="Right" Orientation="Horizontal">
-
-            <ToggleButton x:Name="IndicatorListToggleButton" Margin="0,10,10,0"  IsChecked="True" Template="{StaticResource RoundedButton}" Width="70" Height="70" Click="IndicatorListToggleButton_Click">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="Image/Indicator.png" Cursor="Hand" ToolTipService.ToolTip="Indicator List"/>
-            </ToggleButton>            
             
             <ToggleButton x:Name="HelpToggleButton" Margin="0,10,10,0" IsChecked="True" Template="{StaticResource RoundedButton}" Width="70" Height="70" Click="HelpToggleButton_Click">
                 <Image Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Image/Help.png" Cursor="Hand" ToolTipService.ToolTip="About Us"/>
@@ -204,20 +178,6 @@
                 <TextBlock Margin="0,10,0,0" Name="SignInInformation" Text="Not signed in"></TextBlock>
             </StackPanel>
         </StackPanel>
-
-        <Border x:Name="ControlPanelBorder" CornerRadius="0,10,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,120" Width="400" Height="200" Grid.RowSpan="2" Background="Black">
-            <Border.Effect>
-                <DropShadowEffect BlurRadius="10" Direction="355"/>
-            </Border.Effect>
-            <Grid Margin="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <sdk:TreeView x:Name="IndicatorTreeView" Background="Transparent" Margin="0,1,0,-1" />
-            </Grid>
-        </Border>        
-
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Name="LoadingPanel">
             <StackPanel.Background>
                 <SolidColorBrush Color="Black" Opacity="0.7"/>

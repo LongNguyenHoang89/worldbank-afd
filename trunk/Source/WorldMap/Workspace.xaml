@@ -10,8 +10,8 @@
     Width="auto"
     Height="auto"
 >
-    <Grid x:Name="LayoutRoot" Background="White">
-        <sdk:TabControl Name="tabControl1" VerticalAlignment="Top">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <sdk:TabControl Name="MainTabControl" VerticalAlignment="Top" TabStripPlacement="Left" SelectedIndex="4">
             <sdk:TabControl.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="White" Offset="0"/>
@@ -103,9 +103,22 @@
             </sdk:TabItem>
             <sdk:TabItem>
                 <sdk:TabItem.Header>
-                    <Image Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Personal data"></Image>
+                    <Image Source="/WorldMap;component/Image/Tool_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Tools"></Image>
                 </sdk:TabItem.Header>
                 <sdk:TabControl>
+                    <sdk:TabItem Header="Compare">
+                        <local:CompareCountriesChildWindow x:Name="CompareControl"></local:CompareCountriesChildWindow>
+                    </sdk:TabItem>
+                    <sdk:TabItem Header="Trade data">
+                        <local:TradeMode x:Name="TradeDataControl"></local:TradeMode>
+                    </sdk:TabItem>
+                </sdk:TabControl>
+            </sdk:TabItem>
+            <sdk:TabItem >
+                <sdk:TabItem.Header>
+                    <Image Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Personal data"></Image>
+                </sdk:TabItem.Header>
+                <sdk:TabControl SelectedIndex="1">
                     <sdk:TabItem Header="Shorcuts">
                         <StackPanel>
                             <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
@@ -128,8 +141,7 @@
                                     <Image Margin="5" Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30"></Image>
                                     <TextBlock VerticalAlignment="Center">VietNam_GDP</TextBlock>
                                 </StackPanel>
-                            </ListBox>
-                            <toolkit:Accordion Height="100" Name="accordion1" Width="200" />
+                            </ListBox>                            
                         </StackPanel>
                     </sdk:TabItem>
                     <sdk:TabItem Header="Indicators">
@@ -137,8 +149,9 @@
                             <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
                                 <TextBlock Text="FAVOURITE INDICATORS" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
                             </Border>
-                            <toolkit:Accordion x:Name="IndicatorsAccordion">                                
+                            <toolkit:Accordion x:Name="IndicatorsAccordion" Margin="10,0">
                             </toolkit:Accordion>
+                            <Button Margin="10,5" Name="SaveIndicatorButton" Click="SaveIndicatorButton_Click">Save</Button>
                         </StackPanel>
                     </sdk:TabItem>
                     <sdk:TabItem Header="Settings">
@@ -147,20 +160,7 @@
                         </Border>
                     </sdk:TabItem>
                 </sdk:TabControl>
-            </sdk:TabItem>
-            <sdk:TabItem>
-                <sdk:TabItem.Header>
-                    <Image Source="/WorldMap;component/Image/Tool_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Tools"></Image>
-                </sdk:TabItem.Header>
-                <sdk:TabControl>
-                    <sdk:TabItem Header="Compare">
-                        <local:CompareCountriesChildWindow x:Name="CompareControl"></local:CompareCountriesChildWindow>
-                    </sdk:TabItem>
-                    <sdk:TabItem Header="Trade data">
-                        <local:TradeMode x:Name="TradeDataControl"></local:TradeMode>
-                    </sdk:TabItem>
-                </sdk:TabControl>
-            </sdk:TabItem>
+            </sdk:TabItem>            
         </sdk:TabControl>
     </Grid>
 </UserControl>

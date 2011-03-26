@@ -1,24 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.ServiceModel.DomainServices.Client;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using NCRVisual.web.DataModel;
-using System.ServiceModel.DomainServices.Client;
 
 namespace WorldMap
 {
     public partial class Workspace : UserControl
     {
+        private List<int> _indicatorIDList;
+
+        /// <summary>
+        /// Get or set the List of Indicators that user concerns
+        /// </summary>
+        public List<int> IndicatorIDList
+        {
+            get
+            {
+                _indicatorIDList.Clear();
+                foreach (AccordionItem item in IndicatorsAccordion.Items)
+                {
+                    foreach (Grid grid in (item.Content as StackPanel).Children)
+                    {
+                        CheckBox chk = grid.Children[1] as CheckBox;
+                        if (chk.IsChecked == true)
+                        {
+                            _indicatorIDList.Add((int)chk.Tag);
+                        }
+                    }
+                }
+                return _indicatorIDList;
+            }
+        }
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Workspace()
         {
             InitializeComponent();
+            _indicatorIDList = new List<int>();
         }
 
         /// <summary>
@@ -50,15 +72,12 @@ namespace WorldMap
 
                         ToolTipService.SetToolTip(grid, new ToolTip()
                         {
-                            Content = indicator.indicator_description,                          
+                            Content = indicator.indicator_description,
                         });
 
                         TextBlock name = new TextBlock { Text = indicator.indicator_name };
                         CheckBox chk = new CheckBox();
                         chk.Tag = indicator.indicator_id_pk;
-
-                        //chk.Checked += new RoutedEventHandler(IndicatorCheckbox_Checked);
-                        //chk.Unchecked += new RoutedEventHandler(IndicatorCheckbox_Unchecked);
 
                         grid.Children.Add(name);
                         grid.Children.Add(chk);
@@ -68,6 +87,30 @@ namespace WorldMap
                         (item.Content as StackPanel).Children.Add(grid);
                         break;
                     }
+                }
+            }
+        }
+
+        private void SaveIndicatorButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Load Indicator List after user login
+        /// </summary>
+        /// <param name="favouritedIndicatorIdPKList">List of Indicator ID PK</param>
+        public void LoadIndicatorsList(List<int> favouritedIndicatorIdPKList)
+        {
+            foreach (AccordionItem item in IndicatorsAccordion.Items)
+            {
+                foreach (Grid grid in (item.Content as StackPanel).Children)
+                {
+                    CheckBox chk = grid.Children[1] as CheckBox;
+                    if (favouritedIndicatorIdPKList.Contains((int)chk.Tag))
+                    {
+                        chk.IsChecked = true;
+                    }
+                    else chk.IsChecked = false;
                 }
             }
         }
