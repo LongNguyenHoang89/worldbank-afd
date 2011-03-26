@@ -5,11 +5,13 @@ using System.Web;
 using System.ServiceModel.DomainServices.EntityFramework;
 using NCRVisual.web.DataModel;
 using System.Data;
+using System.ServiceModel.DomainServices.Hosting;
 
 namespace NCRVisual.web.Services
-{
+{    
     public partial class WBDomainService : LinqToEntitiesDomainService<WBEntities>
     {
+
         public IQueryable<ref_country_indicator> GetRef_country_indicatorInCountryIdList(List<int> countryIdList)
         {
             return this.ObjectContext.ref_country_indicator.Where(c => countryIdList.Contains((int)c.country_id));
@@ -28,32 +30,7 @@ namespace NCRVisual.web.Services
         {
             return this.ObjectContext.ref_country_indicator.Where(i => indicatorIdList.Contains((int)i.indicator_id));
         }
-
-        public void InsertRef_country_indicator(ref_country_indicator ref_country_indicator)
-        {
-            if ((ref_country_indicator.EntityState != EntityState.Detached))
-            {
-                this.ObjectContext.ObjectStateManager.ChangeObjectState(ref_country_indicator, EntityState.Added);
-            }
-            else
-            {
-                this.ObjectContext.ref_country_indicator.AddObject(ref_country_indicator);
-            }
-        }
-
-        public void UpdateRef_country_indicator(ref_country_indicator currentref_country_indicator)
-        {
-            this.ObjectContext.ref_country_indicator.AttachAsModified(currentref_country_indicator, this.ChangeSet.GetOriginal(currentref_country_indicator));
-        }
-
-        public void DeleteRef_country_indicator(ref_country_indicator ref_country_indicator)
-        {
-            if ((ref_country_indicator.EntityState == EntityState.Detached))
-            {
-                this.ObjectContext.ref_country_indicator.Attach(ref_country_indicator);
-            }
-            this.ObjectContext.ref_country_indicator.DeleteObject(ref_country_indicator);
-        }
+                
 
 
         /// <summary>
@@ -109,5 +86,69 @@ namespace NCRVisual.web.Services
         {
             return this.ObjectContext.tbl_projects.Where(c => c.country_id == countryId);
         }
+
+        #region save n load data
+        public IQueryable<tbl_users> GetUser(string cid)
+        {
+            return this.ObjectContext.tbl_users.Where(c => c.msn_id == cid);
+        }
+        public IQueryable<ref_user_country> GetUserCountry(int user_id)
+        {
+            return this.ObjectContext.ref_user_country.Where(c => c.user_id == user_id);
+        }
+
+        public void InsertTbl_users(tbl_users tbl_users)
+        {
+            if ((tbl_users.EntityState != EntityState.Detached))
+            {
+                this.ObjectContext.ObjectStateManager.ChangeObjectState(tbl_users, EntityState.Added);
+            }
+            else
+            {
+                this.ObjectContext.tbl_users.AddObject(tbl_users);
+            }
+        }
+
+        public void UpdateTbl_users(tbl_users currenttbl_users)
+        {
+            this.ObjectContext.tbl_users.AttachAsModified(currenttbl_users, this.ChangeSet.GetOriginal(currenttbl_users));
+        }
+
+        public void DeleteTbl_users(tbl_users tbl_users)
+        {
+            if ((tbl_users.EntityState == EntityState.Detached))
+            {
+                this.ObjectContext.tbl_users.Attach(tbl_users);
+            }
+            this.ObjectContext.tbl_users.DeleteObject(tbl_users);
+        }
+
+        public void InsertRef_user_country(ref_user_country ref_user_country)
+        {
+            if ((ref_user_country.EntityState != EntityState.Detached))
+            {
+                this.ObjectContext.ObjectStateManager.ChangeObjectState(ref_user_country, EntityState.Added);
+            }
+            else
+            {
+                this.ObjectContext.ref_user_country.AddObject(ref_user_country);
+            }
+        }
+
+        public void UpdateRef_user_country(ref_user_country currentref_user_country)
+        {
+            this.ObjectContext.ref_user_country.AttachAsModified(currentref_user_country, this.ChangeSet.GetOriginal(currentref_user_country));
+        }
+
+        public void DeleteRef_user_country(ref_user_country ref_user_country)
+        {
+            if ((ref_user_country.EntityState == EntityState.Detached))
+            {
+                this.ObjectContext.ref_user_country.Attach(ref_user_country);
+            }
+            this.ObjectContext.ref_user_country.DeleteObject(ref_user_country);
+        }
+
+        #endregion
     }
 }
