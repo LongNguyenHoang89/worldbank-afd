@@ -14,6 +14,9 @@ namespace WorldMap
         /// <summary>
         /// Get or set the List of Indicators that user concerns
         /// </summary>
+
+        public EventHandler SaveIndicatorButton_Completed;
+
         public List<int> IndicatorIDList
         {
             get
@@ -93,6 +96,7 @@ namespace WorldMap
 
         private void SaveIndicatorButton_Click(object sender, RoutedEventArgs e)
         {
+            SaveIndicatorButton_Completed(sender, e);
         }
 
         /// <summary>

@@ -62,9 +62,12 @@ namespace WorldMap.Helper
         public event EventHandler LoadUserData_Completed;
         public event EventHandler CheckUserCompleted;
 
+        public event EventHandler InsertMsnUser_Completed;
+
         public event EventHandler DeleteUserCountry_Completed;
         public event EventHandler InsertUserCountry_Completed;
         public event EventHandler LoadUserCountry_Completed;
+        public event EventHandler LoadUserIndicator_Completed;
         #endregion
 
         /// <summary>
@@ -223,16 +226,26 @@ namespace WorldMap.Helper
         public void InsertUser(tbl_users tbl_user)
         {
             Context.tbl_users.Add(tbl_user);
-            Context.SubmitChanges();
-
+            var a = Context.SubmitChanges();
+            a.Completed += new EventHandler(insertMsnUser_Completed);
         }
+
+        void insertMsnUser_Completed(object sender, EventArgs e)
+        {
+            if (this.InsertMsnUser_Completed != null)
+            {
+                InsertMsnUser_Completed(sender, e);
+            }
+        }
+
+
 
         void loadUserData_Completed(IEnumerable<tbl_users> r, string cid)
         {
             var a = from n in r
                     where n.msn_id == cid
                     select n;
-            tbl_users user = new tbl_users();
+            tbl_users user = null;
             foreach (tbl_users x in a)
             {
                 user = x;
@@ -347,6 +360,78 @@ namespace WorldMap.Helper
             return listCountry;
         }
 
+        #endregion
+
+        #region
+        public void SaveIndicatorList(List<int> listIndicator,tbl_users user)
+        {            
+            //EntityQuery<View_CountryBorder> query = Context.GetCountryBorderQuery(countryCode);
+            Action<LoadOperation<ref_user_indicator>> completeProcessing = delegate(LoadOperation<ref_user_indicator> loadOp)
+            {
+                if (!loadOp.HasError)
+                {
+                    loadUserIndicator_Completed(loadOp.Entities, user, listIndicator);
+                }
+                else
+                {
+                    //LogAndNotify(loadOp.Error);
+                }
+
+            };
+            //LoadOperation<View_CountryBorder> loadOperation = Context.Load(query, completeProcessing, true);
+            var loadUser_Data = Context.Load(Context.GetRef_user_indicatorQuery(), completeProcessing, true);
+        }
+        void loadUserIndicator_Completed(IEnumerable<ref_user_indicator> r, tbl_users user, List<int> listIndicator)
+        {
+            var ref_user_indicators = from n in r
+                                      where n.user_id == user.user_id_pk
+                                      select n;
+            foreach (ref_user_indicator ref_user_indicator in ref_user_indicators)
+            {
+                Context.ref_user_indicators.Remove(ref_user_indicator);
+            }
+
+            foreach (int i in listIndicator)
+            {
+                ref_user_indicator ref_user_indicator = new ref_user_indicator();
+                ref_user_indicator.user_id = user.user_id_pk;
+                ref_user_indicator.indicator_id = i;
+                var x = from n in Context.ref_user_indicators
+                        where (n.user_id == ref_user_indicator.user_id) && (n.indicator_id == i)
+                        select n;
+                if (x.Count()==0)
+                    Context.ref_user_indicators.Add(ref_user_indicator);
+            }
+            Context.SubmitChanges();
+        }
+
+        public void LoadUserIndicator()
+        {
+            var loadUserIndicator = Context.Load(Context.GetRef_user_indicatorQuery());
+            loadUserIndicator.Completed += new EventHandler(loadRefUserIndicator_Completed);
+
+        }
+
+        void loadRefUserIndicator_Completed(object sender, EventArgs e)
+        {
+            if (LoadUserIndicator_Completed != null)
+            {
+                LoadUserIndicator_Completed(sender, e);
+            }
+        }
+
+        public List<ref_user_indicator> LoadRefUserIndicator(tbl_users tbl_user)
+        {
+            var ref_user_indicator = from n in Context.ref_user_indicators
+                                   where n.user_id == tbl_user.user_id_pk
+                                   select n;
+            List<ref_user_indicator> listIndicators = new List<ref_user_indicator>();
+            foreach (var a in ref_user_indicator)
+            {
+                listIndicators.Add(a);
+            }
+            return listIndicators;
+        }
         #endregion
     }
 }

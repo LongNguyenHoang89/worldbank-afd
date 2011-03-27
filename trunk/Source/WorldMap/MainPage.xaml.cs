@@ -91,6 +91,10 @@ namespace WorldMap
 
             this.MyWorkSpace.TradeDataControl.Refresh += new EventHandler(TradeDataControl_Refresh);
             this.MyWorkSpace.TradeDataControl.Complete += new EventHandler(TradeDataControl_Complete);
+
+            //save indicator event
+            this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
+            WorldMapController.InsertMsnUser_Completed += new EventHandler(getCurrentUser);   
         }
 
         #region Draw Country Borders
@@ -896,13 +900,18 @@ namespace WorldMap
             ReverseGeocodeLocation(pushPin);
             pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
             pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
-        }
+        }        
 
         #region workspace save n load
 
         private void SaveCountry_Click(object sender, RoutedEventArgs e)
         {
             SaveCountryList(user);
+        }
+
+        void getCurrentUser(object sender, EventArgs e)
+        {
+            WorldMapController.CheckExist(user.msn_id);
         }
 
         [ScriptableMember()]
@@ -914,6 +923,9 @@ namespace WorldMap
             user.msn_id = cid;
             WorldMapController.CheckExist(cid);
             WorldMapController.LoadUserData_Completed += new EventHandler(WorldMapController_LoadUserData_Completed);
+
+
+
         }
 
         void WorldMapController_LoadUserData_Completed(object sender, EventArgs e)
@@ -921,19 +933,26 @@ namespace WorldMap
             string userName = "";
             if (sender != null)
                 user = sender as tbl_users;
-            if (user != null)
+            userName = user.user_name;
+            if (sender == null)
             {
                 userName = user.user_name;
-            }
-            else
-            {
                 WorldMapController.InsertUser(user);
                 //map msn_id to user                
             }
-            SignInInformation.Text = userName + " is signed in...";
-            // load data here
-            WorldMapController.LoadUserCountry_Completed += new EventHandler(WorldMapController_LoadUserCountry_Completed);
-            WorldMapController.LoadUserCountry();
+            else
+            {
+                SignInInformation.Text = userName + " is signed in...";
+                // load data here
+                WorldMapController.LoadUserCountry_Completed += new EventHandler
+
+(WorldMapController_LoadUserCountry_Completed);
+                WorldMapController.LoadUserCountry();
+                WorldMapController.LoadUserIndicator_Completed += new EventHandler
+
+(WorldMapController_LoadUserIndicator_Compelted);
+                WorldMapController.LoadUserIndicator();
+            }
         }
 
         private void SaveCountryList(tbl_users tbl_user)
@@ -974,9 +993,28 @@ namespace WorldMap
         }
         private void LoadIndicatorList()
         {
-
+            List<ref_user_indicator> user_indicators = WorldMapController.LoadRefUserIndicator(user);
+            List<int> indicatorList = new List<int>();
+            foreach (ref_user_indicator user_indicator in user_indicators)
+            {
+                indicatorList.Add(user_indicator.indicator_id);
+            }
+            this.MyWorkSpace.LoadIndicatorsList(indicatorList);
         }
 
+        #endregion
+
+        #region save n load indicator
+        void Workspace_SaveIndicatorButton_Completed(object sender, EventArgs e)
+        {
+            List<int> indicatorList = MyWorkSpace.IndicatorIDList;
+            WorldMapController.SaveIndicatorList(indicatorList, user);
+        }
+
+        void WorldMapController_LoadUserIndicator_Compelted(object sender, EventArgs e)
+        {
+            LoadIndicatorList();
+        }
         #endregion
     }
 }
