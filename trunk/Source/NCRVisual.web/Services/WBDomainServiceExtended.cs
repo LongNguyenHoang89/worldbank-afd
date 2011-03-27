@@ -149,6 +149,32 @@ namespace NCRVisual.web.Services
             this.ObjectContext.ref_user_country.DeleteObject(ref_user_country);
         }
 
+        public void InsertRef_user_indicator(ref_user_indicator ref_user_indicator)
+        {
+            if ((ref_user_indicator.EntityState != EntityState.Detached))
+            {
+                this.ObjectContext.ObjectStateManager.ChangeObjectState(ref_user_indicator, EntityState.Added);
+            }
+            else
+            {
+                this.ObjectContext.ref_user_indicator.AddObject(ref_user_indicator);
+            }
+        }
+
+        public void UpdateRef_user_indicator(ref_user_indicator currentref_user_indicator)
+        {
+            this.ObjectContext.ref_user_indicator.AttachAsModified(currentref_user_indicator, this.ChangeSet.GetOriginal(currentref_user_indicator));
+        }
+
+        public void DeleteRef_user_indicator(ref_user_indicator ref_user_indicator)
+        {
+            if ((ref_user_indicator.EntityState == EntityState.Detached))
+            {
+                this.ObjectContext.ref_user_indicator.Attach(ref_user_indicator);
+            }
+            this.ObjectContext.ref_user_indicator.DeleteObject(ref_user_indicator);
+        }
+
         #endregion
     }
 }
