@@ -61,7 +61,7 @@
                 Sys.Debug.writeLine("error: " + signInCompletedEventArgs.get_error());
 
             }
-            else {
+            else {                                      
                 plugin.Content.MainPage.SignInCompleted(true, Microsoft.Live.App.get_auth().get_cid());
                 messengerContext = wl.App.get_messengerContext();
                 messengerContext.signIn(Microsoft.Live.Messenger.PresenceStatus.online, onSignedIn);
@@ -73,11 +73,15 @@
                 plugin.Content.MainPage.SignInCompleted(true, "Failed");
             }
             else {
+                
                 messengerContext = wl.App.get_messengerContext();
                 user = messengerContext.get_user();
+                this.contacts_collection = user.get_contacts();
+                var contact = user.get_contact();
+                this.name = contact.get_displayName() || contact.get_nickname() || contact.get_fullName() || "";
                 plugin.Content.MainPage.SignInMessengerCompleted(
                     Microsoft.Live.App.get_auth().get_cid(),
-                    user.get_displayName()
+                    user.get_displayName(),name
                     );
             }
         }
