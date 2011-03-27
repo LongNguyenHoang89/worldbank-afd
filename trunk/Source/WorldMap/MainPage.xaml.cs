@@ -135,9 +135,7 @@ namespace WorldMap
             myPoly.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
             myPoly.StrokeThickness = 1;
             myPoly.Opacity = 0.5;
-            myPoly.DataContext = countryCode;
-            myPoly.MouseEnter += new MouseEventHandler(myPoly_MouseEnter);
-            myPoly.MouseLeave += new MouseEventHandler(myPoly_MouseLeave);
+            myPoly.DataContext = countryCode;            
             //Add Polygon to map layer
             PolygonLayer.Children.Add(myPoly);
         }
