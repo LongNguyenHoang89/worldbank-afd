@@ -22,10 +22,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Border CornerRadius="5">
-                            <Border.Background>
-                                <SolidColorBrush Color="Black" Opacity="0.5"/>
-                            </Border.Background>
+                        <Border CornerRadius="5" Background="Black" Opacity="0.7">                            
                             <ContentPresenter Margin="5">
                                 <StackPanel Margin="5" MaxWidth="200">
                                     <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" Foreground="White"/>

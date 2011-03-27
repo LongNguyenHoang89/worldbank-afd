@@ -10,19 +10,35 @@
     Width="auto"
     Height="auto"
 >
+    <UserControl.Resources>
+        <Style TargetType="sdk:TabControl">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0.5"/>
+                        <GradientStop Color="#FFB7C8B1" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <sdk:TabControl Name="MainTabControl" VerticalAlignment="Top" TabStripPlacement="Left" SelectedIndex="4">
-            <sdk:TabControl.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="#FFA5A5A5" Offset="1"/>
-                </LinearGradientBrush>
-            </sdk:TabControl.Background>
+        <sdk:TabControl Name="MainTabControl" VerticalAlignment="Top" TabStripPlacement="Left" SelectedIndex="4" Background="{x:Null}" BorderBrush="{x:Null}">
             <sdk:TabItem Name="NavigationTabItem" BorderBrush="#FF354452">
+                <sdk:TabItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </sdk:TabItem.Background>
                 <sdk:TabItem.Header>
                     <Image Source="/WorldMap;component/Image/Navigation_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Navigation"></Image>
                 </sdk:TabItem.Header>
                 <StackPanel>
+                    <StackPanel.Background>
+                        <ImageBrush Stretch="Fill"/>
+                    </StackPanel.Background>
                     <Border Margin="10" CornerRadius="5" Background="Gray">
                         <TextBlock Text="SET VIEW POINT" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
                     </Border>
@@ -141,7 +157,7 @@
                                     <Image Margin="5" Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30"></Image>
                                     <TextBlock VerticalAlignment="Center">VietNam_GDP</TextBlock>
                                 </StackPanel>
-                            </ListBox>                            
+                            </ListBox>
                         </StackPanel>
                     </sdk:TabItem>
                     <sdk:TabItem Header="Indicators">
@@ -160,7 +176,7 @@
                         </Border>
                     </sdk:TabItem>
                 </sdk:TabControl>
-            </sdk:TabItem>            
+            </sdk:TabItem>
         </sdk:TabControl>
     </Grid>
 </UserControl>

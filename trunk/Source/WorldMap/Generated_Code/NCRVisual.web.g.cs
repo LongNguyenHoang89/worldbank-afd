@@ -200,6 +200,128 @@ namespace NCRVisual.web.DataModel
     }
     
     /// <summary>
+    /// The 'ref_project_millenium' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class ref_project_millenium : Entity
+    {
+        
+        private Nullable<int> _millenium_id;
+        
+        private Nullable<int> _project_id;
+        
+        private int _ref_project_millenium_id_pk;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Onmillenium_idChanging(Nullable<int> value);
+        partial void Onmillenium_idChanged();
+        partial void Onproject_idChanging(Nullable<int> value);
+        partial void Onproject_idChanged();
+        partial void Onref_project_millenium_id_pkChanging(int value);
+        partial void Onref_project_millenium_id_pkChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ref_project_millenium"/> class.
+        /// </summary>
+        public ref_project_millenium()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'millenium_id' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> millenium_id
+        {
+            get
+            {
+                return this._millenium_id;
+            }
+            set
+            {
+                if ((this._millenium_id != value))
+                {
+                    this.Onmillenium_idChanging(value);
+                    this.RaiseDataMemberChanging("millenium_id");
+                    this.ValidateProperty("millenium_id", value);
+                    this._millenium_id = value;
+                    this.RaiseDataMemberChanged("millenium_id");
+                    this.Onmillenium_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'project_id' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<int> project_id
+        {
+            get
+            {
+                return this._project_id;
+            }
+            set
+            {
+                if ((this._project_id != value))
+                {
+                    this.Onproject_idChanging(value);
+                    this.RaiseDataMemberChanging("project_id");
+                    this.ValidateProperty("project_id", value);
+                    this._project_id = value;
+                    this.RaiseDataMemberChanged("project_id");
+                    this.Onproject_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'ref_project_millenium_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int ref_project_millenium_id_pk
+        {
+            get
+            {
+                return this._ref_project_millenium_id_pk;
+            }
+            set
+            {
+                if ((this._ref_project_millenium_id_pk != value))
+                {
+                    this.Onref_project_millenium_id_pkChanging(value);
+                    this.ValidateProperty("ref_project_millenium_id_pk", value);
+                    this._ref_project_millenium_id_pk = value;
+                    this.RaisePropertyChanged("ref_project_millenium_id_pk");
+                    this.Onref_project_millenium_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._ref_project_millenium_id_pk;
+        }
+    }
+    
+    /// <summary>
     /// The 'ref_tab_indicator' entity class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
@@ -318,6 +440,409 @@ namespace NCRVisual.web.DataModel
         public override object GetIdentity()
         {
             return this._tab_indicator_id_pk;
+        }
+    }
+    
+    /// <summary>
+    /// The 'ref_user_country' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class ref_user_country : Entity
+    {
+        
+        private int _country_id;
+        
+        private Nullable<decimal> _lat;
+        
+        private Nullable<decimal> _long;
+        
+        private int _user_id;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Oncountry_idChanging(int value);
+        partial void Oncountry_idChanged();
+        partial void OnlatChanging(Nullable<decimal> value);
+        partial void OnlatChanged();
+        partial void OnlongChanging(Nullable<decimal> value);
+        partial void OnlongChanged();
+        partial void Onuser_idChanging(int value);
+        partial void Onuser_idChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ref_user_country"/> class.
+        /// </summary>
+        public ref_user_country()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_id' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int country_id
+        {
+            get
+            {
+                return this._country_id;
+            }
+            set
+            {
+                if ((this._country_id != value))
+                {
+                    this.Oncountry_idChanging(value);
+                    this.ValidateProperty("country_id", value);
+                    this._country_id = value;
+                    this.RaisePropertyChanged("country_id");
+                    this.Oncountry_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'lat' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<decimal> lat
+        {
+            get
+            {
+                return this._lat;
+            }
+            set
+            {
+                if ((this._lat != value))
+                {
+                    this.OnlatChanging(value);
+                    this.RaiseDataMemberChanging("lat");
+                    this.ValidateProperty("lat", value);
+                    this._lat = value;
+                    this.RaiseDataMemberChanged("lat");
+                    this.OnlatChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'long' value.
+        /// </summary>
+        [DataMember()]
+        public Nullable<decimal> @long
+        {
+            get
+            {
+                return this._long;
+            }
+            set
+            {
+                if ((this._long != value))
+                {
+                    this.OnlongChanging(value);
+                    this.RaiseDataMemberChanging("long");
+                    this.ValidateProperty("long", value);
+                    this._long = value;
+                    this.RaiseDataMemberChanged("long");
+                    this.OnlongChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'user_id' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int user_id
+        {
+            get
+            {
+                return this._user_id;
+            }
+            set
+            {
+                if ((this._user_id != value))
+                {
+                    this.Onuser_idChanging(value);
+                    this.ValidateProperty("user_id", value);
+                    this._user_id = value;
+                    this.RaisePropertyChanged("user_id");
+                    this.Onuser_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return EntityKey.Create(this._country_id, this._user_id);
+        }
+    }
+    
+    /// <summary>
+    /// The 'ref_user_indicator_graph' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class ref_user_indicator_graph : Entity
+    {
+        
+        private int _graph_id;
+        
+        private int _indicator_id;
+        
+        private int _user_id;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Ongraph_idChanging(int value);
+        partial void Ongraph_idChanged();
+        partial void Onindicator_idChanging(int value);
+        partial void Onindicator_idChanged();
+        partial void Onuser_idChanging(int value);
+        partial void Onuser_idChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ref_user_indicator_graph"/> class.
+        /// </summary>
+        public ref_user_indicator_graph()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'graph_id' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int graph_id
+        {
+            get
+            {
+                return this._graph_id;
+            }
+            set
+            {
+                if ((this._graph_id != value))
+                {
+                    this.Ongraph_idChanging(value);
+                    this.ValidateProperty("graph_id", value);
+                    this._graph_id = value;
+                    this.RaisePropertyChanged("graph_id");
+                    this.Ongraph_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'indicator_id' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int indicator_id
+        {
+            get
+            {
+                return this._indicator_id;
+            }
+            set
+            {
+                if ((this._indicator_id != value))
+                {
+                    this.Onindicator_idChanging(value);
+                    this.ValidateProperty("indicator_id", value);
+                    this._indicator_id = value;
+                    this.RaisePropertyChanged("indicator_id");
+                    this.Onindicator_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'user_id' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int user_id
+        {
+            get
+            {
+                return this._user_id;
+            }
+            set
+            {
+                if ((this._user_id != value))
+                {
+                    this.Onuser_idChanging(value);
+                    this.ValidateProperty("user_id", value);
+                    this._user_id = value;
+                    this.RaisePropertyChanged("user_id");
+                    this.Onuser_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return EntityKey.Create(this._graph_id, this._indicator_id, this._user_id);
+        }
+    }
+    
+    /// <summary>
+    /// The 'ref_user_tab' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class ref_user_tab : Entity
+    {
+        
+        private string _feed_link;
+        
+        private int _tab_id;
+        
+        private int _user_id;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Onfeed_linkChanging(string value);
+        partial void Onfeed_linkChanged();
+        partial void Ontab_idChanging(int value);
+        partial void Ontab_idChanged();
+        partial void Onuser_idChanging(int value);
+        partial void Onuser_idChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ref_user_tab"/> class.
+        /// </summary>
+        public ref_user_tab()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'feed_link' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(10)]
+        public string feed_link
+        {
+            get
+            {
+                return this._feed_link;
+            }
+            set
+            {
+                if ((this._feed_link != value))
+                {
+                    this.Onfeed_linkChanging(value);
+                    this.RaiseDataMemberChanging("feed_link");
+                    this.ValidateProperty("feed_link", value);
+                    this._feed_link = value;
+                    this.RaiseDataMemberChanged("feed_link");
+                    this.Onfeed_linkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_id' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int tab_id
+        {
+            get
+            {
+                return this._tab_id;
+            }
+            set
+            {
+                if ((this._tab_id != value))
+                {
+                    this.Ontab_idChanging(value);
+                    this.ValidateProperty("tab_id", value);
+                    this._tab_id = value;
+                    this.RaisePropertyChanged("tab_id");
+                    this.Ontab_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'user_id' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int user_id
+        {
+            get
+            {
+                return this._user_id;
+            }
+            set
+            {
+                if ((this._user_id != value))
+                {
+                    this.Onuser_idChanging(value);
+                    this.ValidateProperty("user_id", value);
+                    this._user_id = value;
+                    this.RaisePropertyChanged("user_id");
+                    this.Onuser_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return EntityKey.Create(this._tab_id, this._user_id);
         }
     }
     
@@ -669,6 +1194,101 @@ namespace NCRVisual.web.DataModel
         public override object GetIdentity()
         {
             return this._country_id_pk;
+        }
+    }
+    
+    /// <summary>
+    /// The 'tbl_graphs' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class tbl_graphs : Entity
+    {
+        
+        private int _graph_id_pk;
+        
+        private string _graph_name;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Ongraph_id_pkChanging(int value);
+        partial void Ongraph_id_pkChanged();
+        partial void Ongraph_nameChanging(string value);
+        partial void Ongraph_nameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="tbl_graphs"/> class.
+        /// </summary>
+        public tbl_graphs()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'graph_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int graph_id_pk
+        {
+            get
+            {
+                return this._graph_id_pk;
+            }
+            set
+            {
+                if ((this._graph_id_pk != value))
+                {
+                    this.Ongraph_id_pkChanging(value);
+                    this.ValidateProperty("graph_id_pk", value);
+                    this._graph_id_pk = value;
+                    this.RaisePropertyChanged("graph_id_pk");
+                    this.Ongraph_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'graph_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string graph_name
+        {
+            get
+            {
+                return this._graph_name;
+            }
+            set
+            {
+                if ((this._graph_name != value))
+                {
+                    this.Ongraph_nameChanging(value);
+                    this.RaiseDataMemberChanging("graph_name");
+                    this.ValidateProperty("graph_name", value);
+                    this._graph_name = value;
+                    this.RaiseDataMemberChanged("graph_name");
+                    this.Ongraph_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._graph_id_pk;
         }
     }
     
@@ -1132,6 +1752,101 @@ namespace NCRVisual.web.DataModel
     }
     
     /// <summary>
+    /// The 'tbl_millenium' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class tbl_millenium : Entity
+    {
+        
+        private int _millenium_id_pk;
+        
+        private string _millenium_name;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Onmillenium_id_pkChanging(int value);
+        partial void Onmillenium_id_pkChanged();
+        partial void Onmillenium_nameChanging(string value);
+        partial void Onmillenium_nameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="tbl_millenium"/> class.
+        /// </summary>
+        public tbl_millenium()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'millenium_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int millenium_id_pk
+        {
+            get
+            {
+                return this._millenium_id_pk;
+            }
+            set
+            {
+                if ((this._millenium_id_pk != value))
+                {
+                    this.Onmillenium_id_pkChanging(value);
+                    this.ValidateProperty("millenium_id_pk", value);
+                    this._millenium_id_pk = value;
+                    this.RaisePropertyChanged("millenium_id_pk");
+                    this.Onmillenium_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'millenium_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string millenium_name
+        {
+            get
+            {
+                return this._millenium_name;
+            }
+            set
+            {
+                if ((this._millenium_name != value))
+                {
+                    this.Onmillenium_nameChanging(value);
+                    this.RaiseDataMemberChanging("millenium_name");
+                    this.ValidateProperty("millenium_name", value);
+                    this._millenium_name = value;
+                    this.RaiseDataMemberChanged("millenium_name");
+                    this.Onmillenium_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._millenium_id_pk;
+        }
+    }
+    
+    /// <summary>
     /// The 'tbl_projects' entity class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
@@ -1544,7 +2259,6 @@ namespace NCRVisual.web.DataModel
         /// Gets or sets the 'project_themes' value.
         /// </summary>
         [DataMember()]
-        [StringLength(1000)]
         public string project_themes
         {
             get
@@ -1999,17 +2713,226 @@ namespace NCRVisual.web.DataModel
     }
     
     /// <summary>
-    /// The 'View_Borders' entity class.
+    /// The 'tbl_users' entity class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
-    public sealed partial class View_Borders : Entity
+    public sealed partial class tbl_users : Entity
+    {
+        
+        private string _facebook_id;
+        
+        private string _msn_id;
+        
+        private string _password;
+        
+        private string _twitter_id;
+        
+        private int _user_id_pk;
+        
+        private string _user_name;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Onfacebook_idChanging(string value);
+        partial void Onfacebook_idChanged();
+        partial void Onmsn_idChanging(string value);
+        partial void Onmsn_idChanged();
+        partial void OnpasswordChanging(string value);
+        partial void OnpasswordChanged();
+        partial void Ontwitter_idChanging(string value);
+        partial void Ontwitter_idChanged();
+        partial void Onuser_id_pkChanging(int value);
+        partial void Onuser_id_pkChanged();
+        partial void Onuser_nameChanging(string value);
+        partial void Onuser_nameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="tbl_users"/> class.
+        /// </summary>
+        public tbl_users()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'facebook_id' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string facebook_id
+        {
+            get
+            {
+                return this._facebook_id;
+            }
+            set
+            {
+                if ((this._facebook_id != value))
+                {
+                    this.Onfacebook_idChanging(value);
+                    this.RaiseDataMemberChanging("facebook_id");
+                    this.ValidateProperty("facebook_id", value);
+                    this._facebook_id = value;
+                    this.RaiseDataMemberChanged("facebook_id");
+                    this.Onfacebook_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'msn_id' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string msn_id
+        {
+            get
+            {
+                return this._msn_id;
+            }
+            set
+            {
+                if ((this._msn_id != value))
+                {
+                    this.Onmsn_idChanging(value);
+                    this.RaiseDataMemberChanging("msn_id");
+                    this.ValidateProperty("msn_id", value);
+                    this._msn_id = value;
+                    this.RaiseDataMemberChanged("msn_id");
+                    this.Onmsn_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'password' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string password
+        {
+            get
+            {
+                return this._password;
+            }
+            set
+            {
+                if ((this._password != value))
+                {
+                    this.OnpasswordChanging(value);
+                    this.RaiseDataMemberChanging("password");
+                    this.ValidateProperty("password", value);
+                    this._password = value;
+                    this.RaiseDataMemberChanged("password");
+                    this.OnpasswordChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'twitter_id' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string twitter_id
+        {
+            get
+            {
+                return this._twitter_id;
+            }
+            set
+            {
+                if ((this._twitter_id != value))
+                {
+                    this.Ontwitter_idChanging(value);
+                    this.RaiseDataMemberChanging("twitter_id");
+                    this.ValidateProperty("twitter_id", value);
+                    this._twitter_id = value;
+                    this.RaiseDataMemberChanged("twitter_id");
+                    this.Ontwitter_idChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'user_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int user_id_pk
+        {
+            get
+            {
+                return this._user_id_pk;
+            }
+            set
+            {
+                if ((this._user_id_pk != value))
+                {
+                    this.Onuser_id_pkChanging(value);
+                    this.ValidateProperty("user_id_pk", value);
+                    this._user_id_pk = value;
+                    this.RaisePropertyChanged("user_id_pk");
+                    this.Onuser_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'user_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string user_name
+        {
+            get
+            {
+                return this._user_name;
+            }
+            set
+            {
+                if ((this._user_name != value))
+                {
+                    this.Onuser_nameChanging(value);
+                    this.RaiseDataMemberChanging("user_name");
+                    this.ValidateProperty("user_name", value);
+                    this._user_name = value;
+                    this.RaiseDataMemberChanged("user_name");
+                    this.Onuser_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._user_id_pk;
+        }
+    }
+    
+    /// <summary>
+    /// The 'TM_WORLD_BORDERS_SIMPL_0_2' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class TM_WORLD_BORDERS_SIMPL_0_2 : Entity
     {
         
         private Nullable<long> _area;
         
         private string _fips;
-        
-        private byte[] _geom;
         
         private int _id;
         
@@ -2042,8 +2965,6 @@ namespace NCRVisual.web.DataModel
         partial void OnAREAChanged();
         partial void OnFIPSChanging(string value);
         partial void OnFIPSChanged();
-        partial void OngeomChanging(byte[] value);
-        partial void OngeomChanged();
         partial void OnIDChanging(int value);
         partial void OnIDChanged();
         partial void OnISO2Changing(string value);
@@ -2069,9 +2990,9 @@ namespace NCRVisual.web.DataModel
         
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="View_Borders"/> class.
+        /// Initializes a new instance of the <see cref="TM_WORLD_BORDERS_SIMPL_0_2"/> class.
         /// </summary>
-        public View_Borders()
+        public TM_WORLD_BORDERS_SIMPL_0_2()
         {
             this.OnCreated();
         }
@@ -2121,30 +3042,6 @@ namespace NCRVisual.web.DataModel
                     this._fips = value;
                     this.RaiseDataMemberChanged("FIPS");
                     this.OnFIPSChanged();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Gets or sets the 'geom' value.
-        /// </summary>
-        [DataMember()]
-        public byte[] geom
-        {
-            get
-            {
-                return this._geom;
-            }
-            set
-            {
-                if ((this._geom != value))
-                {
-                    this.OngeomChanging(value);
-                    this.RaiseDataMemberChanging("geom");
-                    this.ValidateProperty("geom", value);
-                    this._geom = value;
-                    this.RaiseDataMemberChanged("geom");
-                    this.OngeomChanged();
                 }
             }
         }
@@ -3880,6 +4777,189 @@ namespace NCRVisual.web.DataModel
             return EntityKey.Create(this._indicator_id_pk, this._tab_id_pk);
         }
     }
+    
+    /// <summary>
+    /// The 'View_User_Country' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
+    public sealed partial class View_User_Country : Entity
+    {
+        
+        private int _country_id_pk;
+        
+        private string _country_iso_code;
+        
+        private string _country_name;
+        
+        private int _user_id_pk;
+        
+        private string _user_name;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void Oncountry_id_pkChanging(int value);
+        partial void Oncountry_id_pkChanged();
+        partial void Oncountry_iso_codeChanging(string value);
+        partial void Oncountry_iso_codeChanged();
+        partial void Oncountry_nameChanging(string value);
+        partial void Oncountry_nameChanged();
+        partial void Onuser_id_pkChanging(int value);
+        partial void Onuser_id_pkChanged();
+        partial void Onuser_nameChanging(string value);
+        partial void Onuser_nameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View_User_Country"/> class.
+        /// </summary>
+        public View_User_Country()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int country_id_pk
+        {
+            get
+            {
+                return this._country_id_pk;
+            }
+            set
+            {
+                if ((this._country_id_pk != value))
+                {
+                    this.Oncountry_id_pkChanging(value);
+                    this.ValidateProperty("country_id_pk", value);
+                    this._country_id_pk = value;
+                    this.RaisePropertyChanged("country_id_pk");
+                    this.Oncountry_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_iso_code' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(10)]
+        public string country_iso_code
+        {
+            get
+            {
+                return this._country_iso_code;
+            }
+            set
+            {
+                if ((this._country_iso_code != value))
+                {
+                    this.Oncountry_iso_codeChanging(value);
+                    this.RaiseDataMemberChanging("country_iso_code");
+                    this.ValidateProperty("country_iso_code", value);
+                    this._country_iso_code = value;
+                    this.RaiseDataMemberChanged("country_iso_code");
+                    this.Oncountry_iso_codeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'country_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string country_name
+        {
+            get
+            {
+                return this._country_name;
+            }
+            set
+            {
+                if ((this._country_name != value))
+                {
+                    this.Oncountry_nameChanging(value);
+                    this.RaiseDataMemberChanging("country_name");
+                    this.ValidateProperty("country_name", value);
+                    this._country_name = value;
+                    this.RaiseDataMemberChanged("country_name");
+                    this.Oncountry_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'user_id_pk' value.
+        /// </summary>
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int user_id_pk
+        {
+            get
+            {
+                return this._user_id_pk;
+            }
+            set
+            {
+                if ((this._user_id_pk != value))
+                {
+                    this.Onuser_id_pkChanging(value);
+                    this.ValidateProperty("user_id_pk", value);
+                    this._user_id_pk = value;
+                    this.RaisePropertyChanged("user_id_pk");
+                    this.Onuser_id_pkChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'user_name' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(50)]
+        public string user_name
+        {
+            get
+            {
+                return this._user_name;
+            }
+            set
+            {
+                if ((this._user_name != value))
+                {
+                    this.Onuser_nameChanging(value);
+                    this.RaiseDataMemberChanging("user_name");
+                    this.ValidateProperty("user_name", value);
+                    this._user_name = value;
+                    this.RaiseDataMemberChanged("user_name");
+                    this.Onuser_nameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return EntityKey.Create(this._country_id_pk, this._user_id_pk);
+        }
+    }
 }
 namespace NCRVisual.web.Services
 {
@@ -3996,6 +5076,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="ref_project_millenium"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<ref_project_millenium> ref_project_milleniums
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<ref_project_millenium>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="ref_tab_indicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<ref_tab_indicator> ref_tab_indicators
@@ -4007,6 +5098,39 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="ref_user_country"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<ref_user_country> ref_user_countries
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<ref_user_country>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="ref_user_indicator_graph"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<ref_user_indicator_graph> ref_user_indicator_graphs
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<ref_user_indicator_graph>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="ref_user_tab"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<ref_user_tab> ref_user_tabs
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<ref_user_tab>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="tbl_countries"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<tbl_countries> tbl_countries
@@ -4014,6 +5138,17 @@ namespace NCRVisual.web.Services
             get
             {
                 return base.EntityContainer.GetEntitySet<tbl_countries>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="tbl_graphs"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<tbl_graphs> tbl_graphs
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<tbl_graphs>();
             }
         }
         
@@ -4051,6 +5186,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="tbl_millenium"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<tbl_millenium> tbl_milleniums
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<tbl_millenium>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="tbl_regions"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<tbl_regions> tbl_regions
@@ -4073,13 +5219,24 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
-        /// Gets the set of <see cref="View_Borders"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// Gets the set of <see cref="tbl_users"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
-        public EntitySet<View_Borders> View_Borders
+        public EntitySet<tbl_users> tbl_users
         {
             get
             {
-                return base.EntityContainer.GetEntitySet<View_Borders>();
+                return base.EntityContainer.GetEntitySet<tbl_users>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="TM_WORLD_BORDERS_SIMPL_0_2"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<TM_WORLD_BORDERS_SIMPL_0_2> TM_WORLD_BORDERS_SIMPL_0_2s
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<TM_WORLD_BORDERS_SIMPL_0_2>();
             }
         }
         
@@ -4113,6 +5270,17 @@ namespace NCRVisual.web.Services
             get
             {
                 return base.EntityContainer.GetEntitySet<View_TabIndicator>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="View_User_Country"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<View_User_Country> View_User_Countries
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<View_User_Country>();
             }
         }
         
@@ -4226,6 +5394,16 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_project_millenium"/> entities using the 'GetRef_project_millenium' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_project_millenium"/> entities.</returns>
+        public EntityQuery<ref_project_millenium> GetRef_project_milleniumQuery()
+        {
+            this.ValidateMethod("GetRef_project_milleniumQuery", null);
+            return base.CreateQuery<ref_project_millenium>("GetRef_project_millenium", null, false, true);
+        }
+        
+        /// <summary>
         /// Gets an EntityQuery instance that can be used to load <see cref="ref_tab_indicator"/> entities using the 'GetRef_tab_indicator' query.
         /// </summary>
         /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_tab_indicator"/> entities.</returns>
@@ -4236,6 +5414,36 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_user_country"/> entities using the 'GetRef_user_country' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_user_country"/> entities.</returns>
+        public EntityQuery<ref_user_country> GetRef_user_countryQuery()
+        {
+            this.ValidateMethod("GetRef_user_countryQuery", null);
+            return base.CreateQuery<ref_user_country>("GetRef_user_country", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_user_indicator_graph"/> entities using the 'GetRef_user_indicator_graph' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_user_indicator_graph"/> entities.</returns>
+        public EntityQuery<ref_user_indicator_graph> GetRef_user_indicator_graphQuery()
+        {
+            this.ValidateMethod("GetRef_user_indicator_graphQuery", null);
+            return base.CreateQuery<ref_user_indicator_graph>("GetRef_user_indicator_graph", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_user_tab"/> entities using the 'GetRef_user_tab' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_user_tab"/> entities.</returns>
+        public EntityQuery<ref_user_tab> GetRef_user_tabQuery()
+        {
+            this.ValidateMethod("GetRef_user_tabQuery", null);
+            return base.CreateQuery<ref_user_tab>("GetRef_user_tab", null, false, true);
+        }
+        
+        /// <summary>
         /// Gets an EntityQuery instance that can be used to load <see cref="tbl_countries"/> entities using the 'GetTbl_countries' query.
         /// </summary>
         /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_countries"/> entities.</returns>
@@ -4243,6 +5451,16 @@ namespace NCRVisual.web.Services
         {
             this.ValidateMethod("GetTbl_countriesQuery", null);
             return base.CreateQuery<tbl_countries>("GetTbl_countries", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_graphs"/> entities using the 'GetTbl_graphs' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_graphs"/> entities.</returns>
+        public EntityQuery<tbl_graphs> GetTbl_graphsQuery()
+        {
+            this.ValidateMethod("GetTbl_graphsQuery", null);
+            return base.CreateQuery<tbl_graphs>("GetTbl_graphs", null, false, true);
         }
         
         /// <summary>
@@ -4289,6 +5507,16 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_millenium"/> entities using the 'GetTbl_millenium' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_millenium"/> entities.</returns>
+        public EntityQuery<tbl_millenium> GetTbl_milleniumQuery()
+        {
+            this.ValidateMethod("GetTbl_milleniumQuery", null);
+            return base.CreateQuery<tbl_millenium>("GetTbl_millenium", null, false, true);
+        }
+        
+        /// <summary>
         /// Gets an EntityQuery instance that can be used to load <see cref="tbl_projects"/> entities using the 'GetTbl_projects' query.
         /// </summary>
         /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_projects"/> entities.</returns>
@@ -4329,13 +5557,49 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
-        /// Gets an EntityQuery instance that can be used to load <see cref="View_Borders"/> entities using the 'GetView_Borders' query.
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_users"/> entities using the 'GetTbl_users' query.
         /// </summary>
-        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_Borders"/> entities.</returns>
-        public EntityQuery<View_Borders> GetView_BordersQuery()
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_users"/> entities.</returns>
+        public EntityQuery<tbl_users> GetTbl_usersQuery()
         {
-            this.ValidateMethod("GetView_BordersQuery", null);
-            return base.CreateQuery<View_Borders>("GetView_Borders", null, false, true);
+            this.ValidateMethod("GetTbl_usersQuery", null);
+            return base.CreateQuery<tbl_users>("GetTbl_users", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="TM_WORLD_BORDERS_SIMPL_0_2"/> entities using the 'GetTM_WORLD_BORDERS_SIMPL_0_2' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="TM_WORLD_BORDERS_SIMPL_0_2"/> entities.</returns>
+        public EntityQuery<TM_WORLD_BORDERS_SIMPL_0_2> GetTM_WORLD_BORDERS_SIMPL_0_2Query()
+        {
+            this.ValidateMethod("GetTM_WORLD_BORDERS_SIMPL_0_2Query", null);
+            return base.CreateQuery<TM_WORLD_BORDERS_SIMPL_0_2>("GetTM_WORLD_BORDERS_SIMPL_0_2", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_users"/> entities using the 'GetUser' query.
+        /// </summary>
+        /// <param name="cid">The value for the 'cid' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_users"/> entities.</returns>
+        public EntityQuery<tbl_users> GetUserQuery(string cid)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("cid", cid);
+            this.ValidateMethod("GetUserQuery", parameters);
+            return base.CreateQuery<tbl_users>("GetUser", parameters, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_user_country"/> entities using the 'GetUserCountry' query.
+        /// </summary>
+        /// <param name="user_id">The value for the 'user_id' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_user_country"/> entities.</returns>
+        public EntityQuery<ref_user_country> GetUserCountryQuery(int user_id)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            this.ValidateMethod("GetUserCountryQuery", parameters);
+            return base.CreateQuery<ref_user_country>("GetUserCountry", parameters, false, true);
         }
         
         /// <summary>
@@ -4386,6 +5650,16 @@ namespace NCRVisual.web.Services
         {
             this.ValidateMethod("GetView_TabIndicatorQuery", null);
             return base.CreateQuery<View_TabIndicator>("GetView_TabIndicator", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="View_User_Country"/> entities using the 'GetView_User_Country' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="View_User_Country"/> entities.</returns>
+        public EntityQuery<View_User_Country> GetView_User_CountryQuery()
+        {
+            this.ValidateMethod("GetView_User_CountryQuery", null);
+            return base.CreateQuery<View_User_Country>("GetView_User_Country", null, false, true);
         }
         
         /// <summary>
@@ -4564,6 +5838,24 @@ namespace NCRVisual.web.Services
             QueryResult<ref_country_indicator> EndGetRef_country_indicatorInIndicatorIDList(IAsyncResult result);
             
             /// <summary>
+            /// Asynchronously invokes the 'GetRef_project_millenium' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetRef_project_milleniumDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetRef_project_millenium", ReplyAction="http://tempuri.org/WBDomainService/GetRef_project_milleniumResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetRef_project_millenium(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetRef_project_millenium'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetRef_project_millenium'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetRef_project_millenium' operation.</returns>
+            QueryResult<ref_project_millenium> EndGetRef_project_millenium(IAsyncResult result);
+            
+            /// <summary>
             /// Asynchronously invokes the 'GetRef_tab_indicator' operation.
             /// </summary>
             /// <param name="callback">Callback to invoke on completion.</param>
@@ -4582,6 +5874,60 @@ namespace NCRVisual.web.Services
             QueryResult<ref_tab_indicator> EndGetRef_tab_indicator(IAsyncResult result);
             
             /// <summary>
+            /// Asynchronously invokes the 'GetRef_user_country' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetRef_user_countryDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetRef_user_country", ReplyAction="http://tempuri.org/WBDomainService/GetRef_user_countryResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetRef_user_country(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetRef_user_country'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetRef_user_country'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetRef_user_country' operation.</returns>
+            QueryResult<ref_user_country> EndGetRef_user_country(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetRef_user_indicator_graph' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetRef_user_indicator_graphDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetRef_user_indicator_graph", ReplyAction="http://tempuri.org/WBDomainService/GetRef_user_indicator_graphResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetRef_user_indicator_graph(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetRef_user_indicator_graph'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetRef_user_indicator_graph'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetRef_user_indicator_graph' operation.</returns>
+            QueryResult<ref_user_indicator_graph> EndGetRef_user_indicator_graph(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetRef_user_tab' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetRef_user_tabDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetRef_user_tab", ReplyAction="http://tempuri.org/WBDomainService/GetRef_user_tabResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetRef_user_tab(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetRef_user_tab'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetRef_user_tab'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetRef_user_tab' operation.</returns>
+            QueryResult<ref_user_tab> EndGetRef_user_tab(IAsyncResult result);
+            
+            /// <summary>
             /// Asynchronously invokes the 'GetTbl_countries' operation.
             /// </summary>
             /// <param name="callback">Callback to invoke on completion.</param>
@@ -4598,6 +5944,24 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_countries'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetTbl_countries' operation.</returns>
             QueryResult<tbl_countries> EndGetTbl_countries(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetTbl_graphs' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetTbl_graphsDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetTbl_graphs", ReplyAction="http://tempuri.org/WBDomainService/GetTbl_graphsResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetTbl_graphs(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetTbl_graphs'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_graphs'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetTbl_graphs' operation.</returns>
+            QueryResult<tbl_graphs> EndGetTbl_graphs(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetTbl_income_levels' operation.
@@ -4673,6 +6037,24 @@ namespace NCRVisual.web.Services
             QueryResult<tbl_lending_types> EndGetTbl_lending_types(IAsyncResult result);
             
             /// <summary>
+            /// Asynchronously invokes the 'GetTbl_millenium' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetTbl_milleniumDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetTbl_millenium", ReplyAction="http://tempuri.org/WBDomainService/GetTbl_milleniumResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetTbl_millenium(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetTbl_millenium'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_millenium'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetTbl_millenium' operation.</returns>
+            QueryResult<tbl_millenium> EndGetTbl_millenium(IAsyncResult result);
+            
+            /// <summary>
             /// Asynchronously invokes the 'GetTbl_projects' operation.
             /// </summary>
             /// <param name="callback">Callback to invoke on completion.</param>
@@ -4745,22 +6127,79 @@ namespace NCRVisual.web.Services
             QueryResult<tbl_trades> EndGetTbl_trades(IAsyncResult result);
             
             /// <summary>
-            /// Asynchronously invokes the 'GetView_Borders' operation.
+            /// Asynchronously invokes the 'GetTbl_users' operation.
             /// </summary>
             /// <param name="callback">Callback to invoke on completion.</param>
             /// <param name="asyncState">Optional state object.</param>
             /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
-            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_BordersDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
-            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_Borders", ReplyAction="http://tempuri.org/WBDomainService/GetView_BordersResponse")]
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetTbl_usersDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetTbl_users", ReplyAction="http://tempuri.org/WBDomainService/GetTbl_usersResponse")]
             [WebGet()]
-            IAsyncResult BeginGetView_Borders(AsyncCallback callback, object asyncState);
+            IAsyncResult BeginGetTbl_users(AsyncCallback callback, object asyncState);
             
             /// <summary>
-            /// Completes the asynchronous operation begun by 'BeginGetView_Borders'.
+            /// Completes the asynchronous operation begun by 'BeginGetTbl_users'.
             /// </summary>
-            /// <param name="result">The IAsyncResult returned from 'BeginGetView_Borders'.</param>
-            /// <returns>The 'QueryResult' returned from the 'GetView_Borders' operation.</returns>
-            QueryResult<View_Borders> EndGetView_Borders(IAsyncResult result);
+            /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_users'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetTbl_users' operation.</returns>
+            QueryResult<tbl_users> EndGetTbl_users(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetTM_WORLD_BORDERS_SIMPL_0_2' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetTM_WORLD_BORDERS_SIMPL_0_2DomainServiceFaul" +
+                "t", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetTM_WORLD_BORDERS_SIMPL_0_2", ReplyAction="http://tempuri.org/WBDomainService/GetTM_WORLD_BORDERS_SIMPL_0_2Response")]
+            [WebGet()]
+            IAsyncResult BeginGetTM_WORLD_BORDERS_SIMPL_0_2(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetTM_WORLD_BORDERS_SIMPL_0_2'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetTM_WORLD_BORDERS_SIMPL_0_2'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetTM_WORLD_BORDERS_SIMPL_0_2' operation.</returns>
+            QueryResult<TM_WORLD_BORDERS_SIMPL_0_2> EndGetTM_WORLD_BORDERS_SIMPL_0_2(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetUser' operation.
+            /// </summary>
+            /// <param name="cid">The value for the 'cid' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetUserDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetUser", ReplyAction="http://tempuri.org/WBDomainService/GetUserResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetUser(string cid, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetUser'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetUser'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetUser' operation.</returns>
+            QueryResult<tbl_users> EndGetUser(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetUserCountry' operation.
+            /// </summary>
+            /// <param name="user_id">The value for the 'user_id' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetUserCountryDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetUserCountry", ReplyAction="http://tempuri.org/WBDomainService/GetUserCountryResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetUserCountry(int user_id, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetUserCountry'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetUserCountry'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetUserCountry' operation.</returns>
+            QueryResult<ref_user_country> EndGetUserCountry(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetView_CountryBorder' operation.
@@ -4853,6 +6292,24 @@ namespace NCRVisual.web.Services
             QueryResult<View_TabIndicator> EndGetView_TabIndicator(IAsyncResult result);
             
             /// <summary>
+            /// Asynchronously invokes the 'GetView_User_Country' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetView_User_CountryDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetView_User_Country", ReplyAction="http://tempuri.org/WBDomainService/GetView_User_CountryResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetView_User_Country(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetView_User_Country'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetView_User_Country'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetView_User_Country' operation.</returns>
+            QueryResult<View_User_Country> EndGetView_User_Country(IAsyncResult result);
+            
+            /// <summary>
             /// Asynchronously invokes the 'SubmitChanges' operation.
             /// </summary>
             /// <param name="changeSet">The change-set to submit.</param>
@@ -4876,22 +6333,30 @@ namespace NCRVisual.web.Services
             
             public WBDomainContextEntityContainer()
             {
-                this.CreateEntitySet<ref_country_indicator>(EntitySetOperations.All);
+                this.CreateEntitySet<ref_country_indicator>(EntitySetOperations.None);
+                this.CreateEntitySet<ref_project_millenium>(EntitySetOperations.None);
                 this.CreateEntitySet<ref_tab_indicator>(EntitySetOperations.None);
+                this.CreateEntitySet<ref_user_country>(EntitySetOperations.All);
+                this.CreateEntitySet<ref_user_indicator_graph>(EntitySetOperations.None);
+                this.CreateEntitySet<ref_user_tab>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_countries>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_graphs>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_income_levels>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_indicators>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_lending_types>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_millenium>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_projects>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_regions>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_tabs>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_trades>(EntitySetOperations.None);
-                this.CreateEntitySet<View_Borders>(EntitySetOperations.None);
+                this.CreateEntitySet<tbl_users>(EntitySetOperations.All);
+                this.CreateEntitySet<TM_WORLD_BORDERS_SIMPL_0_2>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryBorder>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryIndicator>(EntitySetOperations.None);
                 this.CreateEntitySet<View_CountryIndicatorTab>(EntitySetOperations.None);
                 this.CreateEntitySet<View_GeneralCountry>(EntitySetOperations.None);
                 this.CreateEntitySet<View_TabIndicator>(EntitySetOperations.None);
+                this.CreateEntitySet<View_User_Country>(EntitySetOperations.None);
             }
         }
     }

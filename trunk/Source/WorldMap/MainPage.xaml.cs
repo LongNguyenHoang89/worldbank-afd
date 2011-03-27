@@ -916,7 +916,8 @@ namespace WorldMap
             user.user_name = userName;
             user.msn_id = cid;
             WorldMapController.CheckExist(cid);
-            WorldMapController.LoadUserData_Completed += new EventHandler(WorldMapController_LoadUserData_Completed);       
+            WorldMapController.LoadUserData_Completed += new EventHandler(WorldMapController_LoadUserData_Completed);       
+
      
 
         }
