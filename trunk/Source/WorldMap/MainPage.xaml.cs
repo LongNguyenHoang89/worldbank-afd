@@ -14,6 +14,7 @@ using Microsoft.Maps.MapControl;
 using Microsoft.Maps.MapControl.Design;
 using NCRVisual.web.DataModel;
 using WorldMap.Helper;
+using System.Linq;
 
 namespace WorldMap
 {
@@ -24,7 +25,7 @@ namespace WorldMap
         private LocationConverter locConverter = new LocationConverter();
         private int _currentLocationCountry;
 
-        private bool _isAddingNewPushPin;        
+        private bool _isAddingNewPushPin;
 
         private int _currentImportCountryPK = 0;
         private int _currentExportCountryPK = 0;
@@ -120,24 +121,12 @@ namespace WorldMap
             myPoly.Fill = color;
             myPoly.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
             myPoly.Opacity = 0.5;
-            myPoly.DataContext = countryCode;
-            myPoly.MouseEnter += new MouseEventHandler(myPoly_MouseEnter);
-            myPoly.MouseLeave += new MouseEventHandler(myPoly_MouseLeave);
+            myPoly.DataContext = countryCode;            
 
             //Add MultiPolygon to map layer
             PolygonLayer.Children.Add(myPoly);
         }
-
-        void myPoly_MouseLeave(object sender, MouseEventArgs e)
-        {
-            (sender as UIElement).Opacity = 0.5;
-        }
-
-        void myPoly_MouseEnter(object sender, MouseEventArgs e)
-        {
-            (sender as UIElement).Opacity = 0.8;
-        }
-
+        
         private void DrawPolygon(LocationCollection vertices, SolidColorBrush color, string countryCode)
         {
             MapPolygon myPoly = new MapPolygon();
@@ -162,7 +151,7 @@ namespace WorldMap
 
         void WorldMapController_GetView_TabIndicatorQueryCompleted(object sender, EventArgs e)
         {
-            MyWorkSpace.PopulateFavouritedIndicatorsTab(WorldMapController.Context.View_TabIndicators);            
+            MyWorkSpace.PopulateFavouritedIndicatorsTab(WorldMapController.Context.View_TabIndicators);
         }
 
         void WorldMapController_LoadInitDataCompleted(object sender, EventArgs e)
@@ -224,7 +213,7 @@ namespace WorldMap
             CustomChildWindow child = new CustomChildWindow(WorldMapController, thisPinOnCountry, selectedIndicatorPKs);
             child.Show();
              */
-            
+
             MyWorkSpace.CountryDetailsControl.PopulateData(WorldMapController, thisPinOnCountry, MyWorkSpace.IndicatorIDList);
             MyWorkSpace.MainTabControl.SelectedIndex = 2;
         }
@@ -299,6 +288,16 @@ namespace WorldMap
             PushPinLayer.Children.Remove(item.DataContext as DraggablePushpin);
             CountryListBox.Items.Remove(item);
             this.ArrowLayer.Children.Clear();
+
+            //Remove polygon in Polygon Layers
+            IEnumerable<UIElement> polygons = from n in PolygonLayer.Children
+                                              where (n as UserControl).DataContext.ToString() == (item.DataContext as DraggablePushpin).country.country_iso_code
+                                              select n;
+            foreach (UIElement pol in polygons.ToList<UIElement>())
+            {
+                PolygonLayer.Children.Remove(pol);
+            }
+
         }
         #endregion
 
@@ -582,13 +581,13 @@ namespace WorldMap
                 }
             }
         }
-   
+
         private void HelpToggleButton_Click(object sender, RoutedEventArgs e)
         {
             About b = new About();
             b.Show();
         }
-  
+
         #region Reverse Geocode region
         private PlatformServices.GeocodeServiceClient geocodeClient;
 
@@ -854,7 +853,7 @@ namespace WorldMap
             }
         }
 
-        #endregion       
+        #endregion
 
         #region Live ID functions
 
@@ -884,9 +883,9 @@ namespace WorldMap
                 SignInInformation.Text = "Not signed in";
                 //SignInInformation.Text = cid + " is signed out...";
             }
-        }        
+        }
 
-        #endregion        
+        #endregion
 
         public void LoadCountryPushpin(Location loc, Random seed)
         {
@@ -900,7 +899,7 @@ namespace WorldMap
             pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
             pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
         }
-        
+
         #region workspace save n load
 
         private void SaveCountry_Click(object sender, RoutedEventArgs e)
@@ -916,31 +915,28 @@ namespace WorldMap
             user.user_name = userName;
             user.msn_id = cid;
             WorldMapController.CheckExist(cid);
-            WorldMapController.LoadUserData_Completed += new EventHandler(WorldMapController_LoadUserData_Completed);       
-
-     
-
+            WorldMapController.LoadUserData_Completed += new EventHandler(WorldMapController_LoadUserData_Completed);
         }
 
         void WorldMapController_LoadUserData_Completed(object sender, EventArgs e)
         {
             string userName = "";
-            if (sender !=null)
+            if (sender != null)
                 user = sender as tbl_users;
             if (user != null)
             {
                 userName = user.user_name;
             }
             else
-            {                                
+            {
                 WorldMapController.InsertUser(user);
                 //map msn_id to user                
             }
             SignInInformation.Text = userName + " is signed in...";
             // load data here
             WorldMapController.LoadUserCountry_Completed += new EventHandler(WorldMapController_LoadUserCountry_Completed);
-            WorldMapController.LoadUserCountry();            
-        }       
+            WorldMapController.LoadUserCountry();
+        }
 
         private void SaveCountryList(tbl_users tbl_user)
         {
@@ -955,7 +951,7 @@ namespace WorldMap
                 user_country.@long = (decimal)location.Longitude;
                 countryList.Add(user_country);
             }
-            WorldMapController.InsertUserCountry(tbl_user, countryList);            
+            WorldMapController.InsertUserCountry(tbl_user, countryList);
         }
         private void SaveIndicatorList()
         {
@@ -966,7 +962,7 @@ namespace WorldMap
         }
         private void LoadCountryList()
         {
-            List<ref_user_country> user_countries=WorldMapController.LoadRefUserCountry(user);
+            List<ref_user_country> user_countries = WorldMapController.LoadRefUserCountry(user);
             //TEST
             Random backgroundSeed = new Random();
             foreach (ref_user_country user_country in user_countries)
@@ -982,7 +978,7 @@ namespace WorldMap
         {
 
         }
-        
+
         #endregion
     }
 }
