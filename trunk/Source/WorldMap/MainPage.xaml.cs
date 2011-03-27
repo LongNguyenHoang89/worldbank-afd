@@ -154,7 +154,7 @@ namespace WorldMap
 
         void WorldMapController_LoadInitDataCompleted(object sender, EventArgs e)
         {
-            this.LoadingPanel.Visibility = Visibility.Collapsed;
+            this.loadingIndicator.IsBusy = false;
             this.MyMap.IsEnabled = true;
 
             //Default Pushpin, put here cuz we have to wait the controller data loading process completed.
