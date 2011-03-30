@@ -4,13 +4,15 @@ using System.ServiceModel.DomainServices.Client;
 using System.Windows;
 using System.Windows.Controls;
 using NCRVisual.web.DataModel;
+using Microsoft.Maps.MapControl;
+using Microsoft.Maps.MapControl.Navigation;
 
 namespace WorldMap
 {
     public partial class Workspace : UserControl
     {
         private List<int> _indicatorIDList;
-
+        
         /// <summary>
         /// Get or set the List of Indicators that user concerns
         /// </summary>
@@ -36,14 +38,14 @@ namespace WorldMap
                 return _indicatorIDList;
             }
         }
-
+       
         /// <summary>
         /// Default constructor
         /// </summary>
         public Workspace()
         {
             InitializeComponent();
-            _indicatorIDList = new List<int>();
+            _indicatorIDList = new List<int>();            
         }
 
         /// <summary>
@@ -92,7 +94,7 @@ namespace WorldMap
                     }
                 }
             }
-        }
+        }        
 
         private void SaveIndicatorButton_Click(object sender, RoutedEventArgs e)
         {

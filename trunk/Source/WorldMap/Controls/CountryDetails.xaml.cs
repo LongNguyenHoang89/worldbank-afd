@@ -267,7 +267,7 @@ namespace WorldMap
         private void ButtonSaveShortCut_Click(object sender, RoutedEventArgs e)
         {
 
-        }
+        }       
     }
 }
 

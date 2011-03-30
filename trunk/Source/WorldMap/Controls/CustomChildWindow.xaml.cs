@@ -4,7 +4,6 @@ using System.Linq;
 using System.ServiceModel.DomainServices.Client;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using NCRVisual.web.DataModel;
 using WorldbankDataGraphs;
 using WorldbankDataGraphs.Entities;
@@ -40,8 +39,7 @@ namespace WorldMap
             // generate the list of shortlist indicators
             getIndicatorsFromPKs(checkedIndicatorPKs);
             // default is all selected
-            listboxIndicatorPKSelected = checkedIndicatorPKs;
-            this.CountryNameTextBlock.Text = _selectedCountry.country_name;
+            listboxIndicatorPKSelected = checkedIndicatorPKs;            
             // gen combobox's items
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_LINE_DESC);
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_COLUMN_DESC);
@@ -50,25 +48,8 @@ namespace WorldMap
             comboBoxRenderStyle.Items.Add("3D " + WorldbankGeneralChartControl.RA_BAR_DESC);
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_AREA_DESC);
             // select the first choice of the combobox
-            comboBoxRenderStyle.SelectedIndex = 0;
-
-            worldMapController.GetTabCountryData(selectedCountry.country_id_pk);
-            worldMapController.GetTabCountryDataCompleted += new EventHandler(worldMapController_GetTabCountryDataCompleted);
-
-            Uri uriSource = new Uri(Application.Current.Host.Source + "../../../flags/" + selectedCountry.country_iso_code + ".png", UriKind.Absolute);
-            Flag.Source = new BitmapImage(uriSource);
-
-        }
-
-        void worldMapController_GetTabCountryDataCompleted(object sender, EventArgs e)
-        {
-            foreach (View_GeneralCountry v in _worldMapController.Context.View_GeneralCountries)
-            {
-                RegionNameTextBlock.Text = v.region_name;
-                IncomeLevelTextBLock.Text = v.income_level_name;
-                LendingTypeTextBlock.Text = v.lending_type_name;               
-            }
-        }
+            comboBoxRenderStyle.SelectedIndex = 0;            
+        }        
 
         private void getIndicatorsFromPKs(List<int> indPKs)
         {
@@ -96,28 +77,9 @@ namespace WorldMap
                 where indPKs.Contains(tmp.indicator_id_pk)
                 select tmp
                 );
-            return returnList;
-            /* Obsolete code
-            // get the indicator
-            EntityQuery<tbl_indicators> tblIndQuery =
-                from ind in _worldMapController.Context.GetTbl_indicatorsInPKListQuery(indPKs)
-                select ind;
-            tblIndLoadOp = _worldMapController.Context.Load(tblIndQuery);
-            tblIndLoadOp.Completed += new EventHandler(tblIndLoadOp_Completed);
-             */
+            return returnList;            
         }
-
-        //private void tblIndLoadOp_Completed(object sender, EventArgs e)
-        //{
-        //    List<tbl_indicators> selectedInd = new List<tbl_indicators>(tblIndLoadOp.Entities);
-        //    //nqk
-        //    if (selectedInd.Count > 0)
-        //    {
-        //        this.columnChartControl.ChartTitle = selectedInd[0].indicator_unit;
-        //        this.tabItem2.Header = selectedInd[0].indicator_name;
-        //    }
-        //}
-
+        
         private void GetDataForGraph(tbl_countries selectedCountry, List<tbl_indicators> checkedIndicator)
         {
             // create a list of indicator pks

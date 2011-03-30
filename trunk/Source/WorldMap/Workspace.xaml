@@ -26,19 +26,10 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <sdk:TabControl Name="MainTabControl" VerticalAlignment="Top" TabStripPlacement="Left" SelectedIndex="4" Background="{x:Null}" BorderBrush="{x:Null}">
             <sdk:TabItem Name="NavigationTabItem" BorderBrush="#FF354452">
-                <sdk:TabItem.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black" Offset="0"/>
-                        <GradientStop Color="White" Offset="1"/>
-                    </LinearGradientBrush>
-                </sdk:TabItem.Background>
                 <sdk:TabItem.Header>
                     <Image Source="/WorldMap;component/Image/Navigation_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Navigation"></Image>
                 </sdk:TabItem.Header>
-                <StackPanel>
-                    <StackPanel.Background>
-                        <ImageBrush Stretch="Fill"/>
-                    </StackPanel.Background>
+                <StackPanel Background="White">
                     <Border Margin="10" CornerRadius="5" Background="Gray">
                         <TextBlock Text="SET VIEW POINT" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
                     </Border>
@@ -54,6 +45,8 @@
                     <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
                         <TextBox Height="20" Width="200"></TextBox>
                         <Button Margin="10,0">Search</Button>
+                    </StackPanel>
+                    <StackPanel Name="NavigationStackPanel">                        
                     </StackPanel>
                 </StackPanel>
             </sdk:TabItem>

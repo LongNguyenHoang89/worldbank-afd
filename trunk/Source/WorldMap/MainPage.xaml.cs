@@ -57,6 +57,15 @@ namespace WorldMap
             //Event Handler
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
             this.FullScreenButton.Click += new RoutedEventHandler(FullScreenButton_Click);
+
+            try
+            {
+                string Indicator = System.Windows.Browser.HtmlPage.Document.QueryString["Ind"];
+                string Country = System.Windows.Browser.HtmlPage.Document.QueryString["Cou"];
+            }
+            catch (Exception e )
+            {
+            }
         }
 
         void FullScreenButton_Click(object sender, RoutedEventArgs e)
@@ -218,6 +227,8 @@ namespace WorldMap
 
             MyWorkSpace.CountryDetailsControl.PopulateData(WorldMapController, thisPinOnCountry, MyWorkSpace.IndicatorIDList);
             MyWorkSpace.MainTabControl.SelectedIndex = 2;
+            
+            LoadGraph(thisPinOnCountry, MyWorkSpace.IndicatorIDList);
         }
 
         void CreateCountryPushPin(DraggablePushpin pushpin)
@@ -1015,6 +1026,16 @@ namespace WorldMap
         {
             LoadIndicatorList();
         }
+        #endregion
+
+        #region Load Graph By Shortcut
+
+        private void LoadGraph(tbl_countries country, List<int> indicatorIdList)
+        {
+            CustomChildWindow window = new CustomChildWindow(WorldMapController, country, indicatorIdList);
+            window.Show();
+        }
+
         #endregion
     }
 }

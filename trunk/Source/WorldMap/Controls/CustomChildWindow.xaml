@@ -1,85 +1,46 @@
 ﻿<basics:ChildWindow
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" x:Name="chwPopUp"
+	xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" 
+    x:Name="chwPopUp"
 	x:Class="WorldMap.CustomChildWindow"
-	OverlayBrush="#90163EA5" VerticalAlignment="Top" Margin="0,20,0,0" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="618">
+	VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,20,0,0"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"     
+    d:DesignWidth="618">
 
-    <basics:TabControl Height="350" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Top" Width="600">
-        <basics:TabItem Header="Country Overview" Name="OverviewTab">
-            <Grid x:Name="LayoutRoot" Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal">
-                    <Image Name="Flag" Width="70" Height="40" Stretch="Fill" Margin="0,0,10,0"/>
-                    <TextBlock FontSize="30" Name="CountryNameTextBlock"></TextBlock>
-                </StackPanel>
+    <Grid Background="White" Name="columnChartTabContainer" Height="350" Width="600">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Background="White" Name="columnChartTab" Width="400" HorizontalAlignment="Left">
 
-                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0,2" Margin="5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock VerticalAlignment="Center" Foreground="Blue">Country Overview</TextBlock>
-                        
-                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" FontWeight="Bold" Grid.Row="2">Region Name: </TextBlock>
-                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" FontWeight="Bold" Grid.Row="3">Lending Type:</TextBlock>
-                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" FontWeight="Bold" Grid.Row="4">Income Level:</TextBlock>
+        </Grid>
+        <Grid Name="IndicatorsGrid" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+            </Grid.RowDefinitions>
 
-                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="2" Grid.Column="1" Name="RegionNameTextBlock"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3" Grid.Column="1" Name="LendingTypeTextBlock"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" Grid.Column="1" Name="IncomeLevelTextBLock"/>
-                    </Grid>
-                </Border>
-            </Grid>
-        </basics:TabItem>
-        <basics:TabItem Header="Country Data" Name="tabItem2">
-            <Grid Background="White" Name="columnChartTabContainer">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="400"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Background="White" Name="columnChartTab" Width="400" HorizontalAlignment="Left">
-                    
-                </Grid>
-                <Grid Name="IndicatorsGrid" Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="35"></RowDefinition>
-                        <RowDefinition Height="35"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    
-                    <ListBox Name="IndicatorListBox">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid HorizontalAlignment="Stretch" ToolTipService.ToolTip="{Binding indicator_description}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="20"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox IsChecked="True" Name="IndicatorCheckbox" Checked="IndicatorCheckbox_Checked" Tag="{Binding indicator_id_pk}" Unchecked="IndicatorCheckbox_Unchecked"></CheckBox>
-                                    <TextBlock Grid.Column="1" Text="{Binding indicator_name}"></TextBlock>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <ComboBox Name="comboBoxRenderStyle" Grid.Row="1" Height="23"></ComboBox>
-                    <Button Grid.Row="2" Margin="5" Name="buttonRenderChart" Click="buttonRenderChart_Click" IsEnabled="False">Render chart</Button>
-                </Grid>
-            </Grid>
-        </basics:TabItem>
-    </basics:TabControl>
-
+            <ListBox Name="IndicatorListBox">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch" ToolTipService.ToolTip="{Binding indicator_description}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox IsChecked="True" Name="IndicatorCheckbox" Checked="IndicatorCheckbox_Checked" Tag="{Binding indicator_id_pk}" Unchecked="IndicatorCheckbox_Unchecked"></CheckBox>
+                            <TextBlock Grid.Column="1" Text="{Binding indicator_name}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ComboBox Name="comboBoxRenderStyle" Grid.Row="1" Height="23"></ComboBox>
+            <Button Grid.Row="2" Margin="5" Name="buttonRenderChart" Click="buttonRenderChart_Click" IsEnabled="False">Render chart</Button>
+        </Grid>
+    </Grid>
 </basics:ChildWindow>
