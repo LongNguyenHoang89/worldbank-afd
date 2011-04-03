@@ -596,13 +596,11 @@ namespace NCRVisual.web.DataModel
     }
     
     /// <summary>
-    /// The 'ref_user_indicator_graph' entity class.
+    /// The 'ref_user_indicator' entity class.
     /// </summary>
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/NCRVisual.web.DataModel")]
-    public sealed partial class ref_user_indicator_graph : Entity
+    public sealed partial class ref_user_indicator : Entity
     {
-        
-        private int _graph_id;
         
         private int _indicator_id;
         
@@ -615,8 +613,6 @@ namespace NCRVisual.web.DataModel
         /// can be used for further object setup.
         /// </summary>
         partial void OnCreated();
-        partial void Ongraph_idChanging(int value);
-        partial void Ongraph_idChanged();
         partial void Onindicator_idChanging(int value);
         partial void Onindicator_idChanged();
         partial void Onuser_idChanging(int value);
@@ -626,37 +622,11 @@ namespace NCRVisual.web.DataModel
         
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="ref_user_indicator_graph"/> class.
+        /// Initializes a new instance of the <see cref="ref_user_indicator"/> class.
         /// </summary>
-        public ref_user_indicator_graph()
+        public ref_user_indicator()
         {
             this.OnCreated();
-        }
-        
-        /// <summary>
-        /// Gets or sets the 'graph_id' value.
-        /// </summary>
-        [DataMember()]
-        [Editable(false, AllowInitialValue=true)]
-        [Key()]
-        [RoundtripOriginal()]
-        public int graph_id
-        {
-            get
-            {
-                return this._graph_id;
-            }
-            set
-            {
-                if ((this._graph_id != value))
-                {
-                    this.Ongraph_idChanging(value);
-                    this.ValidateProperty("graph_id", value);
-                    this._graph_id = value;
-                    this.RaisePropertyChanged("graph_id");
-                    this.Ongraph_idChanged();
-                }
-            }
         }
         
         /// <summary>
@@ -717,7 +687,7 @@ namespace NCRVisual.web.DataModel
         /// <returns>An object instance that uniquely identifies this entity instance.</returns>
         public override object GetIdentity()
         {
-            return EntityKey.Create(this._graph_id, this._indicator_id, this._user_id);
+            return EntityKey.Create(this._indicator_id, this._user_id);
         }
     }
     
@@ -2418,6 +2388,8 @@ namespace NCRVisual.web.DataModel
     public sealed partial class tbl_tabs : Entity
     {
         
+        private string _tab_feed_link;
+        
         private int _tab_id_pk;
         
         private string _tab_name;
@@ -2429,6 +2401,8 @@ namespace NCRVisual.web.DataModel
         /// can be used for further object setup.
         /// </summary>
         partial void OnCreated();
+        partial void Ontab_feed_linkChanging(string value);
+        partial void Ontab_feed_linkChanged();
         partial void Ontab_id_pkChanging(int value);
         partial void Ontab_id_pkChanged();
         partial void Ontab_nameChanging(string value);
@@ -2443,6 +2417,31 @@ namespace NCRVisual.web.DataModel
         public tbl_tabs()
         {
             this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'tab_feed_link' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(255)]
+        public string tab_feed_link
+        {
+            get
+            {
+                return this._tab_feed_link;
+            }
+            set
+            {
+                if ((this._tab_feed_link != value))
+                {
+                    this.Ontab_feed_linkChanging(value);
+                    this.RaiseDataMemberChanging("tab_feed_link");
+                    this.ValidateProperty("tab_feed_link", value);
+                    this._tab_feed_link = value;
+                    this.RaiseDataMemberChanged("tab_feed_link");
+                    this.Ontab_feed_linkChanged();
+                }
+            }
         }
         
         /// <summary>
@@ -5032,6 +5031,17 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets the set of <see cref="ref_country_indicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// </summary>
+        public EntitySet<ref_country_indicator> ref_country_indicators
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<ref_country_indicator>();
+            }
+        }
+        
+        /// <summary>
         /// Gets the set of <see cref="View_GeneralCountry"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
         public EntitySet<View_GeneralCountry> View_GeneralCountries
@@ -5061,17 +5071,6 @@ namespace NCRVisual.web.Services
             get
             {
                 return base.EntityContainer.GetEntitySet<tbl_trades>();
-            }
-        }
-        
-        /// <summary>
-        /// Gets the set of <see cref="ref_country_indicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
-        /// </summary>
-        public EntitySet<ref_country_indicator> ref_country_indicators
-        {
-            get
-            {
-                return base.EntityContainer.GetEntitySet<ref_country_indicator>();
             }
         }
         
@@ -5109,13 +5108,13 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
-        /// Gets the set of <see cref="ref_user_indicator_graph"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
+        /// Gets the set of <see cref="ref_user_indicator"/> entities that have been loaded into this <see cref="WBDomainContext"/> instance.
         /// </summary>
-        public EntitySet<ref_user_indicator_graph> ref_user_indicator_graphs
+        public EntitySet<ref_user_indicator> ref_user_indicators
         {
             get
             {
-                return base.EntityContainer.GetEntitySet<ref_user_indicator_graph>();
+                return base.EntityContainer.GetEntitySet<ref_user_indicator>();
             }
         }
         
@@ -5298,6 +5297,25 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_country_indicator"/> entities using the 'GetCountryByIndicators' query.
+        /// </summary>
+        /// <param name="indicatorIdPK">The value for the 'indicatorIdPK' parameter of the query.</param>
+        /// <param name="year">The value for the 'year' parameter of the query.</param>
+        /// <param name="fromValue">The value for the 'fromValue' parameter of the query.</param>
+        /// <param name="toValue">The value for the 'toValue' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_country_indicator"/> entities.</returns>
+        public EntityQuery<ref_country_indicator> GetCountryByIndicatorsQuery(int indicatorIdPK, int year, Nullable<int> fromValue, Nullable<int> toValue)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("indicatorIdPK", indicatorIdPK);
+            parameters.Add("year", year);
+            parameters.Add("fromValue", fromValue);
+            parameters.Add("toValue", toValue);
+            this.ValidateMethod("GetCountryByIndicatorsQuery", parameters);
+            return base.CreateQuery<ref_country_indicator>("GetCountryByIndicators", parameters, false, true);
+        }
+        
+        /// <summary>
         /// Gets an EntityQuery instance that can be used to load <see cref="View_GeneralCountry"/> entities using the 'GetCountryGeneralInfo' query.
         /// </summary>
         /// <param name="country_pk">The value for the 'country_pk' parameter of the query.</param>
@@ -5424,13 +5442,13 @@ namespace NCRVisual.web.Services
         }
         
         /// <summary>
-        /// Gets an EntityQuery instance that can be used to load <see cref="ref_user_indicator_graph"/> entities using the 'GetRef_user_indicator_graph' query.
+        /// Gets an EntityQuery instance that can be used to load <see cref="ref_user_indicator"/> entities using the 'GetRef_user_indicator' query.
         /// </summary>
-        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_user_indicator_graph"/> entities.</returns>
-        public EntityQuery<ref_user_indicator_graph> GetRef_user_indicator_graphQuery()
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="ref_user_indicator"/> entities.</returns>
+        public EntityQuery<ref_user_indicator> GetRef_user_indicatorQuery()
         {
-            this.ValidateMethod("GetRef_user_indicator_graphQuery", null);
-            return base.CreateQuery<ref_user_indicator_graph>("GetRef_user_indicator_graph", null, false, true);
+            this.ValidateMethod("GetRef_user_indicatorQuery", null);
+            return base.CreateQuery<ref_user_indicator>("GetRef_user_indicator", null, false, true);
         }
         
         /// <summary>
@@ -5544,6 +5562,19 @@ namespace NCRVisual.web.Services
         {
             this.ValidateMethod("GetTbl_tabsQuery", null);
             return base.CreateQuery<tbl_tabs>("GetTbl_tabs", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="tbl_tabs"/> entities using the 'GetTbl_tabsInPKList' query.
+        /// </summary>
+        /// <param name="pks">The value for the 'pks' parameter of the query.</param>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="tbl_tabs"/> entities.</returns>
+        public EntityQuery<tbl_tabs> GetTbl_tabsInPKListQuery(IEnumerable<int> pks)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("pks", pks);
+            this.ValidateMethod("GetTbl_tabsInPKListQuery", parameters);
+            return base.CreateQuery<tbl_tabs>("GetTbl_tabsInPKList", parameters, false, true);
         }
         
         /// <summary>
@@ -5696,6 +5727,28 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetCountryBorder'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetCountryBorder' operation.</returns>
             QueryResult<View_CountryBorder> EndGetCountryBorder(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetCountryByIndicators' operation.
+            /// </summary>
+            /// <param name="indicatorIdPK">The value for the 'indicatorIdPK' parameter of this action.</param>
+            /// <param name="year">The value for the 'year' parameter of this action.</param>
+            /// <param name="fromValue">The value for the 'fromValue' parameter of this action.</param>
+            /// <param name="toValue">The value for the 'toValue' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetCountryByIndicatorsDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetCountryByIndicators", ReplyAction="http://tempuri.org/WBDomainService/GetCountryByIndicatorsResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetCountryByIndicators(int indicatorIdPK, int year, Nullable<int> fromValue, Nullable<int> toValue, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetCountryByIndicators'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetCountryByIndicators'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetCountryByIndicators' operation.</returns>
+            QueryResult<ref_country_indicator> EndGetCountryByIndicators(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetCountryGeneralInfo' operation.
@@ -5892,22 +5945,22 @@ namespace NCRVisual.web.Services
             QueryResult<ref_user_country> EndGetRef_user_country(IAsyncResult result);
             
             /// <summary>
-            /// Asynchronously invokes the 'GetRef_user_indicator_graph' operation.
+            /// Asynchronously invokes the 'GetRef_user_indicator' operation.
             /// </summary>
             /// <param name="callback">Callback to invoke on completion.</param>
             /// <param name="asyncState">Optional state object.</param>
             /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
-            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetRef_user_indicator_graphDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
-            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetRef_user_indicator_graph", ReplyAction="http://tempuri.org/WBDomainService/GetRef_user_indicator_graphResponse")]
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetRef_user_indicatorDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetRef_user_indicator", ReplyAction="http://tempuri.org/WBDomainService/GetRef_user_indicatorResponse")]
             [WebGet()]
-            IAsyncResult BeginGetRef_user_indicator_graph(AsyncCallback callback, object asyncState);
+            IAsyncResult BeginGetRef_user_indicator(AsyncCallback callback, object asyncState);
             
             /// <summary>
-            /// Completes the asynchronous operation begun by 'BeginGetRef_user_indicator_graph'.
+            /// Completes the asynchronous operation begun by 'BeginGetRef_user_indicator'.
             /// </summary>
-            /// <param name="result">The IAsyncResult returned from 'BeginGetRef_user_indicator_graph'.</param>
-            /// <returns>The 'QueryResult' returned from the 'GetRef_user_indicator_graph' operation.</returns>
-            QueryResult<ref_user_indicator_graph> EndGetRef_user_indicator_graph(IAsyncResult result);
+            /// <param name="result">The IAsyncResult returned from 'BeginGetRef_user_indicator'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetRef_user_indicator' operation.</returns>
+            QueryResult<ref_user_indicator> EndGetRef_user_indicator(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetRef_user_tab' operation.
@@ -6107,6 +6160,25 @@ namespace NCRVisual.web.Services
             /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_tabs'.</param>
             /// <returns>The 'QueryResult' returned from the 'GetTbl_tabs' operation.</returns>
             QueryResult<tbl_tabs> EndGetTbl_tabs(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetTbl_tabsInPKList' operation.
+            /// </summary>
+            /// <param name="pks">The value for the 'pks' parameter of this action.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/WBDomainService/GetTbl_tabsInPKListDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/WBDomainService/GetTbl_tabsInPKList", ReplyAction="http://tempuri.org/WBDomainService/GetTbl_tabsInPKListResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetTbl_tabsInPKList(IEnumerable<int> pks, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetTbl_tabsInPKList'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetTbl_tabsInPKList'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetTbl_tabsInPKList' operation.</returns>
+            QueryResult<tbl_tabs> EndGetTbl_tabsInPKList(IAsyncResult result);
             
             /// <summary>
             /// Asynchronously invokes the 'GetTbl_trades' operation.
@@ -6337,7 +6409,7 @@ namespace NCRVisual.web.Services
                 this.CreateEntitySet<ref_project_millenium>(EntitySetOperations.None);
                 this.CreateEntitySet<ref_tab_indicator>(EntitySetOperations.None);
                 this.CreateEntitySet<ref_user_country>(EntitySetOperations.All);
-                this.CreateEntitySet<ref_user_indicator_graph>(EntitySetOperations.None);
+                this.CreateEntitySet<ref_user_indicator>(EntitySetOperations.All);
                 this.CreateEntitySet<ref_user_tab>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_countries>(EntitySetOperations.None);
                 this.CreateEntitySet<tbl_graphs>(EntitySetOperations.None);

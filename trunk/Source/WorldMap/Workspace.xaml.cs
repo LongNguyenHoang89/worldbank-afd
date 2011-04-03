@@ -6,19 +6,18 @@ using System.Windows.Controls;
 using NCRVisual.web.DataModel;
 using Microsoft.Maps.MapControl;
 using Microsoft.Maps.MapControl.Navigation;
+using WorldMap.Helper;
 
 namespace WorldMap
 {
     public partial class Workspace : UserControl
     {
         private List<int> _indicatorIDList;
-        
+        private Controller _workspacehelper;
+    
         /// <summary>
         /// Get or set the List of Indicators that user concerns
-        /// </summary>
-
-        public EventHandler SaveIndicatorButton_Completed;
-
+        /// </summary>       
         public List<int> IndicatorIDList
         {
             get
@@ -38,14 +37,20 @@ namespace WorldMap
                 return _indicatorIDList;
             }
         }
-       
+
+        #region EventHandler
+        public event EventHandler SaveIndicatorButton_Completed;
+        public event EventHandler SearchCountryByIndicators_Completed;
+        public event EventHandler MapNavigation;
+        #endregion
+
         /// <summary>
         /// Default constructor
         /// </summary>
         public Workspace()
         {
             InitializeComponent();
-            _indicatorIDList = new List<int>();            
+            _indicatorIDList = new List<int>();
         }
 
         public NCRVisual.web.Services.WBDomainContext WBDomainContext
@@ -57,6 +62,16 @@ namespace WorldMap
             set
             {
             }
+        }
+
+        /// <summary>
+        /// Create Controller instance for Workspace
+        /// </summary>
+        public void InitializeController(Controller controller)
+        {
+            _workspacehelper = controller;
+
+            _workspacehelper.SearchCountryByIndicators_Completed += new EventHandler(_workspacehelper_SearchCountryByIndicators_Completed);
         }
 
         /// <summary>
@@ -105,7 +120,7 @@ namespace WorldMap
                     }
                 }
             }
-        }        
+        }
 
         private void SaveIndicatorButton_Click(object sender, RoutedEventArgs e)
         {
@@ -131,5 +146,68 @@ namespace WorldMap
                 }
             }
         }
+
+        #region Search Control
+
+        /// <summary>
+        /// Populate everything in the Search by indicators Tab
+        /// </summary>
+        /// <param name="IndicatorList"></param>
+        public void PopulateSearchByIndicatorsTab(EntitySet<View_TabIndicator> IndicatorList)
+        {
+            this.IndicatorComboBox.ItemsSource = IndicatorList;
+
+            for (int i = 1996; i <= 2009; i++)
+            {
+                this.YearComboBox.Items.Add(i);
+            }
+        }
+
+        private void SearchCountryByIndicatorsButton_Click(object sender, RoutedEventArgs e)
+        {
+            int indicatorId = (this.IndicatorComboBox.SelectedItem as View_TabIndicator).indicator_id_pk;
+            int year = (int)YearComboBox.SelectedItem;
+            int? fromValue = null;
+            int? toValue = null;
+
+            if (!string.IsNullOrEmpty(FromValueTextBox.Text))
+            {
+                fromValue = int.Parse(FromValueTextBox.Text);
+            }
+
+            if (!string.IsNullOrEmpty(ToValueTextBox.Text))
+            {
+                toValue = int.Parse(ToValueTextBox.Text);
+            }
+
+            this._workspacehelper.SearchCountryByIndicator(indicatorId, year, fromValue, toValue);
+        }
+
+        private void _workspacehelper_SearchCountryByIndicators_Completed(object sender, EventArgs e)
+        {
+            if (this.SearchCountryByIndicators_Completed != null)
+            {
+                this.SearchCountryByIndicators_Completed(sender, e);
+            }
+        }
+
+        private void SearchByIndicatorResultListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tbl_countries country = (sender as ListBox).SelectedItem as tbl_countries;            
+            if (MapNavigation != null && country != null)
+            {
+                MapNavigation(country, null);
+            }
+        }
+
+        /// <summary>
+        /// Populate the Result box
+        /// </summary>
+        public void PopulateSearchByIndicatorResultBox(List<tbl_countries> result)
+        {
+            this.SearchByIndicatorResultListBox.ItemsSource = result;
+        }
+
+        #endregion
     }
 }

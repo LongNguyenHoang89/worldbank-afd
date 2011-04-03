@@ -187,5 +187,45 @@ namespace NCRVisual.web.Services
         }
 
         #endregion
+
+        #region Search Country
+
+        /// <summary>
+        /// Get the country 
+        /// </summary>
+        /// <param name="indicatorIdPK"></param>
+        /// <param name="year"></param>
+        /// <param name="fromValue"></param>
+        /// <param name="toValue"></param>
+        /// <returns></returns>
+        public IQueryable<ref_country_indicator> GetCountryByIndicators(int indicatorIdPK, int year, int? fromValue, int? toValue)
+        {
+            if (fromValue == null && toValue != null)
+            {
+                return this.ObjectContext.ref_country_indicator.Where(c => c.indicator_id == indicatorIdPK
+                    && c.country_indicator_year == year
+                    && c.country_indicator_value <= toValue);
+            }
+            else if (fromValue != null && toValue == null)
+            {
+                return this.ObjectContext.ref_country_indicator.Where(c => c.indicator_id == indicatorIdPK
+                    && c.country_indicator_year == year                    
+                    && c.country_indicator_value >= fromValue);
+            }
+            else if (fromValue != null && toValue != null)
+            {
+                return this.ObjectContext.ref_country_indicator.Where(c => c.indicator_id == indicatorIdPK
+                    && c.country_indicator_year == year
+                    && c.country_indicator_value <= toValue
+                    && c.country_indicator_value >= fromValue);
+            }
+            else
+            {
+                return this.ObjectContext.ref_country_indicator.Where(c => c.indicator_id == indicatorIdPK
+                    && c.country_indicator_year == year);
+            }
+        }
+
+        #endregion
     }
 }

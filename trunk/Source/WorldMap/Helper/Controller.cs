@@ -55,7 +55,7 @@ namespace WorldMap.Helper
         public event EventHandler GetBorder_completed;
 
         /// <summary>
-        ///  Event after getting WB Project list of a country completed;
+        /// Event after getting WB Project list of a country completed;
         /// </summary>
         public event EventHandler GetCountryWBProject_completed;
 
@@ -68,6 +68,11 @@ namespace WorldMap.Helper
         public event EventHandler InsertUserCountry_Completed;
         public event EventHandler LoadUserCountry_Completed;
         public event EventHandler LoadUserIndicator_Completed;
+
+        /// <summary>
+        /// Event after search country complete
+        /// </summary>
+        public event EventHandler SearchCountryByIndicators_Completed;
         #endregion
 
         /// <summary>
@@ -124,6 +129,25 @@ namespace WorldMap.Helper
         }
 
         /// <summary>
+        /// Get a country record base on its Id
+        /// </summary>
+        /// <param name="countryName"></param>
+        /// <returns></returns>
+        public tbl_countries GetCountry(int countryId)
+        {
+            var country = from n in Context.tbl_countries
+                          where n.country_id_pk == countryId
+                          select n;
+
+            foreach (var a in country)
+            {
+                return a as tbl_countries;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Get the overview country data
         /// </summary>
         /// <param name="country_pk"></param>
@@ -137,14 +161,14 @@ namespace WorldMap.Helper
         /// Get the WKT for country border
         /// </summary>
         /// <param name="countryCode"></param>
-        public void GetCountryBorder(string countryCode, SolidColorBrush color)
+        public void GetCountryBorder(string countryCode, SolidColorBrush color, string tooltip)
         {
             EntityQuery<View_CountryBorder> query = Context.GetCountryBorderQuery(countryCode);
             Action<LoadOperation<View_CountryBorder>> completeProcessing = delegate(LoadOperation<View_CountryBorder> loadOp)
             {
                 if (!loadOp.HasError)
                 {
-                    loadBorder_Completed(loadOp.Entities, color, countryCode);
+                    loadBorder_Completed(loadOp.Entities, color, countryCode, tooltip);
                 }
                 else
                 {
@@ -155,13 +179,13 @@ namespace WorldMap.Helper
             LoadOperation<View_CountryBorder> loadOperation = Context.Load(query, completeProcessing, true);
         }
 
-        private void loadBorder_Completed(IEnumerable<View_CountryBorder> results, SolidColorBrush countryColor, string countryCode)
+        private void loadBorder_Completed(IEnumerable<View_CountryBorder> results, SolidColorBrush countryColor, string countryCode, string tooltip)
         {
             foreach (View_CountryBorder result in results)
             {
                 if (GetBorder_completed != null)
                 {
-                    GetBorder_completed(new object[3] { GeomatryConverter.GetObject(result.geom), countryColor, countryCode }, null);
+                    GetBorder_completed(new object[4] { GeomatryConverter.GetObject(result.geom), countryColor, countryCode, tooltip }, null);
                 }
             }
         }
@@ -361,7 +385,7 @@ namespace WorldMap.Helper
 
         #endregion
 
-        #region
+        #region Save n load indicators
         public void SaveIndicatorList(List<int> listIndicator,tbl_users user)
         {            
             //EntityQuery<View_CountryBorder> query = Context.GetCountryBorderQuery(countryCode);
@@ -431,6 +455,36 @@ namespace WorldMap.Helper
             }
             return listIndicators;
         }
+        #endregion
+
+        #region Search Country
+
+        public void SearchCountryByIndicator(int indicatorId, int year, int? fromValue, int? toValue)
+        {
+            EntityQuery<ref_country_indicator> query = Context.GetCountryByIndicatorsQuery(indicatorId,year,fromValue,toValue);
+            Action<LoadOperation<ref_country_indicator>> completeProcessing = delegate(LoadOperation<ref_country_indicator> loadOp)
+            {
+                if (!loadOp.HasError)
+                {
+                    SearchCountryByIndicator_Completed(loadOp.Entities);
+                }
+                else
+                {
+                    //LogAndNotify(loadOp.Error);
+                }
+
+            };
+            LoadOperation<ref_country_indicator> loadOperation = Context.Load(query, completeProcessing, true);
+        }
+
+        private void SearchCountryByIndicator_Completed(IEnumerable<ref_country_indicator> result)
+        {
+            if (SearchCountryByIndicators_Completed != null)
+            {
+                SearchCountryByIndicators_Completed(result, null);
+            }
+        }
+
         #endregion
 
         #region function for rss reader

@@ -21,7 +21,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Border CornerRadius="5" Background="Black" Opacity="0.7">                            
+                        <Border CornerRadius="5" Background="Black" Opacity="0.7">
                             <ContentPresenter Margin="5">
                                 <StackPanel Margin="5" MaxWidth="200">
                                     <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" Foreground="White"/>
@@ -33,7 +33,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <ControlTemplate x:Key="RemoveButton" TargetType="Button">
             <Image Source="Image/Remove.png" ToolTipService.ToolTip="Remove"/>
         </ControlTemplate>
@@ -96,33 +96,33 @@
 
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">        
+    <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="70"/>
-            </Grid.RowDefinitions>
+        </Grid.RowDefinitions>
 
         <m:Map CredentialsProvider="AnDFcb6V80_dRKOObV5Q-K0ACvlPNjpllC76dk3Trd7tG1Gjlau_T14711TdnLSe" x:Name="MyMap" 
                AllowDrop="True" Grid.Row="1" VerticalAlignment="Stretch"
                NavigationVisibility="Collapsed">
-            <m:MapLayer x:Name="ArrowLayer"/>
-            <m:MapLayer x:Name="PolygonLayer">
-            </m:MapLayer>
+                <m:MapLayer x:Name="ArrowLayer"/>
+                <m:MapLayer x:Name="PolygonLayer"/>
+                <m:MapLayer x:Name="MarkCountryLayer"/>            
         </m:Map>
-            <Border CornerRadius="0,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Height="60" Grid.Row ="1"  Background="Black">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="20"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel HorizontalAlignment="Center" x:Name="PushPinPanel"/>
-                    <TextBlock Grid.Row="1" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"><Run Text="[Drag this to world map]"/></TextBlock>
-                </Grid>
-            </Border>            
+        <Border CornerRadius="0,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Height="60" Grid.Row ="1"  Background="Black">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" x:Name="PushPinPanel"/>
+                <TextBlock Grid.Row="1" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"><Run Text="[Drag this to world map]"/></TextBlock>
+            </Grid>
+        </Border>
         <local:Workspace Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="MyWorkSpace">
             <local:Workspace.Effect>
-                <DropShadowEffect Opacity="0.3" ShadowDepth="10" BlurRadius="10">                    
+                <DropShadowEffect Opacity="0.3" ShadowDepth="10" BlurRadius="10">
                 </DropShadowEffect>
             </local:Workspace.Effect>
         </local:Workspace>
@@ -157,13 +157,13 @@
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
                     <Button Height="40" Margin="0,0,10,0" x:Name="SaveCountry" ToolTipService.ToolTip="Save Country Data" Click="SaveCountry_Click">
                         <Image Source="Image/TradeData.png"/>
-                    </Button>                    
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>
 
         <StackPanel Grid.RowSpan="2" VerticalAlignment="Top"  HorizontalAlignment="Right" Orientation="Horizontal">
-            
+
             <ToggleButton x:Name="HelpToggleButton" Margin="0,10,10,0" IsChecked="True" Template="{StaticResource RoundedButton}" Width="70" Height="70" Click="HelpToggleButton_Click">
                 <Image Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Image/Help.png" Cursor="Hand" ToolTipService.ToolTip="About Us"/>
             </ToggleButton>
@@ -173,10 +173,8 @@
                 </ToggleButton>
                 <TextBlock Margin="0,10,0,0" Name="SignInInformation" Text="Not signed in"></TextBlock>
             </StackPanel>
-        </StackPanel>        
-        <toolkit:BusyIndicator Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Name="loadingIndicator" IsBusy="True" />
-        
-        <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Name="FullScreenButton">Full Screen</Button>        
+        </StackPanel>
+        <toolkit:BusyIndicator Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Name="loadingIndicator" IsBusy="True" />        
     </Grid>
 </UserControl>
 

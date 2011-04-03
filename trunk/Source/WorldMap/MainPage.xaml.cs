@@ -30,6 +30,7 @@ namespace WorldMap
         private int _currentImportCountryPK = 0;
         private int _currentExportCountryPK = 0;
 
+        private bool _isSearchingCountry = false;
         # endregion
 
         #region properties
@@ -56,14 +57,14 @@ namespace WorldMap
 
             //Event Handler
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
-            this.FullScreenButton.Click += new RoutedEventHandler(FullScreenButton_Click);
+            this.MyWorkSpace.FullScreenButton.Click += new RoutedEventHandler(FullScreenButton_Click);
 
             try
             {
                 string Indicator = System.Windows.Browser.HtmlPage.Document.QueryString["Ind"];
                 string Country = System.Windows.Browser.HtmlPage.Document.QueryString["Cou"];
             }
-            catch (Exception e )
+            catch (Exception e)
             {
             }
         }
@@ -88,10 +89,15 @@ namespace WorldMap
         /// <param name="e"></param>
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            //Populate Helper for this control
             this.WorldMapController = new Controller();
             this.WorldMapController.LoadInitDataCompleted += new EventHandler(WorldMapController_LoadInitDataCompleted);
             this.WorldMapController.GetView_TabIndicatorQueryCompleted += new EventHandler(WorldMapController_GetView_TabIndicatorQueryCompleted);
             this.WorldMapController.GetBorder_completed += new EventHandler(WorldMapController_GetBorder_completed);
+
+            //Populate Helper for workspace
+            this.MyWorkSpace.InitializeController(this.WorldMapController);
+
             // Register this as scriptable object (for running JS)
             HtmlPage.RegisterScriptableObject("MainPage", this);
             user.user_id_pk = 4;
@@ -100,20 +106,21 @@ namespace WorldMap
             this.MyWorkSpace.CompareControl.Refresh += new EventHandler(CompareControl_Refresh);
             this.MyWorkSpace.CountryDetailsControl.mainPage = this;
             this.MyWorkSpace.CountryDetailsControl._worldMapController = this.WorldMapController;
-
             this.MyWorkSpace.TradeDataControl.Refresh += new EventHandler(TradeDataControl_Refresh);
             this.MyWorkSpace.TradeDataControl.Complete += new EventHandler(TradeDataControl_Complete);
+            this.MyWorkSpace.SearchCountryByIndicators_Completed += new EventHandler(MyWorkSpace_SearchCountryByIndicators_Completed);
+            this.MyWorkSpace.MapNavigation += new EventHandler(MyWorkSpace_MapNavigation);
 
             //save indicator event
             this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
-            WorldMapController.InsertMsnUser_Completed += new EventHandler(getCurrentUser);   
+            WorldMapController.InsertMsnUser_Completed += new EventHandler(getCurrentUser);
         }
 
         #region Draw Country Borders
 
         void WorldMapController_GetBorder_completed(object sender, EventArgs e)
         {
-            object[] result = new object[3];
+            object[] result = new object[4];
             (sender as Array).CopyTo(result as Array, 0);
 
             object[] borderResult = new object[2];
@@ -121,29 +128,37 @@ namespace WorldMap
 
             if (borderResult[1].ToString() == "MultiPolygon")
             {
-                DrawMultiPolygon(borderResult[0] as List<LocationCollection>, result[1] as SolidColorBrush, result[2].ToString());
+                DrawMultiPolygon(borderResult[0] as List<LocationCollection>, result[1] as SolidColorBrush, result[2].ToString(), result[3].ToString());
             }
             else if (borderResult[1].ToString() == "Polygon")
             {
-                DrawPolygon(borderResult[0] as LocationCollection, result[1] as SolidColorBrush, result[2].ToString());
-                //DrawPolygon(borderResult[0] as LocationCollection);
+                DrawPolygon(borderResult[0] as LocationCollection, result[1] as SolidColorBrush, result[2].ToString(), result[3].ToString());
             }
         }
 
-        private void DrawMultiPolygon(List<LocationCollection> vertices, SolidColorBrush color, string countryCode)
+        private void DrawMultiPolygon(List<LocationCollection> vertices, SolidColorBrush color, string countryCode, string tooltip)
         {
             MapMultiPolygon myPoly = new MapMultiPolygon();
             myPoly.Vertices = vertices;
             myPoly.Fill = color;
             myPoly.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
             myPoly.Opacity = 0.5;
-            myPoly.DataContext = countryCode;            
+            myPoly.DataContext = countryCode;
 
             //Add MultiPolygon to map layer
-            PolygonLayer.Children.Add(myPoly);
+            if (!_isSearchingCountry)
+            {
+                PolygonLayer.Children.Add(myPoly);
+            }
+            else
+            {
+                ToolTipService.SetToolTip(myPoly, tooltip);
+                MarkCountryLayer.Children.Add(myPoly);
+            }
+
         }
-        
-        private void DrawPolygon(LocationCollection vertices, SolidColorBrush color, string countryCode)
+
+        private void DrawPolygon(LocationCollection vertices, SolidColorBrush color, string countryCode, string tooltip)
         {
             MapPolygon myPoly = new MapPolygon();
             myPoly.Locations = vertices;
@@ -151,14 +166,24 @@ namespace WorldMap
             myPoly.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
             myPoly.StrokeThickness = 1;
             myPoly.Opacity = 0.5;
-            myPoly.DataContext = countryCode;            
+            myPoly.DataContext = countryCode;
+
             //Add Polygon to map layer
-            PolygonLayer.Children.Add(myPoly);
+            if (!_isSearchingCountry)
+            {
+                PolygonLayer.Children.Add(myPoly);
+            }
+            else
+            {
+                ToolTipService.SetToolTip(myPoly, tooltip);
+                MarkCountryLayer.Children.Add(myPoly);
+            }
         }
 
-        private void DrawCountryBorder(DraggablePushpin p)
+        private void DrawCountryBorder(DraggablePushpin p, string tooltip)
         {
-            WorldMapController.GetCountryBorder(p.country.country_iso_code, p.Background as SolidColorBrush);
+            _isSearchingCountry = false;
+            WorldMapController.GetCountryBorder(p.country.country_iso_code, p.Background as SolidColorBrush, tooltip);
         }
 
         #endregion
@@ -166,6 +191,7 @@ namespace WorldMap
         void WorldMapController_GetView_TabIndicatorQueryCompleted(object sender, EventArgs e)
         {
             MyWorkSpace.PopulateFavouritedIndicatorsTab(WorldMapController.Context.View_TabIndicators);
+            MyWorkSpace.PopulateSearchByIndicatorsTab(WorldMapController.Context.View_TabIndicators);
         }
 
         void WorldMapController_LoadInitDataCompleted(object sender, EventArgs e)
@@ -230,7 +256,7 @@ namespace WorldMap
 
             MyWorkSpace.CountryDetailsControl.PopulateData(WorldMapController, thisPinOnCountry, MyWorkSpace.IndicatorIDList);
             MyWorkSpace.MainTabControl.SelectedIndex = 2;
-            
+
             LoadGraph(thisPinOnCountry, MyWorkSpace.IndicatorIDList);
         }
 
@@ -284,7 +310,7 @@ namespace WorldMap
             CountryListBox.Items.Add(panel);
             pushpin.DataContext = panel;
 
-            DrawCountryBorder(pushpin);
+            DrawCountryBorder(pushpin, "");
         }
 
         #region removeButton mouse event
@@ -307,13 +333,13 @@ namespace WorldMap
 
             //Remove polygon in Polygon Layers
             IEnumerable<UIElement> polygons = from n in PolygonLayer.Children
-                                              where (n as UserControl).DataContext.ToString() == (item.DataContext as DraggablePushpin).country.country_iso_code
+                                              where (n as FrameworkElement).DataContext.ToString() == (item.DataContext as DraggablePushpin).country.country_iso_code
                                               select n;
+
             foreach (UIElement pol in polygons.ToList<UIElement>())
             {
                 PolygonLayer.Children.Remove(pol);
             }
-
         }
         #endregion
 
@@ -331,7 +357,7 @@ namespace WorldMap
                 (PushPinPanel.Children[3] as TextBlock).Text = "Error country data";
             }
 
-            DrawCountryBorder(p);
+            DrawCountryBorder(p, "");
         }
 
         void CompareControl_Refresh(object sender, EventArgs e)
@@ -914,7 +940,7 @@ namespace WorldMap
             ReverseGeocodeLocation(pushPin);
             pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
             pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
-        }        
+        }
 
         #region workspace save n load
 
@@ -937,9 +963,6 @@ namespace WorldMap
             user.msn_id = cid;
             WorldMapController.CheckExist(cid);
             WorldMapController.LoadUserData_Completed += new EventHandler(WorldMapController_LoadUserData_Completed);
-
-
-
         }
 
         void WorldMapController_LoadUserData_Completed(object sender, EventArgs e)
@@ -958,13 +981,9 @@ namespace WorldMap
             {
                 SignInInformation.Text = userName + " is signed in...";
                 // load data here
-                WorldMapController.LoadUserCountry_Completed += new EventHandler
-
-(WorldMapController_LoadUserCountry_Completed);
+                WorldMapController.LoadUserCountry_Completed += new EventHandler(WorldMapController_LoadUserCountry_Completed);
                 WorldMapController.LoadUserCountry();
-                WorldMapController.LoadUserIndicator_Completed += new EventHandler
-
-(WorldMapController_LoadUserIndicator_Compelted);
+                WorldMapController.LoadUserIndicator_Completed += new EventHandler(WorldMapController_LoadUserIndicator_Compelted);
                 WorldMapController.LoadUserIndicator();
             }
         }
@@ -1039,6 +1058,53 @@ namespace WorldMap
             window.Show();
         }
 
+        #endregion
+
+        #region Search Country
+        void MyWorkSpace_SearchCountryByIndicators_Completed(object sender, EventArgs e)
+        {
+            IEnumerable<ref_country_indicator> result = sender as IEnumerable<ref_country_indicator>;
+            _isSearchingCountry = true;
+            MarkCountryLayer.Children.Clear();
+
+            float? maxValue = (from val in result
+                               select val.country_indicator_value).Max();
+
+            float? minValue = (from val in result
+                               select val.country_indicator_value).Min();
+
+            List<tbl_countries> resultList = new List<tbl_countries>();
+
+            foreach (ref_country_indicator r in result)
+            {
+                tbl_countries country = WorldMapController.GetCountry(r.country_id.Value);
+                resultList.Add(country);
+                string isoCode = country.country_iso_code;
+
+                float? percent;
+
+                if (maxValue != minValue)
+                {
+                    percent = (r.country_indicator_value - minValue) / (maxValue - minValue) * 100;
+                }
+                else
+                {
+                    percent = 100;
+                }
+
+                byte opacity = (byte)(255 * percent / 100);
+                WorldMapController.GetCountryBorder(isoCode, new SolidColorBrush(Color.FromArgb(255, 39, 136, 59)), country.country_name + ": " + r.country_indicator_value.ToString());
+            }
+
+            MyWorkSpace.PopulateSearchByIndicatorResultBox(resultList);
+        }
+
+        void MyWorkSpace_MapNavigation(object sender, EventArgs e)
+        {
+            tbl_countries country = sender as tbl_countries;
+            MyMap.Center = new Location((double)country.country_latitude.Value, (double)country.country_longitude.Value);
+            MyMap.ZoomLevel = 3;
+        }
         #endregion
     }
 }

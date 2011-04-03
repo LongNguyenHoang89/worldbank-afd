@@ -29,7 +29,14 @@
                 <sdk:TabItem.Header>
                     <Image Source="/WorldMap;component/Image/Navigation_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Navigation"></Image>
                 </sdk:TabItem.Header>
-                <StackPanel Background="White">
+                <Border CornerRadius="5">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White" Offset="0.5"/>
+                            <GradientStop Color="#FFB7C8B1" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel Margin="5" Background="White">
                     <Border Margin="10" CornerRadius="5" Background="Gray">
                         <TextBlock Text="SET VIEW POINT" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
                     </Border>
@@ -41,14 +48,29 @@
                         <CheckBox Margin="20,0,10,0">Aerial with Labels</CheckBox>
                     </StackPanel>
 
+                    <StackPanel Margin="10,10,0,0">
+                        <CheckBox IsChecked="True" Name="ShowPushpinLayerCheckBox">Show pushpin layer</CheckBox>
+                        <CheckBox IsChecked="True" Name="ShowMarkupLayerCheckBox">Show markup layer</CheckBox>
+                        <CheckBox IsChecked="True" Name="ShowTradeDataLayerCheckBox">Show trade data layer</CheckBox>
+                    </StackPanel>
+
+                    <StackPanel Margin="10,10,0,0">
+                        <Button Width="40" Height="20" Margin="0,0,0,10">up</Button>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Width="40" Height="20" Margin="0,0,20,0"></Button>
+                            <Button Name="FullScreenButton">Fullscreen</Button>
+                            <Button Width="40" Height="20" Margin="20,0,0,0"></Button>
+                        </StackPanel>
+                        <Button Width="40" Height="20" Margin="0,10,0,0">down</Button>                        
+                    </StackPanel>
+
                     <TextBlock Margin="10,10,10,5">Search by name (ex: Viet Nam)</TextBlock>
-                    <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                    <StackPanel Margin="10,0,0,10" Orientation="Horizontal">
                         <TextBox Height="20" Width="200"></TextBox>
                         <Button Margin="10,0">Search</Button>
-                    </StackPanel>
-                    <StackPanel Name="NavigationStackPanel">                        
-                    </StackPanel>
+                    </StackPanel>                    
                 </StackPanel>
+                </Border>
             </sdk:TabItem>
             <sdk:TabItem Name="SearchTabItem">
                 <sdk:TabItem.Header>
@@ -56,39 +78,48 @@
                 </sdk:TabItem.Header>
                 <sdk:TabControl HorizontalAlignment="Stretch" Margin="0,5" VerticalAlignment="Stretch">
                     <sdk:TabItem Header="Indicators" >
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
-                                <TextBlock Text="SEARCH COUNTRY BY INDICATORS" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
-                            </Border>
-                            <ComboBox Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0"></ComboBox>
+                        <Border Background="White" CornerRadius="5" BorderBrush="Black">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>                                    
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Row="2" Margin="10,5" HorizontalAlignment="Right">From Year</TextBlock>
-                            <ComboBox Grid.Row="2" Margin="10,5" Grid.Column="1"></ComboBox>
-
-                            <TextBlock Grid.Row="3" Margin="10,5" HorizontalAlignment="Right">To Year</TextBlock>
-                            <ComboBox Grid.Row="3" Margin="10,5" Grid.Column="1"></ComboBox>
-
-                            <TextBlock Grid.Row="4" Margin="10,5" HorizontalAlignment="Right">From Value</TextBlock>
-                            <TextBox Grid.Row="4" Margin="10,5" Grid.Column="1"></TextBox>
-
-                            <TextBlock Grid.Row="5" Margin="10,6" HorizontalAlignment="Right">To Value</TextBlock>
-                            <TextBox Grid.Row="5" Margin="10,5" Grid.Column="1"></TextBox>
-
-                            <Button Grid.Row="6" Margin="10,0">Search</Button>
-                        </Grid>
+                                <Grid Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
+                                        <TextBlock Text="SEARCH COUNTRY BY INDICATORS" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                                    </Border>
+                                    <ComboBox Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0" Name="IndicatorComboBox" DisplayMemberPath="indicator_name"></ComboBox>
+                                    <TextBlock Grid.Row="2" Margin="10,5" HorizontalAlignment="Right">From Year</TextBlock>
+                                    <ComboBox Grid.Row="2" Margin="10,5" Grid.Column="1" Name="YearComboBox"></ComboBox>
+                                    <TextBlock Grid.Row="4" Margin="10,5" HorizontalAlignment="Right">From Value</TextBlock>
+                                    <TextBox Grid.Row="4" Margin="10,5" Grid.Column="1" Name="FromValueTextBox"></TextBox>
+                                    <TextBlock Grid.Row="5" Margin="10,6" HorizontalAlignment="Right">To Value</TextBlock>
+                                    <TextBox Grid.Row="5" Margin="10,5" Grid.Column="1" Name="ToValueTextBox"></TextBox>
+                                    <Button Grid.Row="6" Margin="10,0" Name="SearchCountryByIndicatorsButton" Click="SearchCountryByIndicatorsButton_Click">Search</Button>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <Border Margin="10,15" CornerRadius="5" Background="Gray">
+                                        <TextBlock Text="RESULT" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                                    </Border>
+                                    <ListBox Margin="10,0" Width="150" Height="130" x:Name="SearchByIndicatorResultListBox" SelectionChanged="SearchByIndicatorResultListBox_SelectionChanged" DisplayMemberPath="country_name">                                        
+                                    </ListBox>
+                                </StackPanel>                                
+                            </Grid>
+                        </Border>
                     </sdk:TabItem>
 
                     <sdk:TabItem Header="Trade data">
