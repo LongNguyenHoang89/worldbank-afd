@@ -12,6 +12,17 @@ namespace NCRVisual.web.Services
     public partial class WBDomainService : LinqToEntitiesDomainService<WBEntities>
     {
 
+        #region for rss reader
+        /// <summary>
+        /// This is a custom function to return indicator query that only select a few indicator in a list of specified indicator_id_pk
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<tbl_tabs> GetTbl_tabsInPKList(List<int> pks)
+        {
+            return this.ObjectContext.tbl_tabs.Where(i => pks.Contains((int)i.tab_id_pk));
+        }
+        #endregion
+
         public IQueryable<ref_country_indicator> GetRef_country_indicatorInCountryIdList(List<int> countryIdList)
         {
             return this.ObjectContext.ref_country_indicator.Where(c => countryIdList.Contains((int)c.country_id));
