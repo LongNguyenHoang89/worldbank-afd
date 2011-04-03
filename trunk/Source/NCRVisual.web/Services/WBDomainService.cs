@@ -34,6 +34,15 @@ namespace NCRVisual.web.Services
         // TODO:
         // Consider constraining the results of your query method.  If you need additional input you can
         // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'ref_project_millenium' query.
+        public IQueryable<ref_project_millenium> GetRef_project_millenium()
+        {
+            return this.ObjectContext.ref_project_millenium;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
         // To support paging you will need to add ordering to the 'ref_tab_indicator' query.
         public IQueryable<ref_tab_indicator> GetRef_tab_indicator()
         {
@@ -43,10 +52,46 @@ namespace NCRVisual.web.Services
         // TODO:
         // Consider constraining the results of your query method.  If you need additional input you can
         // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'ref_user_country' query.
+        public IQueryable<ref_user_country> GetRef_user_country()
+        {
+            return this.ObjectContext.ref_user_country;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'ref_user_indicator' query.
+        public IQueryable<ref_user_indicator> GetRef_user_indicator()
+        {
+            return this.ObjectContext.ref_user_indicator;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'ref_user_tab' query.
+        public IQueryable<ref_user_tab> GetRef_user_tab()
+        {
+            return this.ObjectContext.ref_user_tab;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
         // To support paging you will need to add ordering to the 'tbl_countries' query.
         public IQueryable<tbl_countries> GetTbl_countries()
         {
             return this.ObjectContext.tbl_countries;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'tbl_graphs' query.
+        public IQueryable<tbl_graphs> GetTbl_graphs()
+        {
+            return this.ObjectContext.tbl_graphs;
         }
 
         // TODO:
@@ -74,6 +119,15 @@ namespace NCRVisual.web.Services
         public IQueryable<tbl_lending_types> GetTbl_lending_types()
         {
             return this.ObjectContext.tbl_lending_types;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'tbl_millenium' query.
+        public IQueryable<tbl_millenium> GetTbl_millenium()
+        {
+            return this.ObjectContext.tbl_millenium;
         }
 
         // TODO:
@@ -115,10 +169,19 @@ namespace NCRVisual.web.Services
         // TODO:
         // Consider constraining the results of your query method.  If you need additional input you can
         // add parameters to this method or create additional query methods with different names.
-        // To support paging you will need to add ordering to the 'View_Borders' query.
-        public IQueryable<View_Borders> GetView_Borders()
+        // To support paging you will need to add ordering to the 'tbl_users' query.
+        public IQueryable<tbl_users> GetTbl_users()
         {
-            return this.ObjectContext.View_Borders;
+            return this.ObjectContext.tbl_users;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'TM_WORLD_BORDERS_SIMPL_0_2' query.
+        public IQueryable<TM_WORLD_BORDERS_SIMPL_0_2> GetTM_WORLD_BORDERS_SIMPL_0_2()
+        {
+            return this.ObjectContext.TM_WORLD_BORDERS_SIMPL_0_2;
         }
 
         // TODO:
@@ -164,6 +227,15 @@ namespace NCRVisual.web.Services
         public IQueryable<View_TabIndicator> GetView_TabIndicator()
         {
             return this.ObjectContext.View_TabIndicator;
+        }
+
+        // TODO:
+        // Consider constraining the results of your query method.  If you need additional input you can
+        // add parameters to this method or create additional query methods with different names.
+        // To support paging you will need to add ordering to the 'View_User_Country' query.
+        public IQueryable<View_User_Country> GetView_User_Country()
+        {
+            return this.ObjectContext.View_User_Country;
         }
     }
 }
