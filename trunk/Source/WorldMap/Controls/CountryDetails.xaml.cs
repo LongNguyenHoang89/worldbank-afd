@@ -9,6 +9,8 @@ using NCRVisual.web.DataModel;
 using WorldbankDataGraphs;
 using WorldbankDataGraphs.Entities;
 using WorldMap.Helper;
+using NCRVisual.Web.Helper;
+using NCRVisual.Web.Items;
 
 namespace WorldMap
 {
@@ -17,7 +19,11 @@ namespace WorldMap
     /// </summary>
     public partial class CountryDetails
     {
-        Controller _worldMapController;
+        #region constants
+        const int FEED_LIMIT = 3;
+        #endregion
+
+        public Controller _worldMapController { get; set; }
         private WorldbankDataGraphs.WorldbankGeneralChartControl columnChartControl = null;
         private tbl_countries _selectedCountry;
         private LoadOperation<tbl_indicators> tblIndsLoadOp = null;
@@ -25,6 +31,7 @@ namespace WorldMap
         private List<int> listboxIndicatorPKSelected = new List<int>();
         private List<tbl_indicators> listIndicatorSelectedFromWM;
         private List<tbl_indicators> shortListIndicatorsSelected;
+        public MainPage mainPage { get; set; }
 
         /// <summary>
         /// Default constructor
@@ -41,12 +48,14 @@ namespace WorldMap
         /// <param name="selectedCountry"></param>
         /// <param name="checkedIndicatorPKs"></param>
         public void PopulateData(Controller worldMapController, tbl_countries selectedCountry, List<int> checkedIndicatorPKs)
-        {            
+        {
             // set some var with input params
             this._worldMapController = worldMapController;
             this._selectedCountry = selectedCountry;
             // generate the list of shortlist indicators
             getIndicatorsFromPKs(checkedIndicatorPKs);
+            // user related processing
+            this.mainPage = mainPage;
             // default is all selected
             listboxIndicatorPKSelected = checkedIndicatorPKs;
             this.CountryNameTextBlock.Text = _selectedCountry.country_name;
@@ -262,12 +271,105 @@ namespace WorldMap
         private void IndicatorCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             listboxIndicatorPKSelected.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
-        }
+        } 
 
         private void ButtonSaveShortCut_Click(object sender, RoutedEventArgs e)
         {
 
         }       
+
+        #region rss feed
+        RSSReader rssReader = new RSSReader();
+        List<tbl_tabs> userFavTabList;
+
+        private void tabControl1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0) // this makes sure we won't get an "Out of bound" error
+            {
+                TabItem tmpTI = (TabItem)e.AddedItems[0];
+                if (tmpTI.Header.ToString().ToUpper().Equals("News".ToUpper())) // make sure the header is "News"
+                {
+                    if (this.mainPage.user != null)
+                    {
+                        foreach(object o in listBoxFeedList.Items)
+                        {
+                            listBoxFeedList.Items.RemoveAt(0);
+                        }
+                        // get user's favourite tabs
+                        _worldMapController.GetUserFavTab(mainPage.user);
+                        _worldMapController.LoadUserFavTabCompleted += new Controller.LoadUserFavTabCompletedDelegate(_worldMapController_LoadUserFavTabCompleted);
+                    }
+                    else
+                    {
+                        // show error on page
+                    }
+                }
+            }
+        }
+
+        private void _worldMapController_LoadUserFavTabCompleted(object source, WorldMap.Helper.Controller.LoadUserFavTabEventArgs e)
+        {
+            // load the rss feed
+            userFavTabList = e.UserFavTabs;
+            rssReader.RSSReadCompleted += new RSSReader.RSSReadCompletedDelegate(rssReader_RSSReadCompleted);
+            rssReader.FeedLimit = FEED_LIMIT;
+            if (userFavTabList.Count > 0)
+            {
+                string feedLink = userFavTabList[0].tab_feed_link;
+                userFavTabList.RemoveAt(0);
+                rssReader.ReadRSS(feedLink);
+            }
+            //rssReader.ReadRSS("http://wbws.worldbank.org/feeds/xml/Social_Development.xml");
+        }
+
+        private void rssReader_RSSReadCompleted(object source, EventArgs e)
+        {
+            foreach (RSSFeed tmpFeed in rssReader.RSSFeedList)
+            {
+                listBoxFeedList.Items.Add(tmpFeed);
+            }
+            // continues to load other feed if all fav tab not load
+            if (userFavTabList != null && userFavTabList.Count > 0)
+            {
+                string feedLink = userFavTabList[0].tab_feed_link;
+                userFavTabList.RemoveAt(0);
+                rssReader.ReadRSS(feedLink);
+            }
+        }
+
+        private void listBoxFeedList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                string rawSummary = ((RSSFeed)e.AddedItems[0]).Description;
+                int firstDiv = rawSummary.IndexOf("</div>");
+                string summary = "";
+                if (firstDiv != -1)
+                {
+                    summary = rawSummary.Substring(0, firstDiv);
+                }
+                else
+                {
+                    summary = rawSummary;
+                }
+                textBoxFeedContent.Text = ((RSSFeed)e.AddedItems[0]).Title + "\n\n" + summary;
+            }
+        }
+
+        private void buttonGetNews_Click(object sender, RoutedEventArgs e)
+        {
+            listBoxFeedList.Items.Clear();
+            try
+            {
+                rssReader.ReadRSS(textBoxCustomRSSLink.Text);
+            }
+            catch (Exception)
+            {
+                ErrorNotification errorNoti = new ErrorNotification("You must enter a valid RSS link");
+            }
+
+        }
+        #endregion
     }
 }
 

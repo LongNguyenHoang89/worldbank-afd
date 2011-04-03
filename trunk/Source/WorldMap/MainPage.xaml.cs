@@ -44,7 +44,7 @@ namespace WorldMap
         /// </summary>
         public MapLayer PushPinLayer { get; set; }
 
-        public tbl_users user { get; set; }
+        public tbl_users user = new tbl_users();//{ get; set; }
         #endregion
 
         /// <summary>
@@ -94,9 +94,12 @@ namespace WorldMap
             this.WorldMapController.GetBorder_completed += new EventHandler(WorldMapController_GetBorder_completed);
             // Register this as scriptable object (for running JS)
             HtmlPage.RegisterScriptableObject("MainPage", this);
+            user.user_id_pk = 4;
 
             //Populate event for workspace
             this.MyWorkSpace.CompareControl.Refresh += new EventHandler(CompareControl_Refresh);
+            this.MyWorkSpace.CountryDetailsControl.mainPage = this;
+            this.MyWorkSpace.CountryDetailsControl._worldMapController = this.WorldMapController;
 
             this.MyWorkSpace.TradeDataControl.Refresh += new EventHandler(TradeDataControl_Refresh);
             this.MyWorkSpace.TradeDataControl.Complete += new EventHandler(TradeDataControl_Complete);

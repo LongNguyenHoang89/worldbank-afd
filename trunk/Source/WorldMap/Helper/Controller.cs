@@ -96,7 +96,6 @@ namespace WorldMap.Helper
             }
         }
 
-
         void load_Completed(object sender, System.EventArgs e)
         {
             if (this.LoadInitDataCompleted != null)
@@ -431,6 +430,70 @@ namespace WorldMap.Helper
                 listIndicators.Add(a);
             }
             return listIndicators;
+        }
+        #endregion
+
+        #region function for rss reader
+        LoadOperation loadUserFavTabOp;
+        LoadOperation loadRefUserTab;
+        public void GetUserFavTab(tbl_users user)
+        {
+            loadRefUserTab = Context.Load(from n in Context.GetRef_user_tabQuery()
+                                                        where n.user_id == user.user_id_pk
+                                          select n);
+            loadRefUserTab.Completed += new EventHandler(loadRefUserTab_Completed);
+        }
+
+        private void loadRefUserTab_Completed(object sender, EventArgs e)
+        {
+            List<ref_user_tab> ref_user_tabList = new List<ref_user_tab>();
+
+            var tmpE = loadRefUserTab.Entities;
+            foreach (object o in tmpE)
+            {
+                ref_user_tabList.Add((ref_user_tab)o);
+            }
+
+            List<int> tblTabsPKList = new List<int>();
+
+            foreach (ref_user_tab tmpRUT in ref_user_tabList)
+            {
+                tblTabsPKList.Add(tmpRUT.tab_id);
+            }
+            loadUserFavTabOp = this.Context.Load<tbl_tabs>(
+                from t in Context.GetTbl_tabsInPKListQuery((IEnumerable<int>)tblTabsPKList)
+                where 1 == 1
+                select t
+            );
+            loadUserFavTabOp.Completed += new EventHandler(tbl_tabsLoadOpCompleted);
+        }
+
+        private void tbl_tabsLoadOpCompleted(object sender, EventArgs ea)
+        {
+            if (loadUserFavTabOp != null)
+            {
+                List<tbl_tabs> returnList = new List<tbl_tabs>();
+
+                var tmpE = loadUserFavTabOp.Entities;
+
+                foreach (object o in tmpE)
+                {
+                    returnList.Add((tbl_tabs)o);
+                }
+
+                LoadUserFavTabEventArgs eventArgs = new LoadUserFavTabEventArgs();
+                eventArgs.UserFavTabs = returnList;
+
+                LoadUserFavTabCompleted(sender, eventArgs);
+            }
+        }
+
+        public delegate void LoadUserFavTabCompletedDelegate(object sender, LoadUserFavTabEventArgs e);
+        public event LoadUserFavTabCompletedDelegate LoadUserFavTabCompleted;
+
+        public class LoadUserFavTabEventArgs : EventArgs
+        {
+            public List<tbl_tabs> UserFavTabs { get; set; }
         }
         #endregion
     }

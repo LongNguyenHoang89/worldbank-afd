@@ -48,6 +48,17 @@ namespace WorldMap
             _indicatorIDList = new List<int>();            
         }
 
+        public NCRVisual.web.Services.WBDomainContext WBDomainContext
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// Populate the Favourited Indicator Tab
         /// </summary>
