@@ -113,6 +113,7 @@ namespace WorldMap
 
             //save indicator event
             this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
+            this.MyWorkSpace.CountryDetailsControl.SaveGraphButton_Completed += new EventHandler(CountryDetailControl_SaveGraphButton_Completed);
             WorldMapController.InsertMsnUser_Completed += new EventHandler(getCurrentUser);
         }
 
@@ -985,6 +986,8 @@ namespace WorldMap
                 WorldMapController.LoadUserCountry();
                 WorldMapController.LoadUserIndicator_Completed += new EventHandler(WorldMapController_LoadUserIndicator_Compelted);
                 WorldMapController.LoadUserIndicator();
+                WorldMapController.LoadUserGraph_Completed += new EventHandler(WorldMapController_LoadUserGraph_Completed);
+                WorldMapController.LoadUserGraph();
             }
         }
 
@@ -1058,6 +1061,54 @@ namespace WorldMap
             window.Show();
         }
 
+        public void LoadUserGraph()
+        {
+            List<tbl_graphs> graphs = WorldMapController.LoadUserGraph(user);
+            tbl_countries tbl_country = new tbl_countries();
+            List<int> indicatorIdList = new List<int>();
+            foreach (tbl_graphs graph in graphs)
+            {
+                indicatorIdList.Clear();
+                string country_list = graph.country_list;
+                string[] countries = country_list.Split('|');
+                foreach (string country in countries)
+                {
+                    tbl_country.country_id_pk = Int32.Parse(country);
+                }
+                string indicator_list = graph.indicator_list;
+                string[] indicators = graph.indicator_list.Split('|');
+                foreach (string indicator in indicators)
+                {
+                    indicatorIdList.Add(Int32.Parse(indicator));
+                }
+            }
+
+            LoadGraph(tbl_country, indicatorIdList);
+        }
+
+        private void WorldMapController_LoadUserGraph_Completed(object sender, EventArgs e)
+        {
+            LoadUserGraph();
+        }
+
+        public void CountryDetailControl_SaveGraphButton_Completed(object sender, EventArgs e)
+        {
+            tbl_graphs graph = new tbl_graphs();
+            graph.user_id = user.user_id_pk;
+            graph.indicator_list = "";
+            int count = 0;
+            foreach (tbl_indicators i in MyWorkSpace.CountryDetailsControl.shortListIndicatorsSelected)
+            {
+                count++;
+                if (count == MyWorkSpace.CountryDetailsControl.shortListIndicatorsSelected.Count)
+                    graph.indicator_list += i.indicator_id_pk + "";
+                else
+                    graph.indicator_list += i.indicator_id_pk + "|";
+            }
+
+            graph.country_list = MyWorkSpace.CountryDetailsControl._selectedCountry.country_id_pk + "";
+            WorldMapController.saveGraph(graph);
+        }
         #endregion
 
         #region Search Country

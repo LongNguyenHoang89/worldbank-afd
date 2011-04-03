@@ -25,14 +25,15 @@ namespace WorldMap
 
         public Controller _worldMapController { get; set; }
         private WorldbankDataGraphs.WorldbankGeneralChartControl columnChartControl = null;
-        private tbl_countries _selectedCountry;
+        public tbl_countries _selectedCountry;
         private LoadOperation<tbl_indicators> tblIndsLoadOp = null;
         private LoadOperation<ref_country_indicator> loadOp = null;
         private List<int> listboxIndicatorPKSelected = new List<int>();
         private List<tbl_indicators> listIndicatorSelectedFromWM;
-        private List<tbl_indicators> shortListIndicatorsSelected;
+        public List<tbl_indicators> shortListIndicatorsSelected;
         public MainPage mainPage { get; set; }
 
+        public EventHandler SaveGraphButton_Completed;
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -275,7 +276,7 @@ namespace WorldMap
 
         private void ButtonSaveShortCut_Click(object sender, RoutedEventArgs e)
         {
-
+            SaveGraphButton_Completed(sender, e);
         }       
 
         #region rss feed

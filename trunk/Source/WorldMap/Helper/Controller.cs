@@ -68,6 +68,7 @@ namespace WorldMap.Helper
         public event EventHandler InsertUserCountry_Completed;
         public event EventHandler LoadUserCountry_Completed;
         public event EventHandler LoadUserIndicator_Completed;
+        public event EventHandler LoadUserGraph_Completed;
 
         /// <summary>
         /// Event after search country complete
@@ -483,6 +484,46 @@ namespace WorldMap.Helper
             {
                 SearchCountryByIndicators_Completed(result, null);
             }
+        }
+
+        #endregion
+
+        #region save and load graph
+
+        public void LoadUserGraph()
+        {
+            var loadUserGraph = Context.Load(Context.GetTbl_graphsQuery());
+            loadUserGraph.Completed += new EventHandler(loadUserGraph_Completed);
+        }
+
+        public List<tbl_graphs> LoadUserGraph(tbl_users user)
+        {
+            var userGraph = from n in Context.tbl_graphs
+                            where n.user_id == user.user_id_pk
+                            select n;
+
+            List<tbl_graphs> graphs = new List<tbl_graphs>();
+            foreach (var graph in userGraph)
+            {
+                graphs.Add(graph);
+            }
+
+            return graphs;
+
+        }
+
+        void loadUserGraph_Completed(object sender, EventArgs e)
+        {
+            if (LoadUserGraph_Completed != null)
+            {
+                LoadUserGraph_Completed(sender, e);
+            }
+        }
+
+        public void saveGraph(tbl_graphs graph)
+        {
+            Context.tbl_graphs.Add(graph);
+            var a = Context.SubmitChanges();
         }
 
         #endregion

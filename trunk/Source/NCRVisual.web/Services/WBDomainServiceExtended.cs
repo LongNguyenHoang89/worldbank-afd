@@ -186,6 +186,33 @@ namespace NCRVisual.web.Services
             this.ObjectContext.ref_user_indicator.DeleteObject(ref_user_indicator);
         }
 
+        public void InsertTbl_graphs(tbl_graphs currenttbl_graphs)
+        {
+            if ((currenttbl_graphs.EntityState != EntityState.Detached))
+            {
+                this.ObjectContext.ObjectStateManager.ChangeObjectState(currenttbl_graphs, EntityState.Added);
+            }
+            else
+            {
+                this.ObjectContext.tbl_graphs.AddObject(currenttbl_graphs);
+            }
+        }
+
+        public void UpdateTbl_graphs(tbl_graphs currenttbl_graphs)
+        {
+            this.ObjectContext.tbl_graphs.AttachAsModified(currenttbl_graphs, this.ChangeSet.GetOriginal(currenttbl_graphs));
+        }
+
+        public void DeleteTbl_graphs(tbl_graphs tbl_graphs)
+        {
+            if ((tbl_graphs.EntityState == EntityState.Detached))
+            {
+                this.ObjectContext.tbl_graphs.Attach(tbl_graphs);
+            }
+            this.ObjectContext.tbl_graphs.DeleteObject(tbl_graphs);
+        }
+
+
         #endregion
 
         #region Search Country
