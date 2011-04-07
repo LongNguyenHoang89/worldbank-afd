@@ -5,9 +5,9 @@
 	x:Class="WorldMap.CountryDetails"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" d:DesignHeight="389">
 
-    <basics:TabControl HorizontalAlignment="Stretch" Name="tabControl1" SelectionChanged="tabControl1_SelectionChanged" Height="273" Width="532">
+    <basics:TabControl HorizontalAlignment="Stretch" Name="tabControl1" SelectionChanged="tabControl1_SelectionChanged" Height="385" Width="626">
         <basics:TabItem Header="Country Overview" Name="OverviewTab">
             <Grid x:Name="LayoutRoot" Background="White">
                 <Grid.RowDefinitions>
@@ -84,6 +84,7 @@
                         <Button  Margin="5" Name="ButtonSaveShortCut" IsEnabled="False" Click="ButtonSaveShortCut_Click">
                             <Image Source="/WorldMap;component/Image/BookMark_Icon.png"></Image>
                         </Button>
+                        <Button Content="Export Image" IsEnabled="False" Height="23" Name="button1" Width="87" Click="button1_Click" />
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -183,10 +184,11 @@
         <basics:TabItem Name="tabItem_news" Header="News">
             <Grid>
                 <ListBox Name="listBoxFeedList" Width="150" HorizontalAlignment="Left" VerticalAlignment="Stretch" SelectionChanged="listBoxFeedList_SelectionChanged" Margin="0,29,0,0" />
-                <TextBox Name="textBoxFeedContent" Width="364" HorizontalAlignment="Right" VerticalAlignment="Stretch" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsEnabled="True" IsReadOnly="True" Margin="0,29,0,0" />
+                <TextBox Name="textBoxFeedContent" Width="364" HorizontalAlignment="Right" VerticalAlignment="Stretch" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsEnabled="True" IsReadOnly="True" Margin="0,29" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="112,0,0,0" Name="textBoxCustomRSSLink" VerticalAlignment="Top" Width="321" />
                 <sdk:Label Height="20" HorizontalAlignment="Left" Margin="0,4,0,0" Name="label1" VerticalAlignment="Top" Width="120" Content="Your custom RSS:" />
-                <Button Content="Get news" Height="23" HorizontalAlignment="Left" Margin="439,0,0,0" Name="buttonGetNews" VerticalAlignment="Top" Width="75" Click="buttonGetNews_Click" />
+                <Button Content="Get feed" Height="23" HorizontalAlignment="Left" Margin="439,0,0,0" Name="buttonGetNews" VerticalAlignment="Top" Width="75" Click="buttonGetNews_Click" />
+                <Button Content="View full RSS feed" Height="23" HorizontalAlignment="Right" Margin="387,300,0,0" Name="buttonViewFullRSS" VerticalAlignment="Bottom" Width="133" Click="buttonViewFullRSS_Click" />
             </Grid>
         </basics:TabItem>
     </basics:TabControl>

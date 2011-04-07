@@ -11,6 +11,14 @@ using WorldbankDataGraphs.Entities;
 using WorldMap.Helper;
 using NCRVisual.Web.Helper;
 using NCRVisual.Web.Items;
+using System.Windows.Browser;
+using ImageTools.Helpers;
+using ImageTools;
+using ImageTools.IO;
+using ImageTools.IO.Png;
+using ImageTools.IO.Jpeg;
+using ImageTools.IO.Bmp;
+using System.IO;
 
 namespace WorldMap
 {
@@ -120,7 +128,9 @@ namespace WorldMap
             buttonRenderChart.IsEnabled = true;
             buttonRenderChart_Click(this, new RoutedEventArgs());
 
-            ButtonSaveShortCut.IsEnabled = true;            
+            ButtonSaveShortCut.IsEnabled = true;
+
+            button1.IsEnabled = true;
         }        
 
         private List<tbl_indicators> getIndicatorFromPKForGraph(List<int> indPKs)
@@ -370,7 +380,65 @@ namespace WorldMap
             }
 
         }
+
+        private void buttonViewFullRSS_Click(object sender, RoutedEventArgs e)
+        {
+            if (listBoxFeedList.SelectedItem != null)
+            {
+                RSSFeed rssFeed = (RSSFeed)listBoxFeedList.SelectedItem;
+                if (rssFeed.ArticleLink != null)
+                {
+                    HtmlPage.Window.Navigate(rssFeed.ArticleLink, "_blank");
+                }
+                else
+                {
+                    ErrorNotification errorNoti = new ErrorNotification("The RSS doesn't have a full content page");
+                }
+            }
+            else
+            {
+                ErrorNotification errorNoti = new ErrorNotification("No feed selected, please select a feed");
+            }
+        }
+
+        private void buttonOptions_Click(object sender, RoutedEventArgs e)
+        {
+            /*RSSFeedOptions feedOptions = new RSSFeedOptions();
+            feedOptions.Show();*/
+        }
         #endregion
+
+        // this is the button to export graph image
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.DefaultExt = ".jpg";
+                dialog.Filter = "JPEG image|*.jpg|PNG image|*.png|BMP image|*.bmp";
+                // prompt for a location to save the image
+                if (dialog.ShowDialog() == true)
+                {
+                    // the "using" block ensures the stream is cleared upon completed
+                    using (Stream stream = dialog.OpenFile())
+                    {
+                        WriteableBitmap bitmap = new WriteableBitmap(columnChartTab, null);
+                        // encode the stream
+                        //JPGUtil.EncodeJpg(bitmap, stream);
+                        ImageTools.IO.Encoders.AddEncoder<BmpEncoder>();
+                        ImageTools.IO.Encoders.AddEncoder<PngEncoder>();
+                        ImageTools.IO.Encoders.AddEncoder<JpegEncoder>();
+                        ExtendedImage image = bitmap.ToImage();
+                        image.WriteToStream(stream, dialog.SafeFileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //this.tblError.Text = "Error configuring SaveFileDialog: " + ex.Message;
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
 

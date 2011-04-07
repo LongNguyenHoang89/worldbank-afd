@@ -1057,8 +1057,8 @@ namespace WorldMap
 
         private void LoadGraph(tbl_countries country, List<int> indicatorIdList)
         {
-            CustomChildWindow window = new CustomChildWindow(WorldMapController, country, indicatorIdList);
-            window.Show();
+            //CustomChildWindow window = new CustomChildWindow(WorldMapController, country, indicatorIdList);
+            //window.Show();
         }
 
         public void LoadUserGraph()

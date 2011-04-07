@@ -9,6 +9,14 @@ using NCRVisual.web.Services;
 using System.Linq;
 using WorldbankDataGraphs;
 using WorldMap.Helper;
+using ImageTools.Helpers;
+using ImageTools;
+using ImageTools.IO;
+using ImageTools.IO.Png;
+using ImageTools.IO.Jpeg;
+using ImageTools.IO.Bmp;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace WorldMap
 {
@@ -135,45 +143,53 @@ namespace WorldMap
         {
             WorldbankGeneralChartControl control = new WorldbankDataGraphs.WorldbankGeneralChartControl();
             this.columnChartControl = control;
+            RefeshButton_Click(sender, e);
             // select render style for the graph
-            if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_AREA_DESC))
+            if (comboBoxRenderStyle.SelectedItem != null && comboBoxIndicatorSelector.SelectedItem != null)
             {
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_AREA;
+                if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_AREA_DESC))
+                {
+                    control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_AREA;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_BAR_DESC))
+                {
+                    control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_COLUMN_DESC))
+                {
+                    control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_LINE_DESC))
+                {
+                    control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC))
+                {
+                    control.RenderAs3D = true;
+                    control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_BAR_DESC))
+                {
+                    control.RenderAs3D = true;
+                    control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
+                }
+                // disable the combobox
+                this.button1.IsEnabled = false;
+                // get the data needed to show the graph
+                GetDataForGraph(_selectedCountries, ((tbl_indicators)comboBoxIndicatorSelector.SelectedItem).indicator_id_pk);
+                // remove all other graphs from gridChart
+                int childCount = gridChart.Children.Count;
+                for (int i = 0; i < childCount; i++)
+                {
+                    gridChart.Children.RemoveAt(0);
+                }
+                // add the chart to the gridChart
+                this.gridChart.Children.Add(control);
             }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_BAR_DESC))
+            else
             {
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
+                ErrorNotification errorNoti = new ErrorNotification("You must select a graph style and an indicator");
             }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_COLUMN_DESC))
-            {
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
-            }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_LINE_DESC))
-            {
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
-            }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC))
-            {
-                control.RenderAs3D = true;
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
-            }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_BAR_DESC))
-            {
-                control.RenderAs3D = true;
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
-            }
-            // disable the combobox
-            this.button1.IsEnabled = false;
-            // get the data needed to show the graph
-            GetDataForGraph(_selectedCountries, ((tbl_indicators)comboBoxIndicatorSelector.SelectedItem).indicator_id_pk);
-            // remove all other graphs from gridChart
-            int childCount = gridChart.Children.Count;
-            for (int i = 0; i < childCount; i++)
-            {
-                gridChart.Children.RemoveAt(0);
-            }
-            // add the chart to the gridChart
-            this.gridChart.Children.Add(control);
         }
 
         private void RefeshButton_Click(object sender, RoutedEventArgs e)
@@ -181,6 +197,36 @@ namespace WorldMap
             if (this.Refresh != null)
             {
                 Refresh(sender, null);
+            }
+        }
+
+        private void buttonExportGraph_Click(object sender, RoutedEventArgs e)
+        {
+            // prompt for a location to save the image
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.DefaultExt = ".jpg";
+                dialog.Filter = "JPEG image|*.jpg|PNG image|*.png|BMP image|*.bmp";
+                if (dialog.ShowDialog() == true)
+                {
+                    WriteableBitmap bitmap = new WriteableBitmap(columnChartControl, null);
+                    // the "using" block ensures the stream is cleared upon completed
+                    using (Stream stream = dialog.OpenFile())
+                    {
+                        // encode the stream
+                        //JPGUtil.EncodeJpg(bitmap, stream);
+                        ImageTools.IO.Encoders.AddEncoder<BmpEncoder>();
+                        ImageTools.IO.Encoders.AddEncoder<PngEncoder>();
+                        ImageTools.IO.Encoders.AddEncoder<JpegEncoder>();
+                        ExtendedImage image = bitmap.ToImage();
+                        image.WriteToStream(stream, dialog.SafeFileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //this.tblError.Text = "Error configuring SaveFileDialog: " + ex.Message;
             }
         }
     }

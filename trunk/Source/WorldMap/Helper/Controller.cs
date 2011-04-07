@@ -590,6 +590,10 @@ namespace WorldMap.Helper
         {
             public List<tbl_tabs> UserFavTabs { get; set; }
         }
+
+        #region functions for rss options
+        #endregion
+
         #endregion
     }
 }

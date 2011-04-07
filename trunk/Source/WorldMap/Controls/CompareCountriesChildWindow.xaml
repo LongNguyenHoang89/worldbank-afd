@@ -12,10 +12,11 @@
         <Grid Height="284" HorizontalAlignment="Left" Margin="12,95,0,0" Name="gridChart" VerticalAlignment="Top" Width="519"></Grid>
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="164,29,0,0" Name="comboBoxRenderStyle" VerticalAlignment="Top" Width="367" />
         <TextBlock Height="20" HorizontalAlignment="Left" Margin="12,33,0,0" Name="label2" VerticalAlignment="Top" Width="120" Text="Render graph as" />
-        <Button Margin="0,58,120,296" HorizontalAlignment="Right" Name="RefeshButton" Click="RefeshButton_Click">
+        <Button Margin="0,58,222,296" HorizontalAlignment="Right" Name="RefeshButton" Click="RefeshButton_Click">
             <Image Source="/WorldMap;component/Image/Refresh_Icon.png"></Image>
         </Button>
-        <Button Content="Render graph" Height="30" HorizontalAlignment="Left" Margin="429,58,0,0" Name="button1" VerticalAlignment="Top" Width="102" Click="button1_Click" />
+        <Button Content="Render graph" Height="30" HorizontalAlignment="Left" Margin="327,58,0,0" Name="button1" VerticalAlignment="Top" Width="102" Click="button1_Click" />
+        <Button Content="Export graph" Height="30" HorizontalAlignment="Left" Margin="435,58,0,0" Name="buttonExportGraph" VerticalAlignment="Top" Width="96" Click="buttonExportGraph_Click" />
     </Grid>
 
 </UserControl>
