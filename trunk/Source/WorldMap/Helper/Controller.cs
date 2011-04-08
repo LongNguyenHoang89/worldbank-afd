@@ -60,20 +60,31 @@ namespace WorldMap.Helper
         public event EventHandler GetCountryWBProject_completed;
 
         public event EventHandler LoadUserData_Completed;
-        public event EventHandler CheckUserCompleted;
-
-        public event EventHandler InsertMsnUser_Completed;
-
-        public event EventHandler DeleteUserCountry_Completed;
-        public event EventHandler InsertUserCountry_Completed;
+        public event EventHandler InsertMsnUser_Completed;        
         public event EventHandler LoadUserCountry_Completed;
         public event EventHandler LoadUserIndicator_Completed;
         public event EventHandler LoadUserGraph_Completed;
 
         /// <summary>
+        /// Event after finish saving CountryList data
+        /// </summary>
+        public event EventHandler SaveCountryListCompleted;
+
+        /// <summary>
         /// Event after search country complete
         /// </summary>
         public event EventHandler SearchCountryByIndicators_Completed;
+
+        /// <summary>
+        /// Event after finish saving IndicatorList data
+        /// </summary>
+        public event EventHandler SaveIndicatorListCompleted;
+
+        /// <summary>
+        /// Event after finish saving IndicatorList data
+        /// </summary>
+        public event EventHandler SaveGraphCompleted;
+
         #endregion
 
         /// <summary>
@@ -279,10 +290,10 @@ namespace WorldMap.Helper
                 LoadUserData_Completed(user, null);
             }
         }
-        
+
 
         public void CheckExist(string cid)
-        {            
+        {
 
             //EntityQuery<View_CountryBorder> query = Context.GetCountryBorderQuery(countryCode);
             Action<LoadOperation<tbl_users>> completeProcessing = delegate(LoadOperation<tbl_users> loadOp)
@@ -298,8 +309,8 @@ namespace WorldMap.Helper
 
             };
             //LoadOperation<View_CountryBorder> loadOperation = Context.Load(query, completeProcessing, true);
-            var loadUser_Data = Context.Load(Context.GetUserQuery(cid),completeProcessing,true);
-            
+            var loadUser_Data = Context.Load(Context.GetUserQuery(cid), completeProcessing, true);
+
         }
 
         public tbl_users GetUser(string cid)
@@ -319,7 +330,7 @@ namespace WorldMap.Helper
 
         void loadUserCountry_Completed(IEnumerable<ref_user_country> r, tbl_users tbl_users, List<ref_user_country> countries)
         {
-            
+
             var a = from n in r
                     where tbl_users.user_id_pk == n.user_id
                     select n;
@@ -333,9 +344,19 @@ namespace WorldMap.Helper
                 Context.ref_user_countries.Add(x);
             }
 
-            Context.SubmitChanges();            
-                        
-        }
+            Action<SubmitOperation> saveComplete = delegate(SubmitOperation comp)
+            {
+                if (!comp.HasError)
+                {
+                    if (SaveCountryListCompleted != null)
+                    {
+                        SaveCountryListCompleted("Your country List has been saved", null);
+                    }
+                }                
+            };
+
+            Context.SubmitChanges(saveComplete, true);
+        }        
 
         public void InsertUserCountry(tbl_users tbl_user, List<ref_user_country> countries)
         {
@@ -350,7 +371,6 @@ namespace WorldMap.Helper
                 {
                     //LogAndNotify(loadOp.Error);
                 }
-
             };
             //LoadOperation<View_CountryBorder> loadOperation = Context.Load(query, completeProcessing, true);
             var loadUser_Data = Context.Load(Context.GetRef_user_countryQuery(), completeProcessing, true);
@@ -362,13 +382,12 @@ namespace WorldMap.Helper
             {
                 LoadUserCountry_Completed(sender, e);
             }
-
         }
 
         public void LoadUserCountry()
         {
             var loadRefUserCountry = Context.Load(Context.GetRef_user_countryQuery());
-            loadRefUserCountry.Completed += new EventHandler(loadRefUserCountry_Completed);            
+            loadRefUserCountry.Completed += new EventHandler(loadRefUserCountry_Completed);
         }
 
         public List<ref_user_country> LoadRefUserCountry(tbl_users tbl_user)
@@ -387,8 +406,8 @@ namespace WorldMap.Helper
         #endregion
 
         #region Save n load indicators
-        public void SaveIndicatorList(List<int> listIndicator,tbl_users user)
-        {            
+        public void SaveIndicatorList(List<int> listIndicator, tbl_users user)
+        {
             //EntityQuery<View_CountryBorder> query = Context.GetCountryBorderQuery(countryCode);
             Action<LoadOperation<ref_user_indicator>> completeProcessing = delegate(LoadOperation<ref_user_indicator> loadOp)
             {
@@ -423,10 +442,22 @@ namespace WorldMap.Helper
                 var x = from n in Context.ref_user_indicators
                         where (n.user_id == ref_user_indicator.user_id) && (n.indicator_id == i)
                         select n;
-                if (x.Count()==0)
+                if (x.Count() == 0)
                     Context.ref_user_indicators.Add(ref_user_indicator);
-            }
-            Context.SubmitChanges();
+            }            
+
+            Action<SubmitOperation> saveComplete = delegate(SubmitOperation comp)
+            {
+                if (!comp.HasError)
+                {
+                    if (SaveIndicatorListCompleted != null)
+                    {
+                        SaveIndicatorListCompleted("Your Indicator List has been saved", null);
+                    }
+                }
+            };
+
+            Context.SubmitChanges(saveComplete, true);
         }
 
         public void LoadUserIndicator()
@@ -447,8 +478,8 @@ namespace WorldMap.Helper
         public List<ref_user_indicator> LoadRefUserIndicator(tbl_users tbl_user)
         {
             var ref_user_indicator = from n in Context.ref_user_indicators
-                                   where n.user_id == tbl_user.user_id_pk
-                                   select n;
+                                     where n.user_id == tbl_user.user_id_pk
+                                     select n;
             List<ref_user_indicator> listIndicators = new List<ref_user_indicator>();
             foreach (var a in ref_user_indicator)
             {
@@ -462,7 +493,7 @@ namespace WorldMap.Helper
 
         public void SearchCountryByIndicator(int indicatorId, int year, int? fromValue, int? toValue)
         {
-            EntityQuery<ref_country_indicator> query = Context.GetCountryByIndicatorsQuery(indicatorId,year,fromValue,toValue);
+            EntityQuery<ref_country_indicator> query = Context.GetCountryByIndicatorsQuery(indicatorId, year, fromValue, toValue);
             Action<LoadOperation<ref_country_indicator>> completeProcessing = delegate(LoadOperation<ref_country_indicator> loadOp)
             {
                 if (!loadOp.HasError)
@@ -509,7 +540,6 @@ namespace WorldMap.Helper
             }
 
             return graphs;
-
         }
 
         void loadUserGraph_Completed(object sender, EventArgs e)
@@ -522,8 +552,22 @@ namespace WorldMap.Helper
 
         public void saveGraph(tbl_graphs graph)
         {
+            //Temporary graphId
+            graph.graph_id_pk = -1;
+
             Context.tbl_graphs.Add(graph);
-            var a = Context.SubmitChanges();
+
+            Action<SubmitOperation> saveComplete = delegate(SubmitOperation comp)
+            {
+                if (!comp.HasError)
+                {
+                    if (SaveGraphCompleted != null)
+                    {
+                        SaveGraphCompleted("Your Graph has been saved", null);
+                    }
+                }
+            };
+            Context.SubmitChanges(saveComplete, true);            
         }
 
         #endregion
@@ -534,7 +578,7 @@ namespace WorldMap.Helper
         public void GetUserFavTab(tbl_users user)
         {
             loadRefUserTab = Context.Load(from n in Context.GetRef_user_tabQuery()
-                                                        where n.user_id == user.user_id_pk
+                                          where n.user_id == user.user_id_pk
                                           select n);
             loadRefUserTab.Completed += new EventHandler(loadRefUserTab_Completed);
         }

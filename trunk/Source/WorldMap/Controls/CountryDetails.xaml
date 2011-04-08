@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" d:DesignHeight="389">
 
-    <basics:TabControl HorizontalAlignment="Stretch" Name="tabControl1" SelectionChanged="tabControl1_SelectionChanged" Height="385" Width="626">
+
+    <basics:TabControl HorizontalAlignment="Stretch" Name="tabControl1" SelectionChanged="tabControl1_SelectionChanged">
         <basics:TabItem Header="Country Overview" Name="OverviewTab">
             <Grid x:Name="LayoutRoot" Background="White">
                 <Grid.RowDefinitions>
@@ -64,7 +65,7 @@
                         <RowDefinition Height="35"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <ListBox Name="IndicatorListBox">
+                    <ListBox Name="IndicatorListBox" Margin="5,0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid HorizontalAlignment="Stretch" ToolTipService.ToolTip="{Binding indicator_description}">
@@ -78,10 +79,10 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <ComboBox Name="comboBoxRenderStyle" Grid.Row="1" Height="23"></ComboBox>
+                    <ComboBox Name="comboBoxRenderStyle" Grid.Row="1" Height="23" Margin="5,0"></ComboBox>
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <Button  Margin="5" Name="buttonRenderChart" Click="buttonRenderChart_Click" IsEnabled="False">Render chart</Button>
-                        <Button  Margin="5" Name="ButtonSaveShortCut" IsEnabled="False" Click="ButtonSaveShortCut_Click">
+                        <Button  Margin="5" Name="ButtonSaveShortCut" IsEnabled="False" Click="ButtonSaveShortCut_Click" Visibility="Collapsed">
                             <Image Source="/WorldMap;component/Image/BookMark_Icon.png"></Image>
                         </Button>
                         <Button Content="Export Image" IsEnabled="False" Height="23" Name="button1" Width="87" Click="button1_Click" />
@@ -181,7 +182,7 @@
                 </Border>
             </Grid>
         </basics:TabItem>
-        <basics:TabItem Name="tabItem_news" Header="News">
+        <basics:TabItem Name="tabItem_news" Header="News" Visibility="Collapsed">
             <Grid>
                 <ListBox Name="listBoxFeedList" Width="150" HorizontalAlignment="Left" VerticalAlignment="Stretch" SelectionChanged="listBoxFeedList_SelectionChanged" Margin="0,29,0,0" />
                 <TextBox Name="textBoxFeedContent" Width="364" HorizontalAlignment="Right" VerticalAlignment="Stretch" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsEnabled="True" IsReadOnly="True" Margin="0,29" />

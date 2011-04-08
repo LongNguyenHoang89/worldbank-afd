@@ -58,15 +58,6 @@ namespace WorldMap
             //Event Handler
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
             this.MyWorkSpace.FullScreenButton.Click += new RoutedEventHandler(FullScreenButton_Click);
-
-            try
-            {
-                string Indicator = System.Windows.Browser.HtmlPage.Document.QueryString["Ind"];
-                string Country = System.Windows.Browser.HtmlPage.Document.QueryString["Cou"];
-            }
-            catch (Exception e)
-            {
-            }
         }
 
         void FullScreenButton_Click(object sender, RoutedEventArgs e)
@@ -94,6 +85,9 @@ namespace WorldMap
             this.WorldMapController.LoadInitDataCompleted += new EventHandler(WorldMapController_LoadInitDataCompleted);
             this.WorldMapController.GetView_TabIndicatorQueryCompleted += new EventHandler(WorldMapController_GetView_TabIndicatorQueryCompleted);
             this.WorldMapController.GetBorder_completed += new EventHandler(WorldMapController_GetBorder_completed);
+            this.WorldMapController.SaveCountryListCompleted += new EventHandler(WorldMapController_SaveCountryListCompleted);
+            this.WorldMapController.SaveIndicatorListCompleted += new EventHandler(WorldMapController_SaveIndicatorListCompleted);
+            this.WorldMapController.SaveGraphCompleted += new EventHandler(WorldMapController_SaveGraphCompleted);
 
             //Populate Helper for workspace
             this.MyWorkSpace.InitializeController(this.WorldMapController);
@@ -110,6 +104,7 @@ namespace WorldMap
             this.MyWorkSpace.TradeDataControl.Complete += new EventHandler(TradeDataControl_Complete);
             this.MyWorkSpace.SearchCountryByIndicators_Completed += new EventHandler(MyWorkSpace_SearchCountryByIndicators_Completed);
             this.MyWorkSpace.MapNavigation += new EventHandler(MyWorkSpace_MapNavigation);
+            this.MyWorkSpace.ShorcutView += new EventHandler(MyWorkSpace_ShorcutView);
 
             //save indicator event
             this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
@@ -208,6 +203,16 @@ namespace WorldMap
             DraggablePushpin DefaultPushPin = new DraggablePushpin(PushPinLayer, new Random());
             PushPinPanel.Children.Add(DefaultPushPin);
             DefaultPushPin.Pinned += new EventHandler(DefaultPushPin_Pinned);
+
+            try
+            {
+                string Country = System.Windows.Browser.HtmlPage.Document.QueryString["a"];
+                string IndicatorId = System.Windows.Browser.HtmlPage.Document.QueryString["b"];
+                this.KFC(Country, IndicatorId);
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         void DefaultPushPin_Pinned(object sender, EventArgs e)
@@ -256,9 +261,7 @@ namespace WorldMap
              */
 
             MyWorkSpace.CountryDetailsControl.PopulateData(WorldMapController, thisPinOnCountry, MyWorkSpace.IndicatorIDList);
-            MyWorkSpace.MainTabControl.SelectedIndex = 2;
-
-            LoadGraph(thisPinOnCountry, MyWorkSpace.IndicatorIDList);
+            MyWorkSpace.MainTabControl.SelectedIndex = 2;            
         }
 
         void CreateCountryPushPin(DraggablePushpin pushpin)
@@ -414,7 +417,7 @@ namespace WorldMap
 
         }
 
-        private void drawArrow(Location start, Location end, string value)
+        void drawArrow(Location start, Location end, string value)
         {
             double changeY = start.Latitude - end.Latitude;
             double changeX = start.Longitude - end.Longitude;
@@ -625,10 +628,35 @@ namespace WorldMap
             }
         }
 
-        private void HelpToggleButton_Click(object sender, RoutedEventArgs e)
+        void LoadCountryPushpin(Location loc, Random seed)
+        {
+            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer, seed);
+            pushPin.IsOnMap = true;
+            PushPinLayer.AddChild(pushPin, loc);
+            pushPin.Location = loc;
+
+            _isAddingNewPushPin = true;
+            ReverseGeocodeLocation(pushPin);
+            pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
+            pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
+        }
+
+        void HelpToggleButton_Click(object sender, RoutedEventArgs e)
         {
             About b = new About();
             b.Show();
+        }
+
+        void InitializeAfterLoggigIn()
+        {
+            MyWorkSpace.InitializeAfterLogin();
+            SaveCountry.Visibility = Visibility.Visible;
+        }
+
+        void InitializeAfterLoggigOut()
+        {
+            MyWorkSpace.InitializeAfterLogout();
+            SaveCountry.Visibility = Visibility.Collapsed;
         }
 
         #region Reverse Geocode region
@@ -929,20 +957,7 @@ namespace WorldMap
         }
 
         #endregion
-
-        public void LoadCountryPushpin(Location loc, Random seed)
-        {
-            DraggablePushpin pushPin = new DraggablePushpin(PushPinLayer, seed);
-            pushPin.IsOnMap = true;
-            PushPinLayer.AddChild(pushPin, loc);
-            pushPin.Location = loc;
-
-            _isAddingNewPushPin = true;
-            ReverseGeocodeLocation(pushPin);
-            pushPin.Pinned += new EventHandler(MapPushpin_Pinned);
-            pushPin.Clicked += new EventHandler(MapPushpin_Clicked);
-        }
-
+       
         #region workspace save n load
 
         private void SaveCountry_Click(object sender, RoutedEventArgs e)
@@ -988,6 +1003,8 @@ namespace WorldMap
                 WorldMapController.LoadUserIndicator();
                 WorldMapController.LoadUserGraph_Completed += new EventHandler(WorldMapController_LoadUserGraph_Completed);
                 WorldMapController.LoadUserGraph();
+
+                InitializeAfterLoggigIn();
             }
         }
 
@@ -1006,13 +1023,12 @@ namespace WorldMap
             }
             WorldMapController.InsertUserCountry(tbl_user, countryList);
         }
-        private void SaveIndicatorList()
-        {
-        }
+
         void WorldMapController_LoadUserCountry_Completed(object sender, EventArgs e)
         {
             LoadCountryList();
         }
+
         private void LoadCountryList()
         {
             List<ref_user_country> user_countries = WorldMapController.LoadRefUserCountry(user);
@@ -1027,6 +1043,7 @@ namespace WorldMap
             //LoadCountryPushpin(new Location(-34.61180, -58.41730), backgroundSeed);
             //LoadCountryPushpin(new Location(45.42150, -75.69190), backgroundSeed);
         }
+
         private void LoadIndicatorList()
         {
             List<ref_user_indicator> user_indicators = WorldMapController.LoadRefUserIndicator(user);
@@ -1036,6 +1053,16 @@ namespace WorldMap
                 indicatorList.Add(user_indicator.indicator_id);
             }
             this.MyWorkSpace.LoadIndicatorsList(indicatorList);
+        }
+
+        void WorldMapController_SaveCountryListCompleted(object sender, EventArgs e)
+        {
+            ChildWindow ch = new ChildWindow();
+            ch.Content = new TextBlock
+            {
+                Text = sender.ToString()
+            };
+            ch.Show();
         }
 
         #endregion
@@ -1051,12 +1078,72 @@ namespace WorldMap
         {
             LoadIndicatorList();
         }
+
+        void WorldMapController_SaveIndicatorListCompleted(object sender, EventArgs e)
+        {
+            ChildWindow ch = new ChildWindow();
+            ch.Content = new TextBlock
+            {
+                Text = sender.ToString()
+            };
+            ch.Show();
+        }
         #endregion
 
         #region Load Graph By Shortcut
 
+        private void KFC(string countryName, string IndicatorId)
+        {
+            List<int> iList = new List<int>();
+            iList.Add(int.Parse(IndicatorId));
+
+            tbl_countries c = WorldMapController.GetCountry(countryName);
+
+            CustomChildWindow flotwin = new CustomChildWindow(WorldMapController, c, iList);
+            flotwin.Title = countryName;
+
+            System.Windows.Controls.Primitives.Popup popup = new System.Windows.Controls.Primitives.Popup();            
+            flotwin.MouseLeftButtonDown += (a, x) =>
+            {
+                this.LayoutRoot.Children.Remove(popup);
+                this.LayoutRoot.Children.Add(popup);
+                popup.IsOpen = true;
+            };
+
+            flotwin.Closing += (ss, ee) =>
+            {
+                popup.IsOpen = false;
+            };
+            popup.Child = flotwin;
+            popup.IsOpen = true;
+
+
+            LayoutRoot.Children.Add(popup);
+        }
+
         private void LoadGraph(tbl_countries country, List<int> indicatorIdList)
         {
+            CustomChildWindow flotwin = new CustomChildWindow(WorldMapController, country, indicatorIdList);
+            flotwin.Title = country.country_name;
+
+            System.Windows.Controls.Primitives.Popup popup = new System.Windows.Controls.Primitives.Popup();            
+
+            flotwin.MouseLeftButtonDown += (a, x) =>
+            {
+                this.LayoutRoot.Children.Remove(popup);
+                this.LayoutRoot.Children.Add(popup);
+                popup.IsOpen = true;
+            };
+
+            flotwin.Closing += (ss, ee) =>
+            {
+                popup.IsOpen = false;
+            };
+            popup.Child = flotwin;
+            popup.IsOpen = true;
+
+            LayoutRoot.Children.Add(popup);
+
             //CustomChildWindow window = new CustomChildWindow(WorldMapController, country, indicatorIdList);
             //window.Show();
         }
@@ -1064,26 +1151,7 @@ namespace WorldMap
         public void LoadUserGraph()
         {
             List<tbl_graphs> graphs = WorldMapController.LoadUserGraph(user);
-            tbl_countries tbl_country = new tbl_countries();
-            List<int> indicatorIdList = new List<int>();
-            foreach (tbl_graphs graph in graphs)
-            {
-                indicatorIdList.Clear();
-                string country_list = graph.country_list;
-                string[] countries = country_list.Split('|');
-                foreach (string country in countries)
-                {
-                    tbl_country.country_id_pk = Int32.Parse(country);
-                }
-                string indicator_list = graph.indicator_list;
-                string[] indicators = graph.indicator_list.Split('|');
-                foreach (string indicator in indicators)
-                {
-                    indicatorIdList.Add(Int32.Parse(indicator));
-                }
-            }
-
-            LoadGraph(tbl_country, indicatorIdList);
+            MyWorkSpace.PopulateShortcutListbox(graphs);
         }
 
         private void WorldMapController_LoadUserGraph_Completed(object sender, EventArgs e)
@@ -1106,11 +1174,48 @@ namespace WorldMap
                     graph.indicator_list += i.indicator_id_pk + "|";
             }
 
+
             graph.country_list = MyWorkSpace.CountryDetailsControl._selectedCountry.country_id_pk + "";
             WorldMapController.saveGraph(graph);
         }
-        #endregion
 
+        void WorldMapController_SaveGraphCompleted(object sender, EventArgs e)
+        {
+            ChildWindow ch = new ChildWindow();
+            ch.Content = new TextBlock
+            {
+                Text = sender.ToString()
+            };
+            ch.Show();
+
+            MyWorkSpace.PopulateShortcutListbox(WorldMapController.Context.tbl_graphs.ToList());
+        }
+
+        void MyWorkSpace_ShorcutView(object sender, EventArgs e)
+        {
+            tbl_graphs graph = sender as tbl_graphs;
+
+            tbl_countries tbl_country = new tbl_countries();
+
+            List<int> indicatorIdList = new List<int>();
+            string country_list = graph.country_list;
+            string[] countries = country_list.Split('|');
+            foreach (string country in countries)
+            {
+                tbl_country = WorldMapController.GetCountry(Int32.Parse(country));
+            }
+
+            string indicator_list = graph.indicator_list;
+            string[] indicators = graph.indicator_list.Split('|');
+            foreach (string indicator in indicators)
+            {
+                indicatorIdList.Add(Int32.Parse(indicator));
+            }
+
+            LoadGraph(tbl_country, indicatorIdList);
+        }
+        #endregion
+        
         #region Search Country
         void MyWorkSpace_SearchCountryByIndicators_Completed(object sender, EventArgs e)
         {

@@ -4,8 +4,6 @@ using System.ServiceModel.DomainServices.Client;
 using System.Windows;
 using System.Windows.Controls;
 using NCRVisual.web.DataModel;
-using Microsoft.Maps.MapControl;
-using Microsoft.Maps.MapControl.Navigation;
 using WorldMap.Helper;
 
 namespace WorldMap
@@ -14,7 +12,7 @@ namespace WorldMap
     {
         private List<int> _indicatorIDList;
         private Controller _workspacehelper;
-    
+
         /// <summary>
         /// Get or set the List of Indicators that user concerns
         /// </summary>       
@@ -42,6 +40,11 @@ namespace WorldMap
         public event EventHandler SaveIndicatorButton_Completed;
         public event EventHandler SearchCountryByIndicators_Completed;
         public event EventHandler MapNavigation;
+
+        /// <summary>
+        /// Event after clicking view shortcut
+        /// </summary>
+        public event EventHandler ShorcutView;
         #endregion
 
         /// <summary>
@@ -122,11 +125,31 @@ namespace WorldMap
             }
         }
 
+        /// <summary>
+        /// Action after login in
+        /// </summary>
+        public void InitializeAfterLogin()
+        {
+            this.CountryDetailsControl.ButtonSaveShortCut.Visibility = Visibility.Visible;
+            this.CountryDetailsControl.tabItem_news.Visibility = Visibility.Visible;
+            SaveIndicatorButton.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Action after login out
+        /// </summary>
+        public void InitializeAfterLogout()
+        {
+            this.CountryDetailsControl.ButtonSaveShortCut.Visibility = Visibility.Collapsed;
+            this.CountryDetailsControl.tabItem_news.Visibility = Visibility.Collapsed;
+            SaveIndicatorButton.Visibility = Visibility.Collapsed;
+        }
+
         private void SaveIndicatorButton_Click(object sender, RoutedEventArgs e)
         {
             SaveIndicatorButton_Completed(sender, e);
         }
-
+    
         /// <summary>
         /// Load Indicator List after user login
         /// </summary>
@@ -193,7 +216,7 @@ namespace WorldMap
 
         private void SearchByIndicatorResultListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            tbl_countries country = (sender as ListBox).SelectedItem as tbl_countries;            
+            tbl_countries country = (sender as ListBox).SelectedItem as tbl_countries;
             if (MapNavigation != null && country != null)
             {
                 MapNavigation(country, null);
@@ -208,6 +231,31 @@ namespace WorldMap
             this.SearchByIndicatorResultListBox.ItemsSource = result;
         }
 
+        #endregion
+
+        #region Shortcut tab
+        /// <summary>
+        /// Load Shortcut list box
+        /// </summary>
+        /// <param name="shortcutList"></param>
+        public void PopulateShortcutListbox(List<tbl_graphs> shortcutList)
+        {
+            this.ShortcutListBox.ItemsSource = shortcutList;
+        }
+
+        private void ViewShortcut_Click(object sender, RoutedEventArgs e)
+        {
+            tbl_graphs graph = ((sender as Image).Parent as Grid).DataContext as tbl_graphs;
+            if (ShorcutView != null)
+            {
+                ShorcutView(graph, null);
+            }
+        }
+
+        private void RemoveShortCut_click(object sender, RoutedEventArgs e)
+        {
+            //this.ShortcutListBox.Items.Remove( sender as but
+        }
         #endregion
     }
 }

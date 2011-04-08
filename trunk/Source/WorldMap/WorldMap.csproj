@@ -64,6 +64,24 @@
     <Reference Include="BingMapsSL.MultiShape">
       <HintPath>..\..\Libs\Bing Maps Multi Shape\BingMapsSL.MultiShape.dll</HintPath>
     </Reference>
+    <Reference Include="ImageTools">
+      <HintPath>..\..\Libs\ImageTools\ImageTools.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Bmp">
+      <HintPath>..\..\Libs\ImageTools\ImageTools.IO.Bmp.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Gif">
+      <HintPath>..\..\Libs\ImageTools\ImageTools.IO.Gif.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Jpeg">
+      <HintPath>..\..\Libs\ImageTools\ImageTools.IO.Jpeg.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Png">
+      <HintPath>..\..\Libs\ImageTools\ImageTools.IO.Png.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Utils">
+      <HintPath>..\..\Libs\ImageTools\ImageTools.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Drawing" />
     <Reference Include="Microsoft.Expression.Effects" />
     <Reference Include="Microsoft.Expression.Interactions" />
@@ -186,18 +204,14 @@
     <None Include="Service References\RSSFeedService\RSSFeedService1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Resource Include="Image\View.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <Resource Include="Image\Remove.png" />
     <Resource Include="Image\export.png" />
     <Resource Include="Image\import.png" />
-    <Resource Include="Image\Earth.png" />
-    <Resource Include="Image\Globe.png" />
-    <Resource Include="Image\Indicator.png" />
     <Resource Include="Image\Help.png" />
     <Resource Include="Image\Compare.png" />
     <Resource Include="Image\TradeData.png" />
-    <Resource Include="Image\Feeds.png" />
-    <Resource Include="Image\VIE.png" />
     <Resource Include="Image\Project.png" />
     <Resource Include="Image\Country_Icon.png" />
     <Resource Include="Image\Navigation_Icon.png" />

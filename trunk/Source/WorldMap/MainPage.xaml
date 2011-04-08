@@ -155,7 +155,7 @@
                     </ListBox.ItemsPanel>
                 </ListBox>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
-                    <Button Height="40" Margin="0,0,10,0" x:Name="SaveCountry" ToolTipService.ToolTip="Save Country Data" Click="SaveCountry_Click">
+                    <Button Height="40" Margin="0,0,10,0" x:Name="SaveCountry" ToolTipService.ToolTip="Save Country Data" Click="SaveCountry_Click" Visibility="Collapsed">
                         <Image Source="Image/TradeData.png"/>
                     </Button>
                 </StackPanel>
