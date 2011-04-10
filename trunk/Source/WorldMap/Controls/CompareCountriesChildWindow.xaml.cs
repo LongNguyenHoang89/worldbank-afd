@@ -32,7 +32,7 @@ namespace WorldMap
         private LoadOperation<tbl_indicators> tblIndLoadOp = null;
         private LoadOperation<ref_country_indicator> loadOp = null;
 
-        public event EventHandler Refresh;
+        public event EventHandler RefreshControl;
 
         /// <summary>
         /// Default constructor
@@ -40,6 +40,7 @@ namespace WorldMap
         public CompareCountriesChildWindow()
         {
             InitializeComponent();
+            this.RefeshButton.Click += new RoutedEventHandler(RefeshButton_Click);
         }
 
         /// <summary>
@@ -194,9 +195,9 @@ namespace WorldMap
 
         private void RefeshButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Refresh != null)
+            if (this.RefreshControl != null)
             {
-                Refresh(sender, null);
+                RefreshControl(sender, null);
             }
         }
 

@@ -78,7 +78,7 @@ namespace WorldMap
             user.user_id_pk = 4;
 
             //Populate event for workspace
-            this.MyWorkSpace.CompareControl.Refresh += new EventHandler(CompareControl_Refresh);
+            this.MyWorkSpace.CompareControl.RefreshControl += new EventHandler(CompareControl_Refresh);
             this.MyWorkSpace.CountryDetailsControl.mainPage = this;
             this.MyWorkSpace.CountryDetailsControl._worldMapController = this.WorldMapController;
             this.MyWorkSpace.TradeDataControl.Refresh += new EventHandler(TradeDataControl_Refresh);
@@ -286,6 +286,7 @@ namespace WorldMap
             CheckBox chk = new CheckBox();
             chk.VerticalAlignment = VerticalAlignment.Center;
             chk.Margin = new Thickness(5, 0, 5, 0);
+            chk.IsChecked = true;
 
             panel.Children.Add(chk);
             panel.Children.Add(bt);
