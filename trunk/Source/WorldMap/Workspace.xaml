@@ -25,7 +25,7 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <sdk:TabControl Name="MainTabControl" VerticalAlignment="Top" TabStripPlacement="Left" SelectedIndex="4" Background="{x:Null}" BorderBrush="{x:Null}">
-            <sdk:TabItem Name="NavigationTabItem" BorderBrush="#FF354452">
+            <sdk:TabItem Name="NavigationTabItem">
                 <sdk:TabItem.Header>
                     <Image Source="/WorldMap;component/Image/Navigation_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Navigation"></Image>
                 </sdk:TabItem.Header>
@@ -37,39 +37,50 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <StackPanel Margin="5" Background="White">
-                    <Border Margin="10" CornerRadius="5" Background="Gray">
-                        <TextBlock Text="SET VIEW POINT" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
-                    </Border>
-                    <StackPanel Margin="10,0,0,0">
-                        <RadioButton>Road</RadioButton>
-                    </StackPanel>
-                    <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
-                        <RadioButton>Aerial</RadioButton>
-                        <CheckBox Margin="20,0,10,0">Aerial with Labels</CheckBox>
-                    </StackPanel>
-
-                    <StackPanel Margin="10,10,0,0">
-                        <CheckBox IsChecked="True" Name="ShowPushpinLayerCheckBox">Show pushpin layer</CheckBox>
-                        <CheckBox IsChecked="True" Name="ShowMarkupLayerCheckBox">Show markup layer</CheckBox>
-                        <CheckBox IsChecked="True" Name="ShowTradeDataLayerCheckBox">Show trade data layer</CheckBox>
-                    </StackPanel>
-
-                    <StackPanel Margin="10,10,0,0">
-                        <Button Width="40" Height="20" Margin="0,0,0,10">up</Button>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Width="40" Height="20" Margin="0,0,20,0"></Button>
-                            <Button Name="FullScreenButton">Fullscreen</Button>
-                            <Button Width="40" Height="20" Margin="20,0,0,0"></Button>
+                        <Border Margin="10" CornerRadius="5" Background="Gray">
+                            <TextBlock Text="SET VIEW POINT" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
+                        </Border>
+                        <StackPanel Margin="10,0,0,0">
+                            <RadioButton Name="RoadModeRadioButton" Checked="RoadModeRadioButton_Checked" GroupName="MapModeSelection">Road</RadioButton>
+                            <RadioButton Name="AerialModeRadioButton" Checked="AerialModeRadioButton_Checked" GroupName="MapModeSelection">Aerial</RadioButton>
+                            <RadioButton Name="AerialWithLablesCheckBox" Checked="AerialWithLablesCheckBox_Checked" GroupName="MapModeSelection">Aerial with Labels</RadioButton>                                
                         </StackPanel>
-                        <Button Width="40" Height="20" Margin="0,10,0,0">down</Button>                        
-                    </StackPanel>
+                        <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                            
+                        </StackPanel>
 
-                    <TextBlock Margin="10,10,10,5">Search by name (ex: Viet Nam)</TextBlock>
-                    <StackPanel Margin="10,0,0,10" Orientation="Horizontal">
-                        <TextBox Height="20" Width="200"></TextBox>
-                        <Button Margin="10,0">Search</Button>
-                    </StackPanel>                    
-                </StackPanel>
+                        <StackPanel Margin="10,10,0,0">
+                            <CheckBox Checked="ShowPushpinLayerCheckBox_Checked" Unchecked="ShowPushpinLayerCheckBox_Unchecked" Name="ShowPushpinLayerCheckBox">Show pushpin layer</CheckBox>
+                            <CheckBox Checked="ShowMarkupLayerCheckBox_Checked" Unchecked="ShowMarkupLayerCheckBox_Unchecked" Name="ShowMarkupLayerCheckBox">Show markup layer</CheckBox>
+                            <CheckBox Checked="ShowTradeDataLayerCheckBox_Checked" Unchecked="ShowTradeDataLayerCheckBox_Unchecked" Name="ShowTradeDataLayerCheckBox">Show trade data layer</CheckBox>
+                        </StackPanel>                        
+                        <Grid Margin="10,10,0,0" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Column="1" Source="/WorldMap;component/Image/Up.png" Width="20" Height="20" MouseLeftButtonDown="MoveUpButton_Click"></Image>
+                            <Image Grid.Column="1" Grid.Row="2" Source="/WorldMap;component/Image/Down.png" Width="20" Height="20" MouseLeftButtonDown="MoveDownButton_Click"></Image>
+                            <Image Grid.Row="1" Source="/WorldMap;component/Image/Left.png" Width="20" Height="20" MouseLeftButtonDown="MoveLeftButton_Click"></Image>
+                            <Image Grid.Row="1" Grid.Column="2" Source="/WorldMap;component/Image/Right.png" Width="20" Height="20" MouseLeftButtonDown="MoveRightButton_Click"></Image>
+                            <Image Grid.Row="1" Grid.Column="1" Source="/WorldMap;component/Image/Fullscreen.png" Width="20" Height="20" MouseLeftButtonDown="FullscreenButton_Click"></Image>
+                            <Image Grid.Row="2" Grid.Column="3" Source="/WorldMap;component/Image/zoomout.png" Width="20" Height="20" MouseLeftButtonDown="ZoomOutButton_Click"></Image>
+                            <Image Grid.Column="3" Source="/WorldMap;component/Image/zoomin.png" Width="20" Height="20" MouseLeftButtonDown="ZoomInButton_Click"></Image>
+                        </Grid>
+
+                        <TextBlock Margin="10,10,10,5">Search by name (ex: Viet Nam)</TextBlock>
+                        <StackPanel Margin="10,0,0,10" Orientation="Horizontal">
+                            <TextBox Height="20" Width="200"></TextBox>
+                            <Button Margin="10,0">Search</Button>
+                        </StackPanel>
+                    </StackPanel>
                 </Border>
             </sdk:TabItem>
             <sdk:TabItem Name="SearchTabItem">
@@ -82,7 +93,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
-                                    <ColumnDefinition/>                                    
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid Margin="5">
@@ -115,9 +126,9 @@
                                     <Border Margin="10,15" CornerRadius="5" Background="Gray">
                                         <TextBlock Text="RESULT" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
                                     </Border>
-                                    <ListBox Margin="10,0" Width="150" Height="130" x:Name="SearchByIndicatorResultListBox" SelectionChanged="SearchByIndicatorResultListBox_SelectionChanged" DisplayMemberPath="country_name">                                        
+                                    <ListBox Margin="10,0" Width="150" Height="130" x:Name="SearchByIndicatorResultListBox" SelectionChanged="SearchByIndicatorResultListBox_SelectionChanged" DisplayMemberPath="country_name">
                                     </ListBox>
-                                </StackPanel>                                
+                                </StackPanel>
                             </Grid>
                         </Border>
                     </sdk:TabItem>
@@ -164,9 +175,9 @@
                             <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
                                 <TextBlock Text="FAVOURITED DATA" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
                             </Border>
-                            <ListBox Name="ShortcutListBox">                                                                
-                                <ListBox.ItemTemplate>                                    
-                                    <DataTemplate>                                        
+                            <ListBox Name="ShortcutListBox">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
                                         <Grid Width="200">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"></ColumnDefinition>

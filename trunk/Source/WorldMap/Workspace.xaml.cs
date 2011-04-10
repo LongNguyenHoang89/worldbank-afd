@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using NCRVisual.web.DataModel;
 using WorldMap.Helper;
+using Microsoft.Maps.MapControl;
 
 namespace WorldMap
 {
@@ -149,7 +150,7 @@ namespace WorldMap
         {
             SaveIndicatorButton_Completed(sender, e);
         }
-    
+
         /// <summary>
         /// Load Indicator List after user login
         /// </summary>
@@ -255,6 +256,155 @@ namespace WorldMap
         private void RemoveShortCut_click(object sender, RoutedEventArgs e)
         {
             //this.ShortcutListBox.Items.Remove( sender as but
+        }
+        #endregion
+
+        #region Navigation Event
+
+        private void MoveUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            int delta = 50;
+
+            Point viewportPoint;
+            if (map.TryLocationToViewportPoint(map.Center, out viewportPoint))
+            {
+                viewportPoint.Y -= delta;
+                Location newCenter;
+                if (map.TryViewportPointToLocation(viewportPoint, out newCenter))
+                {
+                    map.Center = newCenter;
+                }
+            }
+        }
+
+        private void MoveLeftButton_Click(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            int delta = 50;
+
+            Point viewportPoint;
+            if (map.TryLocationToViewportPoint(map.Center, out viewportPoint))
+            {
+                viewportPoint.X -= delta;
+                Location newCenter;
+                if (map.TryViewportPointToLocation(viewportPoint, out newCenter))
+                {
+                    map.Center = newCenter;
+                }
+            }
+        }
+
+        private void MoveRightButton_Click(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            int delta = 50;
+
+            Point viewportPoint;
+            if (map.TryLocationToViewportPoint(map.Center, out viewportPoint))
+            {
+                viewportPoint.X += delta;
+                Location newCenter;
+                if (map.TryViewportPointToLocation(viewportPoint, out newCenter))
+                {
+                    map.Center = newCenter;
+                }
+            }
+        }
+
+        private void MoveDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            int delta = 50;
+
+            Point viewportPoint;
+            if (map.TryLocationToViewportPoint(map.Center, out viewportPoint))
+            {
+                viewportPoint.Y += delta;
+                Location newCenter;
+                if (map.TryViewportPointToLocation(viewportPoint, out newCenter))
+                {
+                    map.Center = newCenter;
+                }
+            }
+        }
+
+        private void FullscreenButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = (Image)sender;
+            App.Current.Host.Content.IsFullScreen = !App.Current.Host.Content.IsFullScreen;
+
+            bool fullScreen = App.Current.Host.Content.IsFullScreen;
+        }
+        #endregion
+
+        #region Map Mode
+        private void RoadModeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Mode = new RoadMode();
+        }
+
+        private void AerialModeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Mode = new AerialMode(false);
+        }
+
+        private void AerialWithLablesCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Mode = new AerialMode(true);
+        }
+
+        private void ShowPushpinLayerCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Children[1].Visibility = Visibility.Visible;
+            map.Children[3].Visibility = Visibility.Visible;
+        }
+
+        private void ShowPushpinLayerCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Children[1].Visibility = Visibility.Collapsed;
+            map.Children[3].Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowMarkupLayerCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Children[2].Visibility = Visibility.Visible;
+        }
+
+        private void ShowMarkupLayerCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Children[2].Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowTradeDataLayerCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Children[0].Visibility = Visibility.Visible;
+        }
+
+        private void ShowTradeDataLayerCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.Children[0].Visibility = Visibility.Collapsed;
+        }
+
+        private void ZoomOutButton_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.ZoomLevel -= 1;
+        }
+
+        private void ZoomInButton_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Map map = (this.Parent as Grid).Children[0] as Map;
+            map.ZoomLevel += 1;
         }
         #endregion
     }

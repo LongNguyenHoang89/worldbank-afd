@@ -38,12 +38,7 @@ namespace WorldMap
         /// <summary>
         /// public controller
         /// </summary>
-        public Controller WorldMapController { get; set; }
-
-        /// <summary>
-        /// Map Layer for custom pushpin
-        /// </summary>
-        public MapLayer PushPinLayer { get; set; }
+        public Controller WorldMapController { get; set; }     
 
         public tbl_users user = new tbl_users();//{ get; set; }
         #endregion
@@ -56,21 +51,7 @@ namespace WorldMap
             InitializeComponent();
 
             //Event Handler
-            this.Loaded += new RoutedEventHandler(MainPage_Loaded);
-            this.MyWorkSpace.FullScreenButton.Click += new RoutedEventHandler(FullScreenButton_Click);
-        }
-
-        void FullScreenButton_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = (Button)sender;
-            App.Current.Host.Content.IsFullScreen = !App.Current.Host.Content.IsFullScreen;
-
-            bool fullScreen = App.Current.Host.Content.IsFullScreen;
-
-            if (fullScreen)
-                btn.Content = "ON";
-            else
-                btn.Content = "OFF";
+            this.Loaded += new RoutedEventHandler(MainPage_Loaded);            
         }
 
         /// <summary>
@@ -110,6 +91,12 @@ namespace WorldMap
             this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
             this.MyWorkSpace.CountryDetailsControl.SaveGraphButton_Completed += new EventHandler(CountryDetailControl_SaveGraphButton_Completed);
             WorldMapController.InsertMsnUser_Completed += new EventHandler(getCurrentUser);
+
+            //Populate Navigation Tab
+            this.MyWorkSpace.RoadModeRadioButton.IsChecked = true;
+            this.MyWorkSpace.ShowPushpinLayerCheckBox.IsChecked = true;
+            this.MyWorkSpace.ShowMarkupLayerCheckBox.IsChecked = true;
+            this.MyWorkSpace.ShowTradeDataLayerCheckBox.IsChecked = true;
         }
 
         #region Draw Country Borders
@@ -195,11 +182,7 @@ namespace WorldMap
             this.loadingIndicator.IsBusy = false;
             this.MyMap.IsEnabled = true;
 
-            //Default Pushpin, put here cuz we have to wait the controller data loading process completed.
-            PushPinLayer = new MapLayer();
-            PushPinLayer.Name = "PushPinLayer";
-            MyMap.Children.Add(PushPinLayer);
-
+            //Default Pushpin, put here cuz we have to wait the controller data loading process completed.                        
             DraggablePushpin DefaultPushPin = new DraggablePushpin(PushPinLayer, new Random());
             PushPinPanel.Children.Add(DefaultPushPin);
             DefaultPushPin.Pinned += new EventHandler(DefaultPushPin_Pinned);

@@ -205,14 +205,17 @@
       <SubType>Designer</SubType>
     </None>
     <Resource Include="Image\View.png" />
+    <Resource Include="Image\Down.png" />
+    <Resource Include="Image\Left.png" />
+    <Resource Include="Image\Right.png" />
+    <Resource Include="Image\Up.png" />
+    <Resource Include="Image\zoomin.png" />
+    <Resource Include="Image\zoomout.png" />
+    <Resource Include="Image\fullscreen.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <Resource Include="Image\Remove.png" />
-    <Resource Include="Image\export.png" />
-    <Resource Include="Image\import.png" />
     <Resource Include="Image\Help.png" />
-    <Resource Include="Image\Compare.png" />
     <Resource Include="Image\TradeData.png" />
-    <Resource Include="Image\Project.png" />
     <Resource Include="Image\Country_Icon.png" />
     <Resource Include="Image\Navigation_Icon.png" />
     <Resource Include="Image\Personal_icon.png" />

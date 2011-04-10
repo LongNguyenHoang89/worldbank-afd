@@ -108,7 +108,8 @@
                NavigationVisibility="Collapsed">
                 <m:MapLayer x:Name="ArrowLayer"/>
                 <m:MapLayer x:Name="PolygonLayer"/>
-                <m:MapLayer x:Name="MarkCountryLayer"/>            
+                <m:MapLayer x:Name="MarkCountryLayer"/>
+            <m:MapLayer x:Name="PushPinLayer"/>
         </m:Map>
         <Border CornerRadius="0,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Height="60" Grid.Row ="1"  Background="Black">
             <Grid>
