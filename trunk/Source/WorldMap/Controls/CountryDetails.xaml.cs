@@ -91,14 +91,14 @@ namespace WorldMap
         }
 
         void worldMapController_GetCountryWBProject_completed(object sender, EventArgs e)
-        {           
+        {
             List<tbl_projects> returnList = new List<tbl_projects>(
                 from c in _worldMapController.Context.tbl_projects
                 where (c.country_id == _selectedCountry.country_id_pk)
                 select c
                 );
             this.ProjectListDataGrid.ItemsSource = returnList;
-        }        
+        }
 
         void worldMapController_GetTabCountryDataCompleted(object sender, EventArgs e)
         {
@@ -131,7 +131,7 @@ namespace WorldMap
             ButtonSaveShortCut.IsEnabled = true;
 
             button1.IsEnabled = true;
-        }        
+        }
 
         private List<tbl_indicators> getIndicatorFromPKForGraph(List<int> indPKs)
         {
@@ -220,7 +220,7 @@ namespace WorldMap
             // re-enable the render button
             buttonRenderChart.IsEnabled = true;
         }
-        
+
         private void buttonRenderChart_Click(object sender, RoutedEventArgs e)
         {
             // disable the button
@@ -282,12 +282,12 @@ namespace WorldMap
         private void IndicatorCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             listboxIndicatorPKSelected.Remove(Convert.ToInt32(((CheckBox)sender).Tag));
-        } 
+        }
 
         private void ButtonSaveShortCut_Click(object sender, RoutedEventArgs e)
         {
             SaveGraphButton_Completed(sender, e);
-        }       
+        }
 
         #region rss feed
         RSSReader rssReader = new RSSReader();
@@ -302,7 +302,7 @@ namespace WorldMap
                 {
                     if (this.mainPage.user != null)
                     {
-                        foreach(object o in listBoxFeedList.Items)
+                        foreach (object o in listBoxFeedList.Items)
                         {
                             listBoxFeedList.Items.RemoveAt(0);
                         }
@@ -438,6 +438,30 @@ namespace WorldMap
                 //this.tblError.Text = "Error configuring SaveFileDialog: " + ex.Message;
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Display project data when change selection of Project List
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProjectListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ProjectDetailsBorder.Visibility = Visibility.Visible;
+            tbl_projects project = ProjectListDataGrid.SelectedItem as tbl_projects;
+            this.IdTxtBlck.Text = project.project_wb_id;
+            this.NameTxtBlck.Text = project.project_name;
+            this.LinkButton.NavigateUri = new Uri(project.project_link);
+            this.StatusTxtBlck.Text = project.project_status;
+            this.CostTxtBlck.Text = project.project_cost;
+            this.ADateTxtBlck.Text = project.project_approval_date;
+            this.CDateTxtBlck.Text = project.project_close_date;
+            this.RegionTxtBlck.Text = project.project_region;
+            this.BorrowerTxtBlck.Text = project.project_borrower;
+            this.ImplementAgencyTxtBlck.Text = project.project_implement_agency;
+            this.MajorSectorTxtBlck.Text = project.project_major_sector.Replace("\t","").Replace("\n"," ").Replace("/n","\n");
+            this.ProjectThemesTxtBlck.Text = project.project_themes.Replace("\t", "").Replace("\n", " ").Replace("/n", "\n");
+            this.OutComeTxtBlck.Text = project.project_outcome.Replace("\t", "").Replace("\n", " ").Replace("/n", "\n");
         }
     }
 }
