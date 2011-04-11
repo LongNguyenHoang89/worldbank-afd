@@ -170,7 +170,7 @@
                     <Image Source="/WorldMap;component/Image/Personal_Icon.png" Width="30" Height="30" ToolTipService.ToolTip="Personal data"></Image>
                 </sdk:TabItem.Header>
                 <sdk:TabControl SelectedIndex="1">
-                    <sdk:TabItem Header="Shorcuts">
+                    <sdk:TabItem Header="Shorcuts" Name="ShortcutTab" Visibility="Collapsed">
                         <StackPanel>
                             <Border Margin="10" CornerRadius="5" Background="Gray" Grid.ColumnSpan="2">
                                 <TextBlock Text="FAVOURITED DATA" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="AliceBlue"></TextBlock>
@@ -178,13 +178,13 @@
                             <ListBox Name="ShortcutListBox">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Width="200">
+                                        <Grid Width="300">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                                 <ColumnDefinition Width="25"></ColumnDefinition>
                                                 <ColumnDefinition Width="25"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{Binding country_list}" VerticalAlignment="Center"></TextBlock>
+                                            <TextBox Text="{Binding graph_name}" VerticalAlignment="Center" IsReadOnly="True"></TextBox>
                                             <Image Grid.Column="1" MouseLeftButtonDown="ViewShortcut_Click" Source="/WorldMap;component/Image/View.png" Cursor="Hand"></Image>
                                             <Image Grid.Column="2" MouseLeftButtonDown="RemoveShortCut_click" Source="/WorldMap;component/Image/Remove.png" Cursor="Hand"></Image>
                                         </Grid>

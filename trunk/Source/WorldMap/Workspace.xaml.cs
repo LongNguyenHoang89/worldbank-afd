@@ -133,7 +133,8 @@ namespace WorldMap
         {
             this.CountryDetailsControl.ButtonSaveShortCut.Visibility = Visibility.Visible;
             this.CountryDetailsControl.tabItem_news.Visibility = Visibility.Visible;
-            SaveIndicatorButton.Visibility = Visibility.Visible;
+            this.ShortcutTab.Visibility = Visibility.Visible;
+            this.SaveIndicatorButton.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -143,7 +144,8 @@ namespace WorldMap
         {
             this.CountryDetailsControl.ButtonSaveShortCut.Visibility = Visibility.Collapsed;
             this.CountryDetailsControl.tabItem_news.Visibility = Visibility.Collapsed;
-            SaveIndicatorButton.Visibility = Visibility.Collapsed;
+            this.SaveIndicatorButton.Visibility = Visibility.Collapsed;
+            this.ShortcutTab.Visibility = Visibility.Collapsed;
         }
 
         private void SaveIndicatorButton_Click(object sender, RoutedEventArgs e)
@@ -260,7 +262,6 @@ namespace WorldMap
         #endregion
 
         #region Navigation Event
-
         private void MoveUpButton_Click(object sender, RoutedEventArgs e)
         {
             Map map = (this.Parent as Grid).Children[0] as Map;
