@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using NCRVisual.web.DataModel;
 using WorldMap.Helper;
 using Microsoft.Maps.MapControl;
+using System.Linq;
 
 namespace WorldMap
 {
@@ -33,6 +34,7 @@ namespace WorldMap
                         }
                     }
                 }
+                _indicatorIDList = _indicatorIDList.Distinct<int>().ToList<int>();
                 return _indicatorIDList;
             }
         }
