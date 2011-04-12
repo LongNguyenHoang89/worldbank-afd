@@ -5,8 +5,8 @@
 	x:Class="WorldMap.CountryDetails"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
-
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" d:DesignHeight="389"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit">
 
     <basics:TabControl HorizontalAlignment="Stretch" Name="tabControl1" SelectionChanged="tabControl1_SelectionChanged">
         <basics:TabItem Header="Country Overview" Name="OverviewTab">
@@ -190,6 +190,7 @@
                 <sdk:Label Height="20" HorizontalAlignment="Left" Margin="0,4,0,0" Name="label1" VerticalAlignment="Top" Width="120" Content="Your custom RSS:" />
                 <Button Content="Get feed" Height="23" HorizontalAlignment="Left" Margin="439,0,0,0" Name="buttonGetNews" VerticalAlignment="Top" Width="75" Click="buttonGetNews_Click" />
                 <Button Content="View full RSS feed" Height="23" HorizontalAlignment="Right" Margin="387,300,0,0" Name="buttonViewFullRSS" VerticalAlignment="Bottom" Width="133" Click="buttonViewFullRSS_Click" />
+                <toolkit:BusyIndicator Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Name="loadingIndicator" IsBusy="False" />
             </Grid>
         </basics:TabItem>
     </basics:TabControl>

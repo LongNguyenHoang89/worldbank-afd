@@ -300,6 +300,7 @@ namespace WorldMap
                 TabItem tmpTI = (TabItem)e.AddedItems[0];
                 if (tmpTI.Header.ToString().ToUpper().Equals("News".ToUpper())) // make sure the header is "News"
                 {
+                    this.loadingIndicator.IsBusy = true;
                     if (this.mainPage.user != null)
                     {
                         foreach (object o in listBoxFeedList.Items)
@@ -339,6 +340,7 @@ namespace WorldMap
             {
                 listBoxFeedList.Items.Add(tmpFeed);
             }
+            this.loadingIndicator.IsBusy = false;
             // continues to load other feed if all fav tab not load
             if (userFavTabList != null && userFavTabList.Count > 0)
             {
@@ -369,6 +371,7 @@ namespace WorldMap
 
         private void buttonGetNews_Click(object sender, RoutedEventArgs e)
         {
+            this.loadingIndicator.IsBusy = true;
             listBoxFeedList.Items.Clear();
             try
             {
