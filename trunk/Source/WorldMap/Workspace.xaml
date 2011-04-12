@@ -182,11 +182,13 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                                 <ColumnDefinition Width="25"></ColumnDefinition>
-                                                <ColumnDefinition Width="25"></ColumnDefinition>
+                                                <ColumnDefinition Width="25"></ColumnDefinition>                                                
+                                                <ColumnDefinition Width="25"></ColumnDefinition>                                                
                                             </Grid.ColumnDefinitions>
-                                            <TextBox Text="{Binding graph_name}" VerticalAlignment="Center" IsReadOnly="True"></TextBox>
+                                            <TextBox Text="{Binding graph_name}" VerticalAlignment="Center" IsReadOnly="True" Name="graph_link"></TextBox>
                                             <Image Grid.Column="1" MouseLeftButtonDown="ViewShortcut_Click" Source="/WorldMap;component/Image/View.png" Cursor="Hand"></Image>
                                             <Image Grid.Column="2" MouseLeftButtonDown="RemoveShortCut_click" Source="/WorldMap;component/Image/Remove.png" Cursor="Hand"></Image>
+                                            <Image Grid.Column="3" MouseLeftButtonDown="PostFacebook_click" Source="/WorldMap;component/Image/Facebook.png" Cursor="Hand"></Image>                                            
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>

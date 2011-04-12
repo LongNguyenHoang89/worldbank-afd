@@ -7,6 +7,7 @@ using NCRVisual.web.DataModel;
 using WorldMap.Helper;
 using Microsoft.Maps.MapControl;
 using System.Linq;
+using System.Windows.Browser;
 
 namespace WorldMap
 {
@@ -48,6 +49,7 @@ namespace WorldMap
         /// Event after clicking view shortcut
         /// </summary>
         public event EventHandler ShorcutView;
+        public event EventHandler FacebookPost;
         #endregion
 
         /// <summary>
@@ -258,9 +260,19 @@ namespace WorldMap
         }
 
         private void RemoveShortCut_click(object sender, RoutedEventArgs e)
-        {
+        {            
             //this.ShortcutListBox.Items.Remove( sender as but
         }
+
+        private void PostFacebook_click(object sender, RoutedEventArgs e)
+        {
+            tbl_graphs graph = ((sender as Image).Parent as Grid).DataContext as tbl_graphs;
+            if (ShorcutView != null)
+            {
+                FacebookPost(graph, null);
+            }
+        }
+
         #endregion
 
         #region Navigation Event

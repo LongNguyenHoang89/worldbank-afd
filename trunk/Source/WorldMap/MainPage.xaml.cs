@@ -86,6 +86,7 @@ namespace WorldMap
             this.MyWorkSpace.SearchCountryByIndicators_Completed += new EventHandler(MyWorkSpace_SearchCountryByIndicators_Completed);
             this.MyWorkSpace.MapNavigation += new EventHandler(MyWorkSpace_MapNavigation);
             this.MyWorkSpace.ShorcutView += new EventHandler(MyWorkSpace_ShorcutView);
+            this.MyWorkSpace.FacebookPost+= new EventHandler(MyWorkSpace_FacebookPost);
 
             //save indicator event
             this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
@@ -1203,6 +1204,20 @@ namespace WorldMap
             }
 
             LoadGraph(tbl_country, indicatorIdList);
+        }
+
+        void MyWorkSpace_FacebookPost(object sender, EventArgs e)
+        {
+            tbl_graphs graph = sender as tbl_graphs;
+            tbl_countries tbl_country = new tbl_countries();            
+            string country_list = graph.country_list;
+            string[] countries = country_list.Split('|');
+            foreach (string country in countries)
+            {
+                tbl_country = WorldMapController.GetCountry(Int32.Parse(country));
+            }
+            string uri = "http://www.facebook.com/share.php?u=http://ncrvisual.co.cc:8080/WorldMap.aspx?country="+ tbl_country.country_name+"%26indicatorId="+graph.indicator_list;
+            HtmlPage.Window.Navigate(new Uri(uri), "__blank");
         }
         #endregion
 
