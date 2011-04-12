@@ -87,6 +87,7 @@ namespace WorldMap
             this.MyWorkSpace.MapNavigation += new EventHandler(MyWorkSpace_MapNavigation);
             this.MyWorkSpace.ShorcutView += new EventHandler(MyWorkSpace_ShorcutView);
             this.MyWorkSpace.FacebookPost+= new EventHandler(MyWorkSpace_FacebookPost);
+            this.MyWorkSpace.ShortcutRemove+= new EventHandler(MyWorkSpace_ShortcutRemove);
 
             //save indicator event
             this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
@@ -1218,6 +1219,13 @@ namespace WorldMap
             }
             string uri = "http://www.facebook.com/share.php?u=http://ncrvisual.co.cc:8080/WorldMap.aspx?country="+ tbl_country.country_name+"%26indicatorId="+graph.indicator_list;
             HtmlPage.Window.Navigate(new Uri(uri), "__blank");
+        }
+
+        void MyWorkSpace_ShortcutRemove(object sender, EventArgs e)
+        {
+            tbl_graphs graph = sender as tbl_graphs;
+            WorldMapController.deleteGraph(graph);
+            MyWorkSpace.PopulateShortcutListbox(WorldMapController.Context.tbl_graphs.ToList());
         }
         #endregion
 

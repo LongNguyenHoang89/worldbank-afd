@@ -50,6 +50,7 @@ namespace WorldMap
         /// </summary>
         public event EventHandler ShorcutView;
         public event EventHandler FacebookPost;
+        public event EventHandler ShortcutRemove;
         #endregion
 
         /// <summary>
@@ -260,7 +261,13 @@ namespace WorldMap
         }
 
         private void RemoveShortCut_click(object sender, RoutedEventArgs e)
-        {            
+        {
+            tbl_graphs graph = ((sender as Image).Parent as Grid).DataContext as tbl_graphs;
+            if (ShortcutRemove != null)
+            {
+                ShortcutRemove(graph, null);
+            }
+            
             //this.ShortcutListBox.Items.Remove( sender as but
         }
 

@@ -212,6 +212,7 @@
     <Resource Include="Image\zoomin.png" />
     <Resource Include="Image\zoomout.png" />
     <Resource Include="Image\fullscreen.png" />
+    <Resource Include="Image\Facebook.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <Resource Include="Image\Remove.png" />
     <Resource Include="Image\Help.png" />

@@ -548,7 +548,7 @@ namespace WorldMap.Helper
             {
                 LoadUserGraph_Completed(sender, e);
             }
-        }
+        }        
 
         public void saveGraph(tbl_graphs graph)
         {
@@ -568,6 +568,12 @@ namespace WorldMap.Helper
                 }
             };
             Context.SubmitChanges(saveComplete, true);            
+        }
+
+        public void deleteGraph(tbl_graphs graph)
+        {
+            Context.tbl_graphs.Remove(graph);
+            Context.SubmitChanges();
         }
 
         #endregion
