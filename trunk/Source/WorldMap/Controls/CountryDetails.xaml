@@ -50,7 +50,7 @@
             </Grid>
         </basics:TabItem>
         <basics:TabItem Header="Country Data" Name="tabItem2">
-            <Grid Background="White" Name="columnChartTabContainer" Height="350">
+            <Grid Background="White" Name="columnChartTabContainer" Height="350" Width="730">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="400"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -86,6 +86,7 @@
                             <Image Source="/WorldMap;component/Image/BookMark_Icon.png"></Image>
                         </Button>
                         <Button Content="Export Image" IsEnabled="False" Height="23" Name="button1" Width="87" Click="button1_Click" />
+                        <Button Content="Show prediction" IsEnabled="False" Margin="5" Height="23" Name="buttonRenderPrediction" Width="109" Click="buttonShowPrediction_Click" />
                     </StackPanel>
                 </Grid>
             </Grid>

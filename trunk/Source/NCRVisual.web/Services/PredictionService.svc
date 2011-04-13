@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="NCRVisual.web.Services.PredictionService" CodeBehind="PredictionService.svc.cs" %>

@@ -6,6 +6,7 @@ using System.ServiceModel.DomainServices.EntityFramework;
 using NCRVisual.web.DataModel;
 using System.Data;
 using System.ServiceModel.DomainServices.Hosting;
+using DemoPrediction.Web;
 
 namespace NCRVisual.web.Services
 {    
@@ -21,6 +22,15 @@ namespace NCRVisual.web.Services
         {
             return this.ObjectContext.tbl_tabs.Where(i => pks.Contains((int)i.tab_id_pk));
         }
+        #endregion
+
+        #region prediction functions
+
+        public IQueryable<ref_country_indicator> GetRef_country_indicatorListFromCountryIDAndIndicatorID(int countryId, int indicatorId)
+        {
+            return this.ObjectContext.ref_country_indicator.Where(c => countryId == c.country_id && indicatorId == c.indicator_id);
+        }
+
         #endregion
 
         public IQueryable<ref_country_indicator> GetRef_country_indicatorInCountryIdList(List<int> countryIdList)

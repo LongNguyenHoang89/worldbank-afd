@@ -19,6 +19,8 @@ using ImageTools.IO.Png;
 using ImageTools.IO.Jpeg;
 using ImageTools.IO.Bmp;
 using System.IO;
+using WorldMap.PredictionService;
+using System.Collections.ObjectModel;
 
 namespace WorldMap
 {
@@ -128,6 +130,7 @@ namespace WorldMap
             IndicatorListBox.ItemsSource = listIndicatorSelectedFromWM;
             // enable the render button
             buttonRenderChart.IsEnabled = true;
+            buttonRenderPrediction.IsEnabled = true;
             buttonRenderChart_Click(this, new RoutedEventArgs());
 
             ButtonSaveShortCut.IsEnabled = true;
@@ -190,6 +193,16 @@ namespace WorldMap
         private void loadOp_Completed(object sender, EventArgs e)
         {
             List<ref_country_indicator> refCountryIndic = new List<ref_country_indicator>(loadOp.Entities);
+
+            renderGraph(refCountryIndic);
+
+            // re-enable the render button
+            buttonRenderChart.IsEnabled = true;
+            buttonRenderPrediction.IsEnabled = true;
+        }
+
+        private void renderGraph(List<ref_country_indicator> refCountryIndic)
+        {
             List<Country> finalResult = new List<Country>();
             string key = "key"; // it could be any random string
 
@@ -218,24 +231,51 @@ namespace WorldMap
 
             this.columnChartControl.AttributeShownName = key;
             this.columnChartControl.CountriesShown = finalResult;
+        }
 
-            // re-enable the render button
-            buttonRenderChart.IsEnabled = true;
+
+        private void renderGraph(List<refCountryIndicator> refCountryIndic)
+        {
+            List<Country> finalResult = new List<Country>();
+            string key = "key"; // it could be any random string
+
+            foreach (tbl_indicators tmpTI in shortListIndicatorsSelected)
+            {
+                // create a new country to send as param to the ColumnChartControl
+                Country tmpC = new Country();
+                tmpC.Name = tmpTI.indicator_name;
+
+                List<refCountryIndicator> tmprefCountryIndic = new List<refCountryIndicator>(
+                    from r in refCountryIndic
+                    where r.indicator_id == tmpTI.indicator_id_pk
+                    select r
+                    );
+
+                foreach (refCountryIndicator tmpRCI in tmprefCountryIndic)
+                {
+                    YearData tmpYD = new YearData();
+                    tmpYD.Year = (int)tmpRCI.country_indicator_year;
+                    tmpYD.Attributes.Add(key, tmpRCI.country_indicator_value.ToString());
+                    tmpC.Years.Add(tmpYD);
+                }
+                finalResult.Add(tmpC);
+            }
+
+
+            this.columnChartControl.AttributeShownName = key;
+            this.columnChartControl.CountriesShown = finalResult;
         }
 
         private void buttonRenderChart_Click(object sender, RoutedEventArgs e)
         {
             // disable the button
             buttonRenderChart.IsEnabled = false;
+            buttonRenderPrediction.IsEnabled = false;
 
             WorldbankGeneralChartControl control = new WorldbankGeneralChartControl();
             this.columnChartControl = control;
             // remove all controls from columnChartTab
-            int countChild = this.columnChartTab.Children.Count;
-            for (int i = 0; i < countChild; i++)
-            {
-                this.columnChartTab.Children.RemoveAt(0);
-            }
+            this.columnChartTab.Children.Clear();
             // add the chart to columnChartTab
             this.columnChartTab.Children.Add(control);
 
@@ -246,34 +286,46 @@ namespace WorldMap
             //{
             //    control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
             //}
-            if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_AREA_DESC))
-            {
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_AREA;
-            }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_BAR_DESC))
-            {
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
-            }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_COLUMN_DESC))
-            {
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
-            }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_LINE_DESC))
-            {
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
-            }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC))
-            {
-                control.RenderAs3D = true;
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
-            }
-            else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_BAR_DESC))
-            {
-                control.RenderAs3D = true;
-                control.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
-            }
+
+            // get the style that the graph should be shown as
+            refreshControlRenderStyle();
 
             GetDataForGraph(_selectedCountry, shortListIndicatorsSelected);
+        }
+
+
+        private void refreshControlRenderStyle()
+        {
+            // select render style for the graph
+            if (comboBoxRenderStyle.SelectedItem != null)
+            {
+                if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_AREA_DESC))
+                {
+                    this.columnChartControl.ThisChartRenderAs = WorldbankGeneralChartControl.RA_AREA;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_BAR_DESC))
+                {
+                    this.columnChartControl.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_COLUMN_DESC))
+                {
+                    this.columnChartControl.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals(WorldbankGeneralChartControl.RA_LINE_DESC))
+                {
+                    this.columnChartControl.ThisChartRenderAs = WorldbankGeneralChartControl.RA_LINE;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC))
+                {
+                    this.columnChartControl.RenderAs3D = true;
+                    this.columnChartControl.ThisChartRenderAs = WorldbankGeneralChartControl.RA_COLUMN;
+                }
+                else if (((string)comboBoxRenderStyle.SelectedItem).Equals("3D " + WorldbankGeneralChartControl.RA_BAR_DESC))
+                {
+                    this.columnChartControl.RenderAs3D = true;
+                    this.columnChartControl.ThisChartRenderAs = WorldbankGeneralChartControl.RA_BAR;
+                }
+            }
         }
 
         private void IndicatorCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -371,6 +423,7 @@ namespace WorldMap
             }
         }
 
+        // get rss feed from custom rss address
         private void buttonGetNews_Click(object sender, RoutedEventArgs e)
         {
             this.loadingIndicator.IsBusy = true;
@@ -458,6 +511,110 @@ namespace WorldMap
             }
             
         }
+
+        #region prediction functions
+        private List<int> indicatorToPredictList = null;
+        private LoadOperation predictionLO;
+        private List<refCountryIndicator> listPredictedResult;
+
+        private void buttonShowPrediction_Click(object sender, RoutedEventArgs e)
+        {
+            this.columnChartControl = new WorldbankGeneralChartControl();
+
+            // remove all controls from columnChartTab
+            this.columnChartTab.Children.Clear();
+            
+            // add the chart to columnChartTab
+            this.columnChartTab.Children.Add(this.columnChartControl);
+
+            shortListIndicatorsSelected = getIndicatorFromPKForGraph(listboxIndicatorPKSelected);
+            // copy the indicator shortlist to another list
+            indicatorToPredictList = new List<int>();
+            foreach (tbl_indicators i in shortListIndicatorsSelected)
+            {
+                indicatorToPredictList.Add(i.indicator_id_pk);
+            }
+
+            if (comboBoxRenderStyle.SelectedItem != null)
+            {
+                // get the style that the graph should be shown as
+                refreshControlRenderStyle();
+
+                // disable the button
+                buttonRenderChart.IsEnabled = false;
+                buttonRenderPrediction.IsEnabled = false;
+
+                // get the first indicator id to get
+                int nextIndicatorID = indicatorToPredictList[0];
+                indicatorToPredictList.RemoveAt(0);
+
+                predictionLO = this._worldMapController.Context.Load(this._worldMapController.Context.GetRef_country_indicatorListFromCountryIDAndIndicatorIDQuery(_selectedCountry.country_id_pk, nextIndicatorID));
+                listPredictedResult = new List<refCountryIndicator>();
+                predictionLO.Completed -= new EventHandler(predictionLO_Completed);
+                predictionLO.Completed += new EventHandler(predictionLO_Completed);
+            }
+        }
+
+        private void predictionLO_Completed(object sender, EventArgs e)
+        {
+            List<ref_country_indicator> list = new List<ref_country_indicator>();
+
+            foreach (ref_country_indicator rci in predictionLO.Entities)
+            {
+                list.Add(rci);
+            }
+
+            ObservableCollection<refCountryIndicator> tmpCol = convertRCI(list);
+
+            PredictionServiceClient predictionServiceClient = new PredictionServiceClient();
+            predictionServiceClient.PredictDataNextYearsCompleted -= new EventHandler<PredictDataNextYearsCompletedEventArgs>(predictionServiceClient_PredictDataNextYearsCompleted);
+            predictionServiceClient.PredictDataNextYearsCompleted += new EventHandler<PredictDataNextYearsCompletedEventArgs>(predictionServiceClient_PredictDataNextYearsCompleted);
+            predictionServiceClient.PredictDataNextYearsAsync(tmpCol, 3);
+
+        }
+
+        private void predictionServiceClient_PredictDataNextYearsCompleted(object sender, PredictDataNextYearsCompletedEventArgs e)
+        {
+            foreach (refCountryIndicator refCI in e.Result)
+            {
+                listPredictedResult.Add(refCI);
+            }
+
+            if (indicatorToPredictList.Count > 0)
+            {
+                // get the next indicator id to get
+                int nextIndicatorID = indicatorToPredictList[0];
+                indicatorToPredictList.RemoveAt(0);
+
+                predictionLO = this._worldMapController.Context.Load(this._worldMapController.Context.GetRef_country_indicatorListFromCountryIDAndIndicatorIDQuery(_selectedCountry.country_id_pk, nextIndicatorID));
+                predictionLO.Completed -= new EventHandler(predictionLO_Completed);
+                predictionLO.Completed += new EventHandler(predictionLO_Completed);
+            }
+            else
+            {
+                renderGraph(listPredictedResult);
+                // enable buttons
+                this.buttonRenderChart.IsEnabled = true;
+                this.buttonRenderPrediction.IsEnabled = true;
+            }
+        }
+        
+        private ObservableCollection<refCountryIndicator> convertRCI(List<ref_country_indicator> inputList)
+        {
+            ObservableCollection<refCountryIndicator> resultList = new ObservableCollection<refCountryIndicator>();
+            foreach (ref_country_indicator i in inputList)
+            {
+                refCountryIndicator tmpI = new refCountryIndicator();
+                tmpI.country_id = (int)i.country_id;
+                tmpI.country_indicator_value = (float)i.country_indicator_value;
+                tmpI.country_indicator_year = (int)i.country_indicator_year;
+                tmpI.indicator_id = (int)i.indicator_id;
+                resultList.Add(tmpI);
+            }
+            return resultList;
+        }
+
+        #endregion
     }
 }
 

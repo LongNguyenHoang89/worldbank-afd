@@ -6,12 +6,19 @@
                     maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
+                <binding name="BasicHttpBinding_IPredictionService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
             </basicHttpBinding>
         </bindings>
         <client>
             <endpoint address="http://www.ncrvisual.co.cc/Services/RSSFeedService.svc"
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IRSSFeedService"
                 contract="RSSFeedService.IRSSFeedService" name="BasicHttpBinding_IRSSFeedService" />
+            <endpoint address="http://www.ncrvisual.co.cc/Services/PredictionService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IPredictionService"
+                contract="PredictionService.IPredictionService" name="BasicHttpBinding_IPredictionService" />
         </client>
     </system.serviceModel>
 </configuration>
