@@ -404,6 +404,7 @@
             </ItemsControl>
             <sdk:DataPager Grid.Row="1">
             </sdk:DataPager>
+            <Button Content="Favourite" Click="SaveProject_Click"  Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="20,7,0,0" Name="SaveProject" VerticalAlignment="Top" Width="75" />
         </Grid>
     </Grid>
 </UserControl>

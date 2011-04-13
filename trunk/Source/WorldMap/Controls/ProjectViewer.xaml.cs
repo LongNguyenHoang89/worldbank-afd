@@ -6,14 +6,11 @@ using System;
 using NCRVisual.web.DataModel;
 
 namespace WorldMap
-{
-    public class Picture
-    {
-        public ImageSource Href { get; set; }
-    }
+{    
 
     public partial class ProjectViewer : UserControl
     {
+        public EventHandler SaveFavoriteProject_Click;
         public ProjectViewer()
         {
             InitializeComponent();
@@ -21,6 +18,11 @@ namespace WorldMap
             {
                 LoadImages();
             };
+        }
+
+        public class Picture
+        {
+            public ImageSource Href { get; set; }
         }
 
         public void PopulateProjectData(tbl_projects project)
@@ -77,6 +79,11 @@ namespace WorldMap
         private void lbImage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Preview.Source = ((Picture)lbImage.SelectedItem).Href;
+        }
+
+        public void SaveProject_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            SaveFavoriteProject_Click(sender, e);
         }
     }
 }

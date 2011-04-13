@@ -43,7 +43,7 @@ namespace WorldMap
         public tbl_users user = new tbl_users();//{ get; set; }
         #endregion
 
-        public int currentProjectId { get; set; }
+        public tbl_projects currentProject { get; set; }
 
         /// <summary>
         /// default constructor
@@ -90,7 +90,7 @@ namespace WorldMap
             this.MyWorkSpace.ShorcutView += new EventHandler(MyWorkSpace_ShorcutView);
             this.MyWorkSpace.FacebookPost+= new EventHandler(MyWorkSpace_FacebookPost);
             this.MyWorkSpace.ShortcutRemove+= new EventHandler(MyWorkSpace_ShortcutRemove);
-            this.MyWorkSpace.CountryDetailsControl.ProjectSelectionChanged += new EventHandler(CountryDetailsControl_ProjectSelectionChanged);
+            this.MyWorkSpace.CountryDetailsControl.ProjectSelectionChanged += new EventHandler(CountryDetailsControl_ProjectSelectionChanged);            
 
             //save indicator event
             this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
@@ -102,6 +102,9 @@ namespace WorldMap
             this.MyWorkSpace.ShowPushpinLayerCheckBox.IsChecked = true;
             this.MyWorkSpace.ShowMarkupLayerCheckBox.IsChecked = true;
             this.MyWorkSpace.ShowTradeDataLayerCheckBox.IsChecked = true;
+
+            //Save favourite project
+            this.ProjectDetailControl.SaveFavoriteProject_Click += new EventHandler(ProjectDetailControl_SaveProject_Click);
         }
        
         #region Draw Country Borders
@@ -1179,7 +1182,7 @@ namespace WorldMap
                 + "?country=" + MyWorkSpace.CountryDetailsControl._selectedCountry.country_name
                 + "&indicatorId=" +graph.indicator_list;
 
-            WorldMapController.saveGraph(graph);
+            WorldMapController.saveGraph(graph, "Your Graph has been saved");
         }
 
         void WorldMapController_SaveGraphCompleted(object sender, EventArgs e)
@@ -1198,38 +1201,70 @@ namespace WorldMap
         {
             tbl_graphs graph = sender as tbl_graphs;
 
-            tbl_countries tbl_country = new tbl_countries();
-
-            List<int> indicatorIdList = new List<int>();
-            string country_list = graph.country_list;
-            string[] countries = country_list.Split('|');
-            foreach (string country in countries)
+            if (graph.type != "project")
             {
-                tbl_country = WorldMapController.GetCountry(Int32.Parse(country));
-            }
+                tbl_countries tbl_country = new tbl_countries();
 
-            string indicator_list = graph.indicator_list;
-            string[] indicators = graph.indicator_list.Split('|');
-            foreach (string indicator in indicators)
+                List<int> indicatorIdList = new List<int>();
+                string country_list = graph.country_list;
+                string[] countries = country_list.Split('|');
+                foreach (string country in countries)
+                {
+                    tbl_country = WorldMapController.GetCountry(Int32.Parse(country));
+                }
+
+                string indicator_list = graph.indicator_list;
+                string[] indicators = graph.indicator_list.Split('|');
+                foreach (string indicator in indicators)
+                {
+                    indicatorIdList.Add(Int32.Parse(indicator));
+                }
+
+                LoadGraph(tbl_country, indicatorIdList);
+            }
+            else
             {
-                indicatorIdList.Add(Int32.Parse(indicator));
+                currentProject = new tbl_projects();
+               WorldMapController.GetProject_Completed+=new EventHandler(WorldMapController_GetProject_Completed);
+               WorldMapController.GetWBProject((int)graph.project_id);
+               currentProject.project_id_pk =(int) graph.project_id;
             }
+        }
 
-            LoadGraph(tbl_country, indicatorIdList);
+        public void WorldMapController_GetProject_Completed(object sender, EventArgs e)
+        {
+            var project = from n in WorldMapController.Context.tbl_projects
+                          where n.project_id_pk == currentProject.project_id_pk
+                          select n;
+            foreach (tbl_projects x in project)
+            {
+                currentProject = x;
+                ProjectDetailControl.PopulateProjectData(currentProject);
+                break;
+            }
         }
 
         void MyWorkSpace_FacebookPost(object sender, EventArgs e)
-        {
+        {            
             tbl_graphs graph = sender as tbl_graphs;
-            tbl_countries tbl_country = new tbl_countries();            
-            string country_list = graph.country_list;
-            string[] countries = country_list.Split('|');
-            foreach (string country in countries)
+            if (graph.type != "project")
             {
-                tbl_country = WorldMapController.GetCountry(Int32.Parse(country));
+
+                tbl_countries tbl_country = new tbl_countries();
+                string country_list = graph.country_list;
+                string[] countries = country_list.Split('|');
+                foreach (string country in countries)
+                {
+                    tbl_country = WorldMapController.GetCountry(Int32.Parse(country));
+                }
+                string uri = "http://www.facebook.com/share.php?u=http://ncrvisual.co.cc:8080/WorldMap.aspx?country=" + tbl_country.country_name + "%26indicatorId=" + graph.indicator_list;
+                HtmlPage.Window.Navigate(new Uri(uri), "__blank");
             }
-            string uri = "http://www.facebook.com/share.php?u=http://ncrvisual.co.cc:8080/WorldMap.aspx?country="+ tbl_country.country_name+"%26indicatorId="+graph.indicator_list;
-            HtmlPage.Window.Navigate(new Uri(uri), "__blank");
+            else
+            {
+                string uri = "http://www.facebook.com/share.php?u=http://ncrvisual.co.cc:8080/WorldMap.aspx?projectId=" + graph.project_id;
+                HtmlPage.Window.Navigate(new Uri(uri), "__blank");
+            }
         }
 
         void MyWorkSpace_ShortcutRemove(object sender, EventArgs e)
@@ -1292,8 +1327,21 @@ namespace WorldMap
         void CountryDetailsControl_ProjectSelectionChanged(object sender, EventArgs e)
         {
             tbl_projects project = sender as tbl_projects;
-            currentProjectId = project.project_id_pk;
+            currentProject = project;
             ProjectDetailControl.PopulateProjectData(project);
+        }
+
+        public void ProjectDetailControl_SaveProject_Click(object sender, EventArgs e)
+        {
+            tbl_graphs graph = new tbl_graphs();
+            graph.user_id = user.user_id_pk;
+            graph.type = "project";
+            graph.country_list = "215";
+            graph.indicator_list = "180";
+            graph.graph_name = currentProject.project_name;
+            graph.project_id = currentProject.project_id_pk;
+            
+            WorldMapController.saveGraph(graph,"your project has been saved");
         }
         #endregion
 
@@ -1311,7 +1359,7 @@ namespace WorldMap
                          
             tbl_comments comment = new tbl_comments();
             comment.user_name = user.user_name;
-            comment.project_id = currentProjectId;
+            comment.project_id = currentProject.project_id_pk;
             comment.comment_content = commentContent.Text;
             comment.create_date = DateTime.Now;
             comment.comment_type = "normal"; //there are 2 types : normal and like

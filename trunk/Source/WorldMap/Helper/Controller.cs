@@ -87,6 +87,8 @@ namespace WorldMap.Helper
 
         public event EventHandler LoadUserComment_Completed;
 
+        public event EventHandler GetProject_Completed;
+
         #endregion
 
         /// <summary>
@@ -237,6 +239,20 @@ namespace WorldMap.Helper
             if (GetExportData_Completed != null)
             {
                 GetExportData_Completed(sender, e);
+            }
+        }
+
+        public void GetWBProject(int project_id_pk)
+        {
+            var getProjectData = Context.Load(Context.GetProjectQuery(project_id_pk));
+            getProjectData.Completed += new EventHandler(getProjectData_Completed);
+        }
+
+        void getProjectData_Completed(object sender, EventArgs e)
+        {
+            if (GetProject_Completed != null)
+            {
+                GetProject_Completed(sender, e);
             }
         }
 
@@ -552,7 +568,7 @@ namespace WorldMap.Helper
             }
         }        
 
-        public void saveGraph(tbl_graphs graph)
+        public void saveGraph(tbl_graphs graph,string message)
         {
             //Temporary graphId
             graph.graph_id_pk = -1;
@@ -565,7 +581,7 @@ namespace WorldMap.Helper
                 {
                     if (SaveGraphCompleted != null)
                     {
-                        SaveGraphCompleted("Your Graph has been saved", null);
+                        SaveGraphCompleted(message, null);
                     }
                 }
             };
