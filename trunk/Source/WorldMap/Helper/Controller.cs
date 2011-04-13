@@ -87,6 +87,11 @@ namespace WorldMap.Helper
 
         public event EventHandler LoadUserComment_Completed;
 
+        /// <summary>
+        /// Event after finish saving a comment
+        /// </summary>
+        public event EventHandler SaveComment_completed;
+
         public event EventHandler GetProject_Completed;
 
         #endregion
@@ -290,8 +295,6 @@ namespace WorldMap.Helper
                 InsertMsnUser_Completed(sender, e);
             }
         }
-
-
 
         void loadUserData_Completed(IEnumerable<tbl_users> r, string cid)
         {
@@ -682,7 +685,17 @@ namespace WorldMap.Helper
         public void SaveComment(tbl_comments comment)
         {
             Context.tbl_comments.Add(comment);
-            Context.SubmitChanges();
+            Action<SubmitOperation> saveComplete = delegate(SubmitOperation comp)
+            {
+                if (!comp.HasError)
+                {
+                    if (SaveComment_completed != null)
+                    {
+                        SaveComment_completed(null, null);
+                    }
+                }
+            };
+            Context.SubmitChanges(saveComplete, true);            
         }
 
         public void DeleteComment(tbl_comments comment)

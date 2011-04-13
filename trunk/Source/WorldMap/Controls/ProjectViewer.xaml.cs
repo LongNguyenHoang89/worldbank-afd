@@ -6,10 +6,10 @@ using System;
 using NCRVisual.web.DataModel;
 
 namespace WorldMap
-{    
-
+{
     public partial class ProjectViewer : UserControl
     {
+        public event EventHandler PostCommentBegin;
         public EventHandler SaveFavoriteProject_Click;
         public ProjectViewer()
         {
@@ -27,6 +27,22 @@ namespace WorldMap
 
         public void PopulateProjectData(tbl_projects project)
         {
+            //Populate Overview part
+            LoadProjectOverview(project);
+
+            htmlHost.Visibility = System.Windows.Visibility.Visible;
+            string html = "<iframe title=\"YouTube video player\" width=\"320\" height=\"195\" src=\"http://www.youtube.com/embed/6s6UiEuCYXA\" frameborder=\"0\" allowfullscreen></iframe>";
+            htmlHost.SourceHtml = html.ToString();
+        }
+
+        public void PopulateComments(List<tbl_comments> comments)
+        {
+            //Populate Comments
+            CommentControl.ItemsSource = comments;
+        }
+
+        private void LoadProjectOverview(tbl_projects project)
+        {
             this.IdTxtBlck.Text = project.project_wb_id;
             this.NameTxtBlck.Text = project.project_name;
             this.LinkButton.NavigateUri = new Uri(project.project_link);
@@ -40,6 +56,7 @@ namespace WorldMap
             this.MajorSectorTxtBlck.Text = project.project_major_sector.Replace("\t", "").Replace("\n", " ").Replace("/n", "\n");
             this.ProjectThemesTxtBlck.Text = project.project_themes.Replace("\t", "").Replace("\n", " ").Replace("/n", "\n");
             this.OutComeTxtBlck.Text = project.project_outcome.Replace("\t", "").Replace("\n", " ").Replace("/n", "\n");
+
         }
 
         private void LoadImages()
@@ -81,9 +98,28 @@ namespace WorldMap
             Preview.Source = ((Picture)lbImage.SelectedItem).Href;
         }
 
+        private void Image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.Visibility = System.Windows.Visibility.Collapsed;
+            htmlHost.SourceHtml = "";
+        }
+
+        private void PostComment_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (PostCommentBegin != null)
+            {
+                PostCommentBegin(sender, null);
+            }
+        }
+
         public void SaveProject_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             SaveFavoriteProject_Click(sender, e);
         }
+    }
+
+    public class Picture
+    {
+        public ImageSource Href { get; set; }
     }
 }

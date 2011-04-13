@@ -43,17 +43,17 @@
                         <StackPanel Margin="10,0,0,0">
                             <RadioButton Name="RoadModeRadioButton" Checked="RoadModeRadioButton_Checked" GroupName="MapModeSelection">Road</RadioButton>
                             <RadioButton Name="AerialModeRadioButton" Checked="AerialModeRadioButton_Checked" GroupName="MapModeSelection">Aerial</RadioButton>
-                            <RadioButton Name="AerialWithLablesCheckBox" Checked="AerialWithLablesCheckBox_Checked" GroupName="MapModeSelection">Aerial with Labels</RadioButton>                                
+                            <RadioButton Name="AerialWithLablesCheckBox" Checked="AerialWithLablesCheckBox_Checked" GroupName="MapModeSelection">Aerial with Labels</RadioButton>
                         </StackPanel>
                         <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
-                            
+
                         </StackPanel>
 
                         <StackPanel Margin="10,10,0,0">
                             <CheckBox Checked="ShowPushpinLayerCheckBox_Checked" Unchecked="ShowPushpinLayerCheckBox_Unchecked" Name="ShowPushpinLayerCheckBox">Show pushpin layer</CheckBox>
                             <CheckBox Checked="ShowMarkupLayerCheckBox_Checked" Unchecked="ShowMarkupLayerCheckBox_Unchecked" Name="ShowMarkupLayerCheckBox">Show markup layer</CheckBox>
                             <CheckBox Checked="ShowTradeDataLayerCheckBox_Checked" Unchecked="ShowTradeDataLayerCheckBox_Unchecked" Name="ShowTradeDataLayerCheckBox">Show trade data layer</CheckBox>
-                        </StackPanel>                        
+                        </StackPanel>
                         <Grid Margin="10,10,0,0" HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="30"/>
@@ -182,13 +182,13 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                                 <ColumnDefinition Width="25"></ColumnDefinition>
-                                                <ColumnDefinition Width="25"></ColumnDefinition>                                                
-                                                <ColumnDefinition Width="25"></ColumnDefinition>                                                
+                                                <ColumnDefinition Width="25"></ColumnDefinition>
+                                                <ColumnDefinition Width="25"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
                                             <TextBox Text="{Binding graph_name}" VerticalAlignment="Center" IsReadOnly="True" Name="graph_link"></TextBox>
                                             <Image Grid.Column="1" MouseLeftButtonDown="ViewShortcut_Click" Source="/WorldMap;component/Image/View.png" Cursor="Hand"></Image>
                                             <Image Grid.Column="2" MouseLeftButtonDown="RemoveShortCut_click" Source="/WorldMap;component/Image/Remove.png" Cursor="Hand"></Image>
-                                            <Image Grid.Column="3" MouseLeftButtonDown="PostFacebook_click" Source="/WorldMap;component/Image/Facebook.png" Cursor="Hand"></Image>                                            
+                                            <Image Grid.Column="3" MouseLeftButtonDown="PostFacebook_click" Source="/WorldMap;component/Image/Facebook.png" Cursor="Hand"></Image>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -213,5 +213,7 @@
                 </sdk:TabControl>
             </sdk:TabItem>
         </sdk:TabControl>
+
+        <Image Source="/WorldMap;component/Image/Power.png" Width="30" Height="30" ToolTipService.ToolTip="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"></Image>
     </Grid>
 </UserControl>

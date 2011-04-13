@@ -429,5 +429,17 @@ namespace WorldMap
             map.ZoomLevel += 1;
         }
         #endregion
+
+        private void Image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (MainTabControl.Visibility == Visibility.Collapsed)
+            {
+                MainTabControl.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MainTabControl.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

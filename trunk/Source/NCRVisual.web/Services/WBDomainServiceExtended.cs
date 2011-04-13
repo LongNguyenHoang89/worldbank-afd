@@ -6,7 +6,6 @@ using System.ServiceModel.DomainServices.EntityFramework;
 using NCRVisual.web.DataModel;
 using System.Data;
 using System.ServiceModel.DomainServices.Hosting;
-using DemoPrediction.Web;
 
 namespace NCRVisual.web.Services
 {    

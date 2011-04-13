@@ -82,6 +82,7 @@
     <Content Include="ClientBin\WorldMap.xap" />
     <Content Include="Dev.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Services\PredictionService.svc" />
     <Content Include="Services\RSSFeedService.svc" />
     <Content Include="SignIn.aspx" />
     <Content Include="TestPages\DataInputAnalysisTestPage.aspx" />
@@ -131,7 +132,14 @@
       <DependentUpon>PHPBB_DB_Info.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IPredictionService.cs" />
     <Compile Include="Services\IRSSFeedService.cs" />
+    <Compile Include="Services\Prediction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\PredictionService.svc.cs">
+      <DependentUpon>PredictionService.svc</DependentUpon>
+    </Compile>
     <Compile Include="Services\RSSFeedService.svc.cs">
       <DependentUpon>RSSFeedService.svc</DependentUpon>
     </Compile>

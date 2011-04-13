@@ -71,6 +71,7 @@ namespace WorldMap
             this.WorldMapController.SaveCountryListCompleted += new EventHandler(WorldMapController_SaveCountryListCompleted);
             this.WorldMapController.SaveIndicatorListCompleted += new EventHandler(WorldMapController_SaveIndicatorListCompleted);
             this.WorldMapController.SaveGraphCompleted += new EventHandler(WorldMapController_SaveGraphCompleted);
+            this.WorldMapController.SaveComment_completed += new EventHandler(WorldMapController_SaveComment_completed);
 
             //Populate Helper for workspace
             this.MyWorkSpace.InitializeController(this.WorldMapController);
@@ -104,8 +105,10 @@ namespace WorldMap
             this.MyWorkSpace.ShowTradeDataLayerCheckBox.IsChecked = true;
 
             //Save favourite project
-            this.ProjectDetailControl.SaveFavoriteProject_Click += new EventHandler(ProjectDetailControl_SaveProject_Click);
-        }
+            this.ProjectDetailControl.SaveFavoriteProject_Click += new EventHandler(ProjectDetailControl_SaveProject_Click);        
+            //Event handler for Project detail control
+            ProjectDetailControl.PostCommentBegin += new EventHandler(ProjectDetailControl_PostCommentBegin);            
+        }       
        
         #region Draw Country Borders
 
@@ -1240,6 +1243,7 @@ namespace WorldMap
             {
                 currentProject = x;
                 ProjectDetailControl.PopulateProjectData(currentProject);
+                ProjectDetailControl.PopulateComments(LoadComment(currentProject.project_id_pk));
                 break;
             }
         }
@@ -1329,6 +1333,8 @@ namespace WorldMap
             tbl_projects project = sender as tbl_projects;
             currentProject = project;
             ProjectDetailControl.PopulateProjectData(project);
+            ProjectDetailControl.PopulateComments(LoadComment(project.project_id_pk));
+            ProjectDetailControl.Visibility = Visibility.Visible;
         }
 
         public void ProjectDetailControl_SaveProject_Click(object sender, EventArgs e)
@@ -1352,21 +1358,32 @@ namespace WorldMap
             WorldMapController.DeleteComment(comment);
         }
 
-        public void PostComment_Click(object sender, EventArgs e)
-        {            
-            
-            // save comment 
-                         
-            tbl_comments comment = new tbl_comments();
-            comment.user_name = user.user_name;
-            comment.project_id = currentProject.project_id_pk;
-            comment.comment_content = commentContent.Text;
-            comment.create_date = DateTime.Now;
-            comment.comment_type = "normal"; //there are 2 types : normal and like
-            WorldMapController.SaveComment(comment);
-
-
+        void ProjectDetailControl_PostCommentBegin(object sender, EventArgs e)
+        {
+            CommentForm form = new CommentForm();
+            form.Show();
+            form.Closed += new EventHandler(form_Closed);            
         }
+
+        void form_Closed(object sender, EventArgs e)
+        {
+            if ((sender as CommentForm).DialogResult == true)
+            {
+                // save comment                          
+                tbl_comments comment = new tbl_comments();
+                comment.user_name = user.user_name;
+                comment.project_id = currentProject.project_id_pk;
+                comment.comment_content = (sender as CommentForm).commentContent.Text;
+                comment.create_date = DateTime.Now;
+                comment.comment_type = "normal"; //there are 2 types : normal and like
+                WorldMapController.SaveComment(comment);                
+            }
+        }
+
+        void WorldMapController_SaveComment_completed(object sender, EventArgs e)
+        {
+            ProjectDetailControl.PopulateComments(LoadComment(currentProject.project_id_pk));
+        }       
 
         public List<tbl_comments> LoadComment(int projectId)
         {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1ec39c1d-c4a9-4e3b-a633-567a12fe5b99" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://www.ncrvisual.co.cc/Services/PredictionService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PredictionService3.xsd" MetadataType="Schema" ID="45f4447d-046c-44d5-8b66-c7a7a4e4f088" SourceId="1" SourceUrl="http://www.ncrvisual.co.cc/Services/PredictionService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PredictionService31.xsd" MetadataType="Schema" ID="e25f3491-768f-482b-ab49-e03496ca3223" SourceId="1" SourceUrl="http://www.ncrvisual.co.cc/Services/PredictionService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PredictionService1.wsdl" MetadataType="Wsdl" ID="8a337fff-b73c-49bc-b175-9ccc1713b92f" SourceId="1" SourceUrl="http://www.ncrvisual.co.cc/Services/PredictionService.svc?wsdl" />
+    <MetadataFile FileName="PredictionService32.xsd" MetadataType="Schema" ID="a8e7d663-6930-4e89-85a8-445132b3ab9b" SourceId="1" SourceUrl="http://www.ncrvisual.co.cc/Services/PredictionService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PredictionService1.disco" MetadataType="Disco" ID="6e80f65a-f26b-45f8-ac2e-639a8ef63b90" SourceId="1" SourceUrl="http://www.ncrvisual.co.cc/Services/PredictionService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

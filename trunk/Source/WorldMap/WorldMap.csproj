@@ -64,6 +64,9 @@
     <Reference Include="BingMapsSL.MultiShape">
       <HintPath>..\..\Libs\Bing Maps Multi Shape\BingMapsSL.MultiShape.dll</HintPath>
     </Reference>
+    <Reference Include="Divelements.SilverlightTools">
+      <HintPath>..\..\Libs\libs\Divelements.SilverlightTools.dll</HintPath>
+    </Reference>
     <Reference Include="ImageTools">
       <HintPath>..\..\Libs\ImageTools\ImageTools.dll</HintPath>
     </Reference>
@@ -122,6 +125,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CommentForm.xaml.cs">
+      <DependentUpon>CommentForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CountryDetails.xaml.cs">
       <DependentUpon>CountryDetails.xaml</DependentUpon>
     </Compile>
@@ -163,6 +169,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Helper\WKTToGeomatryPoint.cs" />
+    <Compile Include="Service References\PredictionService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\RSSFeedService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -201,6 +212,19 @@
     <None Include="Service References\PlatformServices\WorldMap.PlatformServices.GeocodeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\PredictionService\PredictionService1.wsdl" />
+    <None Include="Service References\PredictionService\PredictionService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PredictionService\PredictionService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PredictionService\PredictionService32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PredictionService\WorldMap.PredictionService.refCountryIndicator.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\RSSFeedService\RSSFeedService.wsdl" />
     <None Include="Service References\RSSFeedService\RSSFeedService.xsd">
       <SubType>Designer</SubType>
@@ -215,8 +239,19 @@
     <Resource Include="Image\Up.png" />
     <Resource Include="Image\zoomin.png" />
     <Resource Include="Image\zoomout.png" />
-    <Resource Include="Image\fullscreen.png" />
     <Resource Include="Image\Facebook.png" />
+    <Resource Include="Image\Image_icon.png" />
+    <Resource Include="Image\Project_Overview_icon.png" />
+    <Resource Include="Image\Video_icon.png" />
+    <Resource Include="Image\fullscreen_icon.png" />
+    <Resource Include="Image\Power.png" />
+    <None Include="Service References\PredictionService\configuration91.svcinfo" />
+    <None Include="Service References\PredictionService\configuration.svcinfo" />
+    <None Include="Service References\PredictionService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\PredictionService\PredictionService1.disco" />
     <Content Include="ServiceReferences.ClientConfig" />
     <Resource Include="Image\Remove.png" />
     <Resource Include="Image\Help.png" />
@@ -236,6 +271,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\PlatformServices\" />
+    <WCFMetadataStorage Include="Service References\PredictionService\" />
     <WCFMetadataStorage Include="Service References\RSSFeedService\" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +288,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CommentForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
