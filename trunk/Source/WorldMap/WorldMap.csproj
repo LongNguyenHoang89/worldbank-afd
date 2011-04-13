@@ -125,6 +125,10 @@
     <Compile Include="Controls\CountryDetails.xaml.cs">
       <DependentUpon>CountryDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ExtendedGridSplitter.cs" />
+    <Compile Include="Controls\ProjectViewer.xaml.cs">
+      <DependentUpon>ProjectViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entity\RSSFeed.cs" />
     <Compile Include="Helper\Controller.cs" />
     <Compile Include="Controls\About.xaml.cs">
@@ -271,11 +275,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ProjectViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\TradeMode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
