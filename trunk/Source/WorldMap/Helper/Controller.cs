@@ -85,6 +85,8 @@ namespace WorldMap.Helper
         /// </summary>
         public event EventHandler SaveGraphCompleted;
 
+        public event EventHandler LoadUserComment_Completed;
+
         #endregion
 
         /// <summary>
@@ -645,5 +647,40 @@ namespace WorldMap.Helper
         #endregion
 
         #endregion
+
+        #region comments
+        public void LoadUserComment()
+        {
+            var loadUserComment = Context.Load(Context.GetTbl_commentsQuery());
+            loadUserComment.Completed += new EventHandler(loadUserComment_Completed);
+        }
+
+        public void loadUserComment_Completed(object sender, EventArgs e)
+        {
+            if (LoadUserComment_Completed != null)
+            {
+                LoadUserComment_Completed(sender, e);
+            }            
+        }
+
+        public void SaveComment(tbl_comments comment)
+        {
+            Context.tbl_comments.Add(comment);
+            Context.SubmitChanges();
+        }
+
+        public void DeleteComment(tbl_comments comment)
+        {
+            var comments = from n in Context.tbl_comments
+                           where n.comment_id_pk==comment.comment_id_pk
+                           select n;
+            foreach (tbl_comments x in comments)
+            {
+                Context.tbl_comments.Remove(x);
+            }
+            Context.SubmitChanges();
+        }
+
+        #endregion        
     }
 }

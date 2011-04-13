@@ -604,7 +604,9 @@ namespace WorldMap
 
                     if (value != null)
                     {
-                        drawArrow((ele.DataContext as DraggablePushpin).Location, end, value.ToString());
+                        //format import value
+                        string valueString = String.Format("{0:0.0000}", value/1000000)+" Million $";
+                        drawArrow((ele.DataContext as DraggablePushpin).Location, end, valueString);
                     }
                     else
                     {
@@ -989,9 +991,15 @@ namespace WorldMap
                 WorldMapController.LoadUserIndicator();
                 WorldMapController.LoadUserGraph_Completed += new EventHandler(WorldMapController_LoadUserGraph_Completed);
                 WorldMapController.LoadUserGraph();
+                WorldMapController.LoadUserComment_Completed += new EventHandler(WorldMapController_LoadUserComment_Completed);
+                WorldMapController.LoadUserComment();
 
                 InitializeAfterLoggigIn();
             }
+        }
+
+        public void WorldMapController_LoadUserComment_Completed(object sender, EventArgs e)
+        {            
         }
 
         private void SaveCountryList(tbl_users tbl_user)
@@ -1274,6 +1282,28 @@ namespace WorldMap
             MyMap.Center = new Location((double)country.country_latitude.Value, (double)country.country_longitude.Value);
             MyMap.ZoomLevel = 3;
         }
+        #endregion
+
+        #region comments
+
+        public void InsertComments()
+        {
+            int project_id = 1318;
+            string type = "normal"; //type : normal , like
+            string comment_content = "comment content";
+            tbl_comments comment = new tbl_comments();
+            comment.user_id = user.user_id_pk;
+            comment.project_id = project_id;
+            comment.comment_content = comment_content;
+            comment.create_date = DateTime.Now;
+
+        }
+
+        public void DeleteComment(tbl_comments comment)
+        {
+            WorldMapController.DeleteComment(comment);
+        }
+
         #endregion
     }
 }

@@ -254,5 +254,33 @@ namespace NCRVisual.web.Services
         }
 
         #endregion
+
+        #region comments        
+        public void InsertTbl_comments(tbl_comments tbl_comments)
+        {
+            if ((tbl_comments.EntityState != EntityState.Detached))
+            {
+                this.ObjectContext.ObjectStateManager.ChangeObjectState(tbl_comments, EntityState.Added);
+            }
+            else
+            {
+                this.ObjectContext.tbl_comments.AddObject(tbl_comments);
+            }
+        }
+
+        public void UpdateTbl_comments(tbl_comments currenttbl_comments)
+        {
+            this.ObjectContext.tbl_comments.AttachAsModified(currenttbl_comments, this.ChangeSet.GetOriginal(currenttbl_comments));
+        }
+
+        public void DeleteTbl_comments(tbl_comments tbl_comments)
+        {
+            if ((tbl_comments.EntityState == EntityState.Detached))
+            {
+                this.ObjectContext.tbl_comments.Attach(tbl_comments);
+            }
+            this.ObjectContext.tbl_comments.DeleteObject(tbl_comments);
+        }
+        #endregion
     }
 }
