@@ -9,7 +9,7 @@
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://ncrvisual.co.cc:8080/Services/RSSFeedService.svc"
+            <endpoint address="http://www.ncrvisual.co.cc/Services/RSSFeedService.svc"
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IRSSFeedService"
                 contract="RSSFeedService.IRSSFeedService" name="BasicHttpBinding_IRSSFeedService" />
         </client>
