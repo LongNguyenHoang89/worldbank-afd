@@ -41,7 +41,9 @@ namespace WorldMap
         public List<tbl_indicators> shortListIndicatorsSelected;
         public MainPage mainPage { get; set; }
 
-        public EventHandler SaveGraphButton_Completed;
+        public event EventHandler SaveGraphButton_Completed;
+
+        public event EventHandler ProjectSelectionChanged;
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -449,22 +451,12 @@ namespace WorldMap
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ProjectListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ProjectDetailsBorder.Visibility = Visibility.Visible;
-            tbl_projects project = ProjectListDataGrid.SelectedItem as tbl_projects;
-            this.IdTxtBlck.Text = project.project_wb_id;
-            this.NameTxtBlck.Text = project.project_name;
-            this.LinkButton.NavigateUri = new Uri(project.project_link);
-            this.StatusTxtBlck.Text = project.project_status;
-            this.CostTxtBlck.Text = project.project_cost;
-            this.ADateTxtBlck.Text = project.project_approval_date;
-            this.CDateTxtBlck.Text = project.project_close_date;
-            this.RegionTxtBlck.Text = project.project_region;
-            this.BorrowerTxtBlck.Text = project.project_borrower;
-            this.ImplementAgencyTxtBlck.Text = project.project_implement_agency;
-            this.MajorSectorTxtBlck.Text = project.project_major_sector.Replace("\t","").Replace("\n"," ").Replace("/n","\n");
-            this.ProjectThemesTxtBlck.Text = project.project_themes.Replace("\t", "").Replace("\n", " ").Replace("/n", "\n");
-            this.OutComeTxtBlck.Text = project.project_outcome.Replace("\t", "").Replace("\n", " ").Replace("/n", "\n");
+        {                        
+            if (ProjectSelectionChanged != null)
+            {
+                this.ProjectSelectionChanged(ProjectListDataGrid.SelectedItem as tbl_projects, null);
+            }
+            
         }
     }
 }

@@ -88,6 +88,7 @@ namespace WorldMap
             this.MyWorkSpace.ShorcutView += new EventHandler(MyWorkSpace_ShorcutView);
             this.MyWorkSpace.FacebookPost+= new EventHandler(MyWorkSpace_FacebookPost);
             this.MyWorkSpace.ShortcutRemove+= new EventHandler(MyWorkSpace_ShortcutRemove);
+            this.MyWorkSpace.CountryDetailsControl.ProjectSelectionChanged += new EventHandler(CountryDetailsControl_ProjectSelectionChanged);
 
             //save indicator event
             this.MyWorkSpace.SaveIndicatorButton_Completed += new EventHandler(Workspace_SaveIndicatorButton_Completed);
@@ -100,7 +101,7 @@ namespace WorldMap
             this.MyWorkSpace.ShowMarkupLayerCheckBox.IsChecked = true;
             this.MyWorkSpace.ShowTradeDataLayerCheckBox.IsChecked = true;
         }
-
+       
         #region Draw Country Borders
 
         void WorldMapController_GetBorder_completed(object sender, EventArgs e)
@@ -1284,6 +1285,15 @@ namespace WorldMap
         }
         #endregion
 
+
+        #region Project data
+        void CountryDetailsControl_ProjectSelectionChanged(object sender, EventArgs e)
+        {
+            tbl_projects project = sender as tbl_projects;
+            ProjectDetailControl.PopulateProjectData(project);
+        }
+        #endregion
+
         #region comments
 
         public void InsertComments()
@@ -1305,5 +1315,6 @@ namespace WorldMap
         }
 
         #endregion
+
     }
 }
