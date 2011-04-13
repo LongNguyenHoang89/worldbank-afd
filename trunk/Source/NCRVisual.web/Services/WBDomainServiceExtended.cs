@@ -292,5 +292,13 @@ namespace NCRVisual.web.Services
             this.ObjectContext.tbl_comments.DeleteObject(tbl_comments);
         }
         #endregion
+        #region project
+        public IQueryable<tbl_projects> GetProject(int projectId)
+        {
+            return this.ObjectContext.tbl_projects.Where(c => c.project_id_pk == projectId);
+        }
+        #endregion 
+
+
     }
 }
