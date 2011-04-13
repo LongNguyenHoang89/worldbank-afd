@@ -54,6 +54,7 @@ namespace WorldMap
             this._selectedCountries = selectedCountries;
             this._checkedIndicatorPKs = checkedIndicatorPKs;
             // pupulate the combobox
+            comboBoxRenderStyle.Items.Clear();
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_LINE_DESC);
             comboBoxRenderStyle.Items.Add(WorldbankGeneralChartControl.RA_COLUMN_DESC);
             comboBoxRenderStyle.Items.Add("3D " + WorldbankGeneralChartControl.RA_COLUMN_DESC);
@@ -77,13 +78,11 @@ namespace WorldMap
         }
 
         private void tblIndLoadOp_Completed(object sender, EventArgs e)
-        {
+        {            
             List<tbl_indicators> selectedInd = new List<tbl_indicators>(tblIndLoadOp.Entities);
             comboBoxIndicatorSelector.DisplayMemberPath = "indicator_name";
-            foreach (tbl_indicators tmpI in selectedInd)
-            {
-                comboBoxIndicatorSelector.Items.Add(tmpI);
-            }
+            comboBoxIndicatorSelector.ItemsSource = selectedInd;
+            
             // select the first indicator
             if (selectedInd.Count > 0)
             {
@@ -144,7 +143,7 @@ namespace WorldMap
         {
             WorldbankGeneralChartControl control = new WorldbankDataGraphs.WorldbankGeneralChartControl();
             this.columnChartControl = control;
-            RefeshButton_Click(sender, e);
+            //RefeshButton_Click(sender, e);
             // select render style for the graph
             if (comboBoxRenderStyle.SelectedItem != null && comboBoxIndicatorSelector.SelectedItem != null)
             {
