@@ -43,6 +43,8 @@ namespace WorldMap
         public tbl_users user = new tbl_users();//{ get; set; }
         #endregion
 
+        public int currentProjectId { get; set; }
+
         /// <summary>
         /// default constructor
         /// </summary>
@@ -1290,31 +1292,40 @@ namespace WorldMap
         void CountryDetailsControl_ProjectSelectionChanged(object sender, EventArgs e)
         {
             tbl_projects project = sender as tbl_projects;
+            currentProjectId = project.project_id_pk;
             ProjectDetailControl.PopulateProjectData(project);
         }
         #endregion
 
         #region comments
-
-        public void InsertComments()
-        {
-            int project_id = 1318;
-            string type = "normal"; //type : normal , like
-            string comment_content = "comment content";
-            tbl_comments comment = new tbl_comments();
-            comment.user_id = user.user_id_pk;
-            comment.project_id = project_id;
-            comment.comment_content = comment_content;
-            comment.create_date = DateTime.Now;
-
-        }
-
+        
         public void DeleteComment(tbl_comments comment)
         {
             WorldMapController.DeleteComment(comment);
         }
 
-        #endregion
+        public void PostComment_Click(object sender, EventArgs e)
+        {            
+            
+            // save comment 
+                         
+            tbl_comments comment = new tbl_comments();
+            comment.user_name = user.user_name;
+            comment.project_id = currentProjectId;
+            comment.comment_content = commentContent.Text;
+            comment.create_date = DateTime.Now;
+            comment.comment_type = "normal"; //there are 2 types : normal and like
+            WorldMapController.SaveComment(comment);
+
+
+        }
+
+        public List<tbl_comments> LoadComment(int projectId)
+        {
+            return WorldMapController.LoadComment(projectId);
+        }
+
+        #endregion        
 
     }
 }

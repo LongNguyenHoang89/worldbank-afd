@@ -680,6 +680,19 @@ namespace WorldMap.Helper
             }
             Context.SubmitChanges();
         }
+        
+        public List<tbl_comments> LoadComment(int projectId)
+        {
+            List<tbl_comments> result = new List<tbl_comments>();
+            var comments = from n in Context.tbl_comments
+                           where n.project_id == projectId
+                           select n;
+            foreach (tbl_comments x in comments)
+            {
+                result.Add(x);
+            }
+            return result;
+        }
 
         #endregion        
     }
