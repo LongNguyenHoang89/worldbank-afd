@@ -383,13 +383,13 @@ namespace WorldMap
             }
             else if (selectedIndicatorPKs.Count < 1)
             {
-                //ErrorNotification errorPopup = new ErrorNotification("You must select at least 1 indicator");
-                //errorPopup.Show();
+                ErrorNotification errorPopup = new ErrorNotification("You must select at least 1 indicator");
+                errorPopup.Show();
             }
             else
             {
-                //ErrorNotification errorPopup = new ErrorNotification("You must select at least 2 country to compare them");
-                //errorPopup.Show();
+                ErrorNotification errorPopup = new ErrorNotification("You must select at least 2 country to compare them");
+                errorPopup.Show();
             }
         }
 
