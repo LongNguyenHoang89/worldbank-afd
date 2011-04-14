@@ -343,24 +343,24 @@ namespace WorldMap
             SaveGraphButton_Completed(sender, e);
         }
 
-        #region rss feed
-        RSSReader rssReader = new RSSReader();
-        List<tbl_tabs> userFavTabList;
+        private const string NEWS_TAB_HEADER = "News";
+        private const string COUNTRY_OVERVIEW_TAB_HEADER = "Country Overview";
+        private const string COUNTRY_DATA_TAB_HEADER = "Country Data";
+        private const string WB_PROJET_TAB_HEADER = "WorldBank Projects";
+
+        private bool justInit = true;
 
         private void tabControl1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0) // this makes sure we won't get an "Out of bound" error
             {
                 TabItem tmpTI = (TabItem)e.AddedItems[0];
-                if (tmpTI.Header.ToString().ToUpper().Equals("News".ToUpper())) // make sure the header is "News"
+                if (tmpTI.Header.ToString().ToUpper().Equals(NEWS_TAB_HEADER.ToUpper())) // make sure the header is "News"
                 {
-                    this.loadingIndicator.IsBusy = true;
                     if (this.mainPage.user != null)
                     {
-                        foreach (object o in listBoxFeedList.Items)
-                        {
-                            listBoxFeedList.Items.RemoveAt(0);
-                        }
+                        this.loadingIndicator.IsBusy = true;
+                        listBoxFeedList.Items.Clear();
                         // get user's favourite tabs
                         _worldMapController.GetUserFavTab(mainPage.user);
                         _worldMapController.LoadUserFavTabCompleted += new Controller.LoadUserFavTabCompletedDelegate(_worldMapController_LoadUserFavTabCompleted);
@@ -368,10 +368,39 @@ namespace WorldMap
                     else
                     {
                         // show error on page
+                        ErrorNotification noteWin = new ErrorNotification("You are not logged in so you can only use custom feed");
+                        noteWin.Show();
+                        this.loadingIndicator.IsBusy = false;
+                    }
+                }
+                else if (tmpTI.Header.ToString().ToLower().Equals(COUNTRY_OVERVIEW_TAB_HEADER.ToLower()) && this.Visibility == Visibility.Visible)
+                {
+                    if (_selectedCountry == null)
+                    {
+                        if (!justInit)
+                        {
+                            ErrorNotification noteWin = new ErrorNotification("You must first select a country by clicking on the pin of that country");
+                            noteWin.Show();
+                        }
+                        else
+                        {
+                            justInit = false;
+                        }
+                    }
+                } else if (this.Visibility == Visibility.Visible)
+                {
+                    if (_selectedCountry == null)
+                    {
+                        ErrorNotification noteWin = new ErrorNotification("You must first select a country by clicking on the pin of that country");
+                        noteWin.Show();
                     }
                 }
             }
         }
+
+        #region rss feed
+        RSSReader rssReader = new RSSReader();
+        List<tbl_tabs> userFavTabList;
 
         private void _worldMapController_LoadUserFavTabCompleted(object source, WorldMap.Helper.Controller.LoadUserFavTabEventArgs e)
         {
@@ -384,6 +413,10 @@ namespace WorldMap
                 string feedLink = userFavTabList[0].tab_feed_link;
                 userFavTabList.RemoveAt(0);
                 rssReader.ReadRSS(feedLink);
+            }
+            else
+            {
+                this.loadingIndicator.IsBusy = false;
             }
             //rssReader.ReadRSS("http://wbws.worldbank.org/feeds/xml/Social_Development.xml");
         }
